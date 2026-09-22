@@ -12,7 +12,7 @@ Arabic RAG question-answering system over KSU and KAU academic regulations.
   should, to confirm the API contract (see below).
 
 ## Stack
-- Python 3.14, managed with `uv` (never pip, poetry, or conda)
+- Python 3.12, managed with `uv` (never pip, poetry, or conda)
 - FastAPI + uvicorn
 - ChromaDB, separate collections per university and source type
 - Embeddings: `intfloat/multilingual-e5-large` via sentence-transformers (CPU only)
