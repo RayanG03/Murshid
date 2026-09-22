@@ -1,0 +1,416 @@
+<div class="shell" [class.dark]="dark()" [attr.data-theme]="selected().id" [style.--fs]="fontScale()">
+
+  <!-- الشريط الجانبي -->
+  <aside class="sidebar">
+
+    <div class="side-head">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" />
+          <path d="M15.6 8.4 13 13l-4.6 2.6L11 11l4.6-2.6Z" fill="currentColor" />
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-name">مُرشِد</span>
+        <span class="logo-tag">مساعدك الجامعي الذكي</span>
+      </div>
+    </div>
+
+    <div class="side-section">
+      <span class="side-label" id="lbl-uni">اختر الجامعة</span>
+      <div class="uni-list" role="group" aria-labelledby="lbl-uni">
+        @for (u of universities; track u.id) {
+          <button
+            class="uni-card"
+            [class.on]="selected().id === u.id"
+            [attr.aria-pressed]="selected().id === u.id"
+            (click)="selectUniversity(u)">
+            <span class="uni-mark" [attr.data-uni]="u.id" aria-hidden="true">
+              @if (u.id === 'ksu') { KSU } @else { KAU }
+            </span>
+            <span class="uni-meta">
+              <span class="uni-name">{{ u.name }}</span>
+              <span class="uni-en">
+                @if (u.id === 'ksu') { King Saud University }
+                @else { King Abdulaziz University }
+              </span>
+            </span>
+            <span class="uni-check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none">
+                <path d="M5 12.5 10 17.5 19 7" stroke="currentColor"
+                  stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="side-section side-history">
+      <span class="side-label">
+        محادثاتك
+        <em class="count">{{ history().length }}/3</em>
+      </span>
+
+      @if (history().length === 0) {
+        <p class="hist-empty">ما عندك محادثات محفوظة بعد</p>
+      } @else {
+        <div class="hist-list">
+          @for (c of history(); track c.id) {
+            <button
+              class="hist"
+              [class.on]="currentId() === c.id"
+              (click)="openConversation(c)"
+              [attr.aria-label]="'فتح محادثة: ' + c.title">
+              <span class="hist-dot" [attr.data-uni]="c.uni" aria-hidden="true"></span>
+              <span class="hist-meta">
+                <span class="hist-title">{{ c.title }}</span>
+                <span class="hist-sub">{{ uniShort(c.uni) }} · {{ relativeTime(c.updatedAt) }}</span>
+              </span>
+              <span
+                class="hist-del"
+                role="button"
+                tabindex="0"
+                (click)="deleteConversation(c.id, $event)"
+                (keydown.enter)="deleteConversation(c.id, $event)"
+                aria-label="حذف المحادثة">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true">
+                  <path d="M6 6l12 12M18 6 6 18" stroke="currentColor"
+                    stroke-width="1.9" stroke-linecap="round" />
+                </svg>
+              </span>
+            </button>
+          }
+        </div>
+      }
+      <span class="hist-note">يُحفظ آخر 3 محادثات · تنتهي بعد 3 أيام</span>
+    </div>
+
+    <div class="side-section side-topics">
+      <span class="side-label">مواضيع سريعة</span>
+      <div class="topic-list">
+        @for (s of suggestions(); track s) {
+          <button class="topic" (click)="useSuggestion(s)">
+            <span class="topic-dot" aria-hidden="true"></span>
+            <span class="topic-text">{{ s }}</span>
+            <svg class="topic-go" viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true">
+              <path d="M14 7l-5 5 5 5" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="side-foot">
+      <span class="foot-badge">مشروع تخرّج · نظام إجابة عربي</span>
+    </div>
+  </aside>
+
+  <!-- المنطقة الرئيسية -->
+  <main class="main">
+
+    <header class="topbar">
+      <div class="context">
+        <span class="ctx-mark" [attr.data-uni]="selected().id" aria-hidden="true">
+          @if (selected().id === 'ksu') { KSU } @else { KAU }
+        </span>
+        <span class="ctx-meta">
+          <span class="ctx-name">{{ selected().name }}</span>
+          <span class="ctx-status"><span class="live" aria-hidden="true"></span> متصل وجاهز</span>
+        </span>
+      </div>
+
+      <div class="tools">
+        <button class="tool fs-sm" (click)="smallerFont()" [disabled]="fontScale() <= 0.85" aria-label="تصغير الخط">أ</button>
+        <button class="tool fs-lg" (click)="biggerFont()" [disabled]="fontScale() >= 1.4" aria-label="تكبير الخط">أ</button>
+
+        <button
+          class="tool"
+          [class.on]="autoRead()"
+          (click)="toggleAutoRead()"
+          [disabled]="!ttsSupported()"
+          [attr.aria-pressed]="autoRead()"
+          aria-label="قراءة الردود تلقائياً">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true">
+            <path d="M4 13v-1a8 8 0 0 1 16 0v1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            <rect x="3" y="13" width="4.2" height="6.5" rx="1.6" stroke="currentColor" stroke-width="1.6" />
+            <rect x="16.8" y="13" width="4.2" height="6.5" rx="1.6" stroke="currentColor" stroke-width="1.6" />
+          </svg>
+        </button>
+
+        <button
+          class="tool"
+          [class.on]="dark()"
+          (click)="toggleDark()"
+          [attr.aria-pressed]="dark()"
+          [attr.aria-label]="dark() ? 'الوضع النهاري' : 'الوضع الليلي'">
+          @if (dark()) {
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6" />
+              <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"
+                stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          } @else {
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true">
+              <path d="M20 14.5A8 8 0 0 1 9.5 4 7 7 0 1 0 20 14.5Z"
+                stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+            </svg>
+          }
+        </button>
+
+        <button
+          class="ghost-btn"
+          (click)="clearChat()"
+          [disabled]="messages().length === 0">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7" />
+            <path d="M12 8.5v7M8.5 12h7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+          </svg>
+          <span class="btn-label">محادثة جديدة</span>
+        </button>
+      </div>
+    </header>
+
+    <div
+      class="thread"
+      #scrollBox
+      role="log"
+      aria-live="polite"
+      aria-relevant="additions"
+      aria-label="سجل المحادثة">
+
+      @if (messages().length === 0) {
+        <div class="empty">
+          <div class="empty-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none">
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" />
+              <path d="M15.6 8.4 13 13l-4.6 2.6L11 11l4.6-2.6Z" fill="currentColor" />
+            </svg>
+          </div>
+          <h2>كيف أقدر أساعدك اليوم؟</h2>
+          <p>اسألني أي شيء عن <strong>{{ selected().name }}</strong> وبجاوبك من مصادرها الرسمية.</p>
+
+          <div class="prompts">
+            @for (s of suggestions(); track s; let i = $index) {
+              <button
+                class="prompt"
+                [style.animation-delay.ms]="i * 60"
+                (click)="useSuggestion(s)">
+                <span class="prompt-ic" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                    <path d="M9.2 9.3a2.8 2.8 0 1 1 4 2.5c-.9.5-1.2 1-1.2 1.9M12 17h.01"
+                      stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                <span class="prompt-text">{{ s }}</span>
+                <svg class="prompt-go" viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+                  <path d="M14 7l-5 5 5 5" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+            }
+          </div>
+        </div>
+      }
+
+      @for (m of messages(); track m.id) {
+        <div class="row" [class.me]="m.role === 'user'">
+          <div class="avatar" [class.bot]="m.role === 'bot'" aria-hidden="true">
+            @if (m.role === 'bot') {
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" />
+                <path d="M15.6 8.4 13 13l-4.6 2.6L11 11l4.6-2.6Z" fill="currentColor" />
+              </svg>
+            } @else {
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none">
+                <circle cx="12" cy="8.5" r="3.2" stroke="currentColor" stroke-width="1.6" />
+                <path d="M5.5 19c.7-3.3 3.3-5 6.5-5s5.8 1.7 6.5 5" stroke="currentColor"
+                  stroke-width="1.6" stroke-linecap="round" />
+              </svg>
+            }
+          </div>
+
+          <div class="msg">
+            <span class="who">{{ m.role === 'bot' ? 'مُرشِد' : 'أنت' }}</span>
+            <div class="bubble" [class.error]="m.isError">
+              <p class="text">{{ m.text }}</p>
+            </div>
+
+            @if (m.isError) {
+              <button class="retry-btn" (click)="retryLast()">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true">
+                  <path d="M19 12a7 7 0 1 1-2-4.9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+                  <path d="M17 3v4.5h-4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                أعد المحاولة
+              </button>
+            }
+
+            @if (m.role === 'bot' && !m.isError) {
+              <div class="actions" role="group" aria-label="خيارات الإجابة">
+                <button
+                  class="act"
+                  [class.ok]="copiedId() === m.id"
+                  (click)="copy(m)"
+                  [attr.aria-label]="copiedId() === m.id ? 'تم النسخ' : 'نسخ الإجابة'">
+                  @if (copiedId() === m.id) {
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+                      <path d="M5 12.5 10 17.5 19 7" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  } @else {
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+                      <rect x="9" y="9" width="11" height="11" rx="2.5" stroke="currentColor" stroke-width="1.6" />
+                      <path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                    </svg>
+                  }
+                </button>
+
+                <button
+                  class="act"
+                  [class.on]="speakingId() === m.id"
+                  (click)="speak(m)"
+                  [disabled]="!ttsSupported()"
+                  [attr.aria-pressed]="speakingId() === m.id"
+                  [attr.aria-label]="speakingId() === m.id ? 'إيقاف القراءة' : 'استماع للإجابة'">
+                  @if (speakingId() === m.id) {
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+                      <rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" />
+                    </svg>
+                  } @else {
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+                      <path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4Z" fill="currentColor" />
+                      <path d="M15.5 9a3.5 3.5 0 0 1 0 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                    </svg>
+                  }
+                </button>
+
+                <button
+                  class="act"
+                  (click)="regenerate(m)"
+                  [disabled]="loading()"
+                  aria-label="إعادة توليد الإجابة">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+                    <path d="M19 12a7 7 0 1 1-2-4.9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                    <path d="M17 3v4.5h-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+
+                <button
+                  class="act"
+                  [class.up]="m.feedback === 'up'"
+                  (click)="rate(m, 'up')"
+                  [attr.aria-pressed]="m.feedback === 'up'"
+                  aria-label="الإجابة ساعدتني">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+                    <path d="M7 11v8H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h2Z"
+                      stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                    <path d="M7 11l3.4-6.4A1.7 1.7 0 0 1 13.8 5.4V9H18a2 2 0 0 1 2 2.3l-1 5.4A2 2 0 0 1 17 19H7"
+                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+
+                <button
+                  class="act dis"
+                  [class.down]="m.feedback === 'down'"
+                  (click)="rate(m, 'down')"
+                  [attr.aria-pressed]="m.feedback === 'down'"
+                  aria-label="الإجابة ما نفعتني">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+                    <path d="M7 11v8H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h2Z"
+                      stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                    <path d="M7 11l3.4-6.4A1.7 1.7 0 0 1 13.8 5.4V9H18a2 2 0 0 1 2 2.3l-1 5.4A2 2 0 0 1 17 19H7"
+                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            }
+
+            <span class="time">{{ m.time }}</span>
+          </div>
+        </div>
+      }
+
+      @if (loading()) {
+        <div class="row">
+          <div class="avatar bot" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none">
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" />
+              <path d="M15.6 8.4 13 13l-4.6 2.6L11 11l4.6-2.6Z" fill="currentColor" />
+            </svg>
+          </div>
+          <div class="msg">
+            <span class="who">مُرشِد</span>
+            <div class="bubble typing" aria-label="يكتب الآن">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- أسئلة متابعة مقترحة -->
+      @if (!loading() && lastIsBot()) {
+        <div class="followups" aria-label="أسئلة مقترحة">
+          @for (f of followups; track f) {
+            <button class="followup" (click)="useSuggestion(f)">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true">
+                <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+              </svg>
+              {{ f }}
+            </button>
+          }
+        </div>
+      }
+    </div>
+
+    <footer class="composer">
+      <div class="field">
+        <button
+          class="mic"
+          [class.on]="listening()"
+          (click)="toggleMic()"
+          [disabled]="!micSupported()"
+          [attr.aria-pressed]="listening()"
+          [attr.aria-label]="listening() ? 'إيقاف الإدخال الصوتي' : 'سؤال بالصوت'"
+          [title]="micSupported() ? 'سؤال بالصوت' : 'الإدخال الصوتي غير مدعوم في هذا المتصفّح'">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden="true">
+            <rect x="9" y="3" width="6" height="11" rx="3" stroke="currentColor" stroke-width="1.6" />
+            <path d="M5 11a7 7 0 0 0 14 0M12 18v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+
+        <input
+          class="input"
+          type="text"
+          aria-label="اكتب سؤالك"
+          [ngModel]="draft()"
+          (ngModelChange)="draft.set($event)"
+          (keyup.enter)="send()"
+          [disabled]="loading()"
+          placeholder="اكتب سؤالك هنا..." />
+
+        <button
+          class="send"
+          (click)="send()"
+          [disabled]="loading() || !draft().trim()"
+          aria-label="إرسال السؤال">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden="true">
+            <path d="M4 12l16-8-5 16-3.6-6.4L4 12z" stroke="currentColor"
+              stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+
+      @if (listening()) {
+        <span class="hint-line listening" role="status">
+          <span class="listen-dot" aria-hidden="true"></span>
+          يتم الاستماع، تكلّم الآن...
+        </span>
+      } @else {
+        <span class="hint-line">اضغط Enter للإرسال · قد تحتوي الإجابات على أخطاء، تحقّق من المصدر الرسمي</span>
+      }
+    </footer>
+
+  </main>
+</div>
