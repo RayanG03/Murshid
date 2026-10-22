@@ -18,6 +18,11 @@ Arabic RAG question-answering system over KSU and KAU academic regulations.
 - Embeddings: `intfloat/multilingual-e5-large` via sentence-transformers (CPU only)
 - Generators: DeepSeek, Qwen, Llama via DeepInfra; Gemini via free tier
 - Windows environment: use paths and commands that work on Windows
+- Package index: pypi.org (and files.pythonhosted.org) is unreachable on some dev
+  machines on this network. If `uv sync` or `uv add` times out trying to reach
+  pypi.org, create a local `backend/uv.toml` (gitignored) pointing `[[index]]`
+  at a PyPI mirror (e.g. `https://pypi.tuna.tsinghua.edu.cn/simple/`) with
+  `default = true`. Never commit a default index override in `backend/pyproject.toml`.
 
 ## Commands (run from `code-Agent/backend/`)
 - Add a dependency: `uv add <package>`
@@ -66,13 +71,27 @@ Arabic RAG question-answering system over KSU and KAU academic regulations.
   - لائحة الطالب الجامعي الحقوق والواجبات.pdf — student rights and duties regulation
   - لائحة ضبط سلوك الطلاب والطالبات.pdf — student conduct regulation
   # TODO: confirm which of these map to which "المصدر الرسمي" rows in the workbook
-- KSU sources (`KSU/`):
-  - university documents.txt — # TODO: what is this (plain text version of what?)
-  - university documents(pdf).pdf — # TODO: same content as the .txt, or different?
-  - اللائحة التنظيمية للشؤون الدراسية.pdf — academic affairs regulation
-  - اللائحة التنظيمية للشؤون الدراسية24.pdf — academic affairs regulation (2024 version? or a
-    duplicate/updated copy of the one above — # TODO: confirm which is current)
-  - لائحة المكافئات.pdf — rewards/stipends regulation
+- KSU sources (`KSU/`) — triaged 2026-10-17:
+  - university documents.txt — KSU registrar/admission web dump: 2 main sections (القبول، الطلاب),
+    23 service sections ("الخدمة المطلوبة:(...)"), 2 FAQ blocks (القبول 18 Qs، المكافآت 7 Qs).
+    Ingested into `ksu_txt` (83 chunks).
+  - university documents(pdf).pdf — print-to-PDF of the same content (same headers visible through
+    the cipher, similar char volume); its text layer is garbled (reversed glyph order + broken
+    ToUnicode substitutions, ~1% vocab overlap with the txt even after line reversal). Excluded;
+    the .txt is the single source.
+  - اللائحة التنظيمية للشؤون الدراسية.pdf — same 73-article regulation as the "24" file but
+    WITHOUT the executive rules; text layer garbled (scrambled lam-alef + letter transpositions,
+    e.g. اجلامعية/جبامعة). Excluded as redundant and unreadable.
+  - اللائحة التنظيمية للشؤون الدراسية24.pdf — the 2024 consolidated edition of the same
+    73-article regulation (board decision (3)أ/4/1445, session 25/02/2024) PLUS executive rules
+    updated through 1446هـ. Presentation-form text NFKC-folds cleanly; ingested into `ksu_pdf`
+    (150 chunks). Caveats: decimals use ',' (4,50), mixed Western/Arabic-Indic digits, and
+    multi-number runs (dates, decision numbers) extract BIDI-reversed (٦٤/٠١/١٢ for ١٢/١٠/٤٦).
+  - KSU chunk token cap: both KSU collections are split under `ksu_chunk_max_tokens=450`
+    (measured with tokenizer: display max 449 / embedded 451 incl. "passage: " prefix, p95 442)
+    so no chunk can be truncated at embed time; content lossless modulo repeated headings.
+  - لائحة المكافئات.pdf — scanned images only (0 chars on all 7 pages, no text layer).
+    NOT ingested — content gap (OCR/vision pass deliberately not started).
 
 ## Generated files (write here, never into `backend/sources/`)
 - `backend/data/`: derived datasets (for example `kau_qa.csv`, `kau_unverified.csv`)
@@ -107,6 +126,16 @@ sometimes note/linked_pages_not_captured), then an H1, then `##` sections.
 - The housing, health, and student affairs pages are overviews. The detail pages they link to
   were not captured (see `linked_pages_not_captured` in each header).
 - The MyKAU app page has no real per-service descriptions (placeholders were excluded).
+- KAU PDF text layers are corrupted (ToUnicode maps scramble lam-alef ligatures and some
+  letters; PyMuPDF/pypdfium2/pdfplumber all produce garbled text). Never ingest their text
+  layers. `backend/data/extracted/KAU/دليل التحويل الداخلي.txt` was instead produced by
+  Gemini vision transcription (gemini-2.5-flash) of 300-DPI page renders, cross-checked
+  against Tesseract OCR, with two manual corrections applied after spot-checks against the
+  source: academic-year order normalized to "1448/1447", and the page-12 footer (social
+  handles + dar@kau.edu.sa) restored. Its GPA thresholds were manually verified as correct.
+- The other three KAU PDFs (تقويم 26-27.pdf, دليل القبول لبرامج البكالوريوس والدبلوم.pdf,
+  دليل القبول للتحويل الخارجي إلى الجامعة.pdf) are NOT yet extracted (deferred; same
+  corruption; OCR/vision pass not completed) — treat as content gaps.
 - If a question depends on missing content, the system must say it cannot confirm, not guess.
 
 ## PDF extraction

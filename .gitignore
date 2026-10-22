@@ -1,6 +1,7 @@
 # Backend
 backend/.venv/
 backend/.env
+backend/uv.toml
 backend/*.env.local
 backend/data/
 backend/chroma_db/
