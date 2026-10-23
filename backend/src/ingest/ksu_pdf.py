@@ -36,7 +36,7 @@ from src.chroma_store import COL_KSU_PDF, add_batched, rebuild_collection
 from src.config import get_settings
 from src.embeddings import E5Embedder
 from src.ingest.token_cap import split_to_fit
-from src.text import normalize_digits_for_search
+from src.text import clean_search_text, normalize_digits_for_search
 
 logger = logging.getLogger("capstone.ingest.ksu_pdf")
 
@@ -245,6 +245,21 @@ def build_pdf_chunks(
     return chunks
 
 
+def final_pdf_text(unit: str, chunk_text: str) -> str:
+    """Variant-C stored text: bare unit label + cleaned body.
+
+    The repeated 'DOC_TITLE — unit' heading is shortened to just the
+    article label (unit, e.g. "المادة الرابعة عشرة") and the tatweel /
+    diacritic extraction artifacts are removed. Applied to BOTH the
+    embedded text and the stored display text. The full title and unit
+    stay in the chunk metadata for citations.
+    """
+    body = chunk_text.split("\n", 1)[1] if "\n" in chunk_text else ""
+    cleaned_unit = clean_search_text(unit)
+    cleaned_body = clean_search_text(body)
+    return cleaned_unit + "\n" + cleaned_body if cleaned_unit else cleaned_body
+
+
 def ingest_ksu_pdf(client, embedder: E5Embedder) -> int:
     """Chunk and ingest the regulation into ksu_pdf."""
     settings = get_settings()
@@ -258,14 +273,15 @@ def ingest_ksu_pdf(client, embedder: E5Embedder) -> int:
     logger.info(
         "ksu_pdf: %d chunks from %d units.", len(chunks), len({c.unit for c in chunks})
     )
+    texts = [final_pdf_text(c.unit, c.display) for c in chunks]
     embeddings = embedder.embed_passages(
-        [normalize_digits_for_search(c.display) for c in chunks]
+        [normalize_digits_for_search(t) for t in texts]
     )
     collection = rebuild_collection(client, COL_KSU_PDF)
     added = add_batched(
         collection,
         ids=[f"ksu_pdf_{c.page:02d}_{i:03d}" for i, c in enumerate(chunks)],
-        documents=[c.display for c in chunks],
+        documents=texts,
         metadatas=[c.metadata for c in chunks],
         embeddings=embeddings,
         batch_size=settings.embedding_batch_size,

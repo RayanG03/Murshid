@@ -40,7 +40,9 @@ class ExplodingGenerator(BaseGenerator):
     def __init__(self) -> None:
         super().__init__("exploding", backoff_base=0.01, max_attempts=1)
 
-    def _invoke(self, system: str, prompt: str) -> str:
+    def _invoke_once(
+        self, system: str, prompt: str, timeout_seconds: float
+    ) -> tuple[str, bool]:
         raise AssertionError("LLM was called during a gate-verification run")
 
 

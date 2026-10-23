@@ -55,6 +55,8 @@ class Settings(BaseSettings):
     # Secrets (placeholders; real values come from backend/.env).
     deepinfra_api_key: str = ""
     gemini_api_key: str = ""
+    groq_api_key: str = ""
+    mistral_api_key: str = ""
 
     # Generator models: DeepSeek / Qwen / Llama served via DeepInfra
     # (OpenAI-compatible endpoint), Gemini via its free tier.
@@ -64,8 +66,48 @@ class Settings(BaseSettings):
     llama_model_id: str = "meta-llama/Llama-3.3-70B-Instruct"
     gemini_model_id: str = "gemini-flash-latest"
 
+    # Groq (OpenAI-compatible): gpt-oss is a reasoning model whose reasoning
+    # tokens count against the completion cap, so reasoning effort is set low
+    # and reasoning output is excluded (verified against Groq docs
+    # 2026-10-23: reasoning_effort low/medium/high for gpt-oss; include_reasoning
+    # controls exposure; max_tokens is deprecated -> max_completion_tokens).
+    groq_base_url: str = "https://api.groq.com/openai/v1"
+    groq_model_id: str = "openai/gpt-oss-120b"
+    groq_reasoning_effort: str = "low"
+    groq_include_reasoning: bool = False
+
+    # Mistral (OpenAI-compatible chat/completions).
+    mistral_base_url: str = "https://api.mistral.ai/v1"
+    mistral_model_id: str = "mistral-small-latest"
+
+    # Default failover chain: tried in order, one shared time budget
+    # (src/generators.py generate_with_meta). DeepInfra models (deepseek,
+    # qwen, llama) remain selectable explicitly via get_generator() but are
+    # deliberately NOT part of the default chain.
+    default_generation_providers: tuple[str, ...] = ("groq", "mistral", "gemini")
+
+    # Generation timing: ONE shared budget across the whole failover chain.
+    # The frontend gives up at 20s and retrieval + rerank already take up to
+    # ~3s, so generation must fit in 14s; no attempt may start unless it can
+    # finish within the remaining budget (per attempt timeout below).
+    generation_time_budget_s: float = 14.0
+    per_attempt_timeout_s: float = 8.0
+
     # Embeddings (loaded once at startup in a later stage).
     embedding_model_name: str = "intfloat/multilingual-e5-large"
+
+    # Cross-encoder reranker for the KSU retrieval gate (loaded once at
+    # startup, next to the embedder; never lazily). Its predict() returns
+    # PROBABILITIES for num_labels==1 — used as received, never re-squashed.
+    reranker_model_name: str = "BAAI/bge-reranker-v2-m3"
+
+    # KSU rerank gate: from the merged q&a+txt+pdf dense candidates keep the
+    # top-N pool, rerank it, and refuse when nothing reaches the threshold.
+    # Rationale (src.ksu_text_clean_diag, TUNE only): with variant-C texts
+    # the rerank scores separate cleanly — min RELEVANT top1 0.5855 vs max
+    # REFUSAL top1 0.2117, overlap 0 — so 0.40 centers the feasible window.
+    ksu_rerank_pool_size: int = 6
+    ksu_rerank_refuse_threshold: float = 0.40
 
     # Gemini REST endpoint and pacing (free-tier friendly).
     gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta"
@@ -138,13 +180,13 @@ def get_settings() -> Settings:
 
 
 def get_university_gates(university: str) -> dict[str, float]:
-    """Per-university context-assembly gates for src.context_assembly.
+    """Per-university gates for the pipeline.
 
-    Returns the KAU gate quartet (floor_qa, floor_docs, strong_leader, gap)
-    built from the calibrated Settings values, so those numbers stay the
-    single source of truth. KSU gates await their own calibration (a later
-    step): asking for them fails loudly instead of silently reusing the KAU
-    thresholds.
+    KAU returns the calibrated floor/leader/gap quartet for
+    src.context_assembly (Settings remains the single source of truth).
+    KSU returns its rerank-gate values; the pipeline branches on
+    university before touching either shape. Unknown universities fail
+    loudly instead of silently reusing another university's thresholds.
     """
     if university == "kau":
         settings = get_settings()
@@ -153,6 +195,12 @@ def get_university_gates(university: str) -> dict[str, float]:
             "floor_docs": settings.relevance_floor_docs,
             "strong_leader": settings.gate_strong_leader,
             "gap": settings.gate_gap,
+        }
+    if university == "ksu":
+        settings = get_settings()
+        return {
+            "rerank_threshold": settings.ksu_rerank_refuse_threshold,
+            "rerank_pool_size": float(settings.ksu_rerank_pool_size),
         }
     raise ValueError(
         f"No calibrated context gates for university {university!r} yet"

@@ -16,7 +16,10 @@ Arabic RAG question-answering system over KSU and KAU academic regulations.
 - FastAPI + uvicorn
 - ChromaDB, separate collections per university and source type
 - Embeddings: `intfloat/multilingual-e5-large` via sentence-transformers (CPU only)
-- Generators: DeepSeek, Qwen, Llama via DeepInfra; Gemini via free tier
+- Generators: default failover chain Groq (openai/gpt-oss-120b) -> Mistral
+  (mistral-small-latest) -> Gemini (free tier), one shared generation time
+  budget; DeepSeek, Qwen, Llama via DeepInfra stay selectable explicitly
+  (NOT in the default chain)
 - Windows environment: use paths and commands that work on Windows
 - Package index: pypi.org (and files.pythonhosted.org) is unreachable on some dev
   machines on this network. If `uv sync` or `uv add` times out trying to reach

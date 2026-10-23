@@ -20,3 +20,23 @@ def normalize_digits_for_search(text: str) -> str:
     original text is always kept for display, per AGENTS.md.
     """
     return text.translate(_DIGIT_TABLE)
+
+
+TATWEEL = "\u0640"
+
+# Arabic diacritics (fathatan..sukun), a PDF text-layer extraction artifact.
+_DIACRITICS = "".join(chr(cp) for cp in range(0x064B, 0x0653))
+
+_CLEAN_TABLE: dict[int, str | None] = {ord(TATWEEL): None}
+_CLEAN_TABLE.update({cp: None for cp in range(0x064B, 0x0653)})
+
+
+def clean_search_text(text: str) -> str:
+    """Remove ONLY U+0640 (tatweel) and U+064B-U+0652 (Arabic diacritics).
+
+    Both are PDF text-layer extraction artifacts rather than source
+    content, so cleaning is applied to the chunk text that is embedded
+    AND stored (display). Nothing else is touched: no letter
+    normalization, no reordering, no digit work.
+    """
+    return text.translate(_CLEAN_TABLE)

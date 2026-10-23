@@ -241,16 +241,22 @@ def test_get_university_gates_kau_exact() -> None:
         "strong_leader": 0.869,
         "gap": 0.04,
     }
+
+
+def test_get_university_gates_ksu_rerank() -> None:
+    from src.config import get_settings
+
+    gates = get_university_gates("ksu")
+    settings = get_settings()
+    assert gates["rerank_threshold"] == settings.ksu_rerank_refuse_threshold
+    assert gates["rerank_pool_size"] == float(settings.ksu_rerank_pool_size)
     with pytest.raises(ValueError):
-        get_university_gates("ksu")
+        get_university_gates("uqu")
 
 
 def test_university_available_when_registered_and_gated() -> None:
     assert is_university_available("kau") is True
-
-
-def test_university_unavailable_without_calibrated_gates() -> None:
-    assert is_university_available("ksu") is False
+    assert is_university_available("ksu") is True
 
 
 def test_university_unknown_name_unavailable() -> None:
