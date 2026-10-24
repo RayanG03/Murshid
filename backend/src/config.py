@@ -151,7 +151,7 @@ class Settings(BaseSettings):
     # relevant probes: QA 0.891-0.946, docs 0.793-0.896;
     # off-topic probes: QA 0.758-0.821, docs 0.726-0.782.
     relevance_floor_qa: float = 0.83
-    relevance_floor_docs: float = 0.79
+    relevance_floor_docs: float = 0.80
 
     # Confidence gate per side (Stage 4 fix): after the floor, a side passes
     # only if its top hit is a strong leader OR clearly separated from the
@@ -163,8 +163,8 @@ class Settings(BaseSettings):
     # fragile: drift should be handled by retrieval-side improvements
     # (reranking / hybrid search), not by nudging this threshold. Refusing a
     # borderline-relevant query is the safe error direction.
-    gate_strong_leader: float = 0.869
-    gate_gap: float = 0.04
+    gate_strong_leader: float = 0.832
+    gate_gap: float = 0.012
 
     # Context assembly sizing.
     context_max_qa: int = 3
