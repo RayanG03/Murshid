@@ -4,7 +4,8 @@ Groq, Mistral.
 Every call goes through retry with exponential backoff and emits a
 per-request progress log line, per AGENTS.md's hard rules. Failed-over
 requests run through generate_with_meta(), which walks a provider chain
-under ONE shared time budget and returns a GenerationResult carrying the
+under ONE absolute request deadline (anchored at /ask start, passed in
+by the caller) and returns a GenerationResult carrying the
 truncation flag (never instance state — generators are shared across
 concurrent requests).
 """
@@ -154,9 +155,15 @@ class BaseGenerator(abc.ABC):
 
 
 class _HttpStatusError(Exception):
-    def __init__(self, status: int, body: str) -> None:
+    def __init__(
+        self, status: int, body: str,
+        headers: dict[str, str] | None = None,
+    ) -> None:
         super().__init__(f"HTTP {status}: {body[:200]}")
         self.status = status
+        # Response headers (lower-cased keys by httpx) — read for 429
+        # zero-rate-limit detection; None when a caller does not have them.
+        self.headers = headers or {}
 
 
 _RETRYABLE = (httpx.HTTPError, TimeoutError)
@@ -195,6 +202,34 @@ def _classify_attempt_exception(
 # invalid/wrong scope): retrying them every request is waste. Loud log ONCE.
 _AUTH_SKIPPED: set[str] = set()
 
+# Providers skipped for the rest of the process after a 429 whose response
+# headers show a request rate limit of 0 (e.g. x-ratelimit-limit-req-minute:
+# "0"): the provider cannot serve ANY request this minute, so retrying it —
+# this request or on later requests — is guaranteed waste. Same policy as
+# the 401/403 skip: marked once, loud log ONCE.
+_RATE_LIMIT_SKIPPED: set[str] = set()
+
+# Header-name prefixes whose VALUE is a request-count limit. A value of 0
+# means the provider is configured to allow zero requests.
+_ZERO_LIMIT_HEADER_PREFIXES = (
+    "x-ratelimit-limit-req",
+    "x-ratelimit-limit-requests",
+    "ratelimit-limit-requests",
+)
+
+
+def _zero_request_limit_header(headers: dict[str, str] | None) -> str | None:
+    """Return the first request-limit header whose value is exactly 0."""
+    if not headers:
+        return None
+    for name, value in headers.items():
+        normalized = name.lower().strip()
+        if not normalized.startswith(_ZERO_LIMIT_HEADER_PREFIXES):
+            continue
+        if value.strip() in {"0", "0.0"}:
+            return normalized
+    return None
+
 
 class DeepInfraGenerator(BaseGenerator):
     """DeepSeek / Qwen / Llama through DeepInfra's OpenAI-compatible API."""
@@ -228,7 +263,9 @@ class DeepInfraGenerator(BaseGenerator):
             timeout=timeout_seconds,
         )
         if resp.status_code != 200:
-            raise _HttpStatusError(resp.status_code, resp.text)
+            raise _HttpStatusError(
+                resp.status_code, resp.text, dict(resp.headers)
+            )
         choice = resp.json()["choices"][0]
         finish_reason = str(choice.get("finish_reason", ""))
         truncated = finish_reason == "length"
@@ -288,7 +325,9 @@ class OpenAICompatGenerator(BaseGenerator):
             timeout=timeout_seconds,
         )
         if resp.status_code != 200:
-            raise _HttpStatusError(resp.status_code, resp.text)
+            raise _HttpStatusError(
+                resp.status_code, resp.text, dict(resp.headers)
+            )
         choice = resp.json()["choices"][0]
         finish_reason = str(choice.get("finish_reason", ""))
         truncated = finish_reason == "length"
@@ -388,7 +427,9 @@ class GeminiGenerator(BaseGenerator):
             timeout=timeout_seconds,
         )
         if resp.status_code != 200:
-            raise _HttpStatusError(resp.status_code, resp.text)
+            raise _HttpStatusError(
+                resp.status_code, resp.text, dict(resp.headers)
+            )
         data = resp.json()
         finish_reason = data["candidates"][0].get("finishReason", "")
         truncated = finish_reason == "MAX_TOKENS"
@@ -452,30 +493,46 @@ def generate_with_meta(
     prompt: str,
     label: str = "",
     settings: Settings | None = None,
+    deadline: float | None = None,
 ) -> GenerationResult:
-    """Run the failover chain under ONE shared deadline.
+    """Run the failover chain under ONE absolute request deadline.
 
-    Providers are tried in order; timeout / network error / 429 / 5xx fail
-    over to the next provider (after in-provider retries if budget
-    remains); 401/403 skip the provider immediately for the whole process.
-    An attempt starts only if it can finish within the remaining budget.
+    ``deadline`` is a time.monotonic() timestamp anchored at the START of
+    /ask handling (before retrieval/rerank) and passed down through the
+    pipeline; when None, it is anchored here (offline callers). No attempt
+    may start unless it can finish within the remaining deadline.
+    Timeout / network error / 5xx fail over to the next provider (after
+    in-provider retries if the deadline allows); a 429 fails over
+    IMMEDIATELY (no same-provider retry) whenever another provider
+    remains in the chain, and a 429 whose headers show a zero request
+    rate limit skips that provider for the whole process (like 401/403);
+    401/403 skip the provider immediately for the whole process.
     Every provider failing raises ONE GenerationError listing outcomes.
     """
     s = settings or get_settings()
     label = label or "request"
-    started = time.perf_counter()
-    deadline = started + s.generation_time_budget_s
+    started = time.monotonic()
+    if deadline is None:
+        deadline = started + s.request_deadline_s
     attempts: list[AttemptOutcome] = []
 
-    for gen in chain:
+    for index, gen in enumerate(chain):
         provider = gen.name
+        has_next = index + 1 < len(chain)
         if provider in _AUTH_SKIPPED:
             attempts.append(AttemptOutcome(
                 provider, "auth_skipped", 0.0, "skipped (earlier 401/403)"
             ))
             continue
+        if provider in _RATE_LIMIT_SKIPPED:
+            attempts.append(AttemptOutcome(
+                provider, "rate_limit_skipped", 0.0,
+                "skipped (earlier 429 with zero request rate limit)",
+            ))
+            continue
         result = _run_provider_with_budget(
-            gen, system, prompt, label, deadline, s, attempts
+            gen, system, prompt, label, deadline, s, attempts,
+            has_next=has_next,
         )
         if result is not None:
             return GenerationResult(
@@ -484,7 +541,7 @@ def generate_with_meta(
                 model=gen.model or provider,
                 truncated=result[1],
                 attempts=attempts,
-                total_seconds=time.perf_counter() - started,
+                total_seconds=time.monotonic() - started,
             )
     raise GenerationError(_chain_fail_message(label, attempts))
 
@@ -497,11 +554,15 @@ def _run_provider_with_budget(
     deadline: float,
     settings: Settings,
     attempts: list[AttemptOutcome],
+    has_next: bool = False,
 ) -> tuple[str, bool] | None:
-    """Retry loop for one provider, bounded by the shared chain deadline.
+    """Retry loop for one provider, bounded by the shared request deadline.
 
     Returns (text, truncated) on success, None when the provider failed
-    (each outcome appended to ``attempts`` with seconds spent).
+    (each outcome appended to ``attempts`` with seconds spent). A 429
+    fails over immediately when ``has_next`` is True (another provider
+    remains in the chain); on the last provider the legacy in-provider
+    retry within the remaining deadline still applies.
     """
     provider = gen.name
     attempt = 0
@@ -535,6 +596,41 @@ def _run_provider_with_budget(
         except Exception as exc:  # noqa: BLE001 - classified + logged below
             seconds = time.monotonic() - t0
             outcome, retryable, auth_error = _classify_attempt_exception(exc)
+            if outcome == "http_429":
+                zero_header = _zero_request_limit_header(
+                    getattr(exc, "headers", None)
+                )
+                if zero_header is not None:
+                    detail = (
+                        f"{zero_header}: 0 - provider serves no requests; "
+                        f"skipping it for the rest of the process"
+                    )
+                    attempts.append(AttemptOutcome(
+                        provider, "http_429", seconds, detail
+                    ))
+                    logger.warning(
+                        "[failover] %s %s attempt %d FAILED (http_429, %.2fs)",
+                        provider, label, attempt, seconds,
+                    )
+                    if provider not in _RATE_LIMIT_SKIPPED:
+                        _RATE_LIMIT_SKIPPED.add(provider)
+                        logger.error(
+                            "[failover] %s RATE LIMIT 0 (%s): the provider "
+                            "cannot serve any request; skipping %s for every "
+                            "future request in this process.",
+                            provider, zero_header, provider,
+                        )
+                    return None
+                if has_next:
+                    attempts.append(AttemptOutcome(
+                        provider, outcome, seconds, f"{type(exc).__name__}: {exc}"[:160],
+                    ))
+                    logger.warning(
+                        "[failover] %s %s attempt %d FAILED (http_429, %.2fs) "
+                        "- failing over immediately, no same-provider retry",
+                        provider, label, attempt, seconds,
+                    )
+                    return None
             attempts.append(AttemptOutcome(
                 provider, outcome, seconds, f"{type(exc).__name__}: {exc}"[:160]
             ))

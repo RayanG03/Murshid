@@ -291,3 +291,105 @@ def test_universities_registry_driven(env) -> None:
 def test_health(env) -> None:
     client, _app, _tmp = env
     assert client.get("/health").json() == {"status": "ok"}
+
+
+# --------------------------------------------- request deadline (from /ask)
+
+
+class _SlowReranker(_FakeReranker):
+    """Reranker that burns wall-clock time before scoring (simulates the
+    real bge-reranker stage cost on CPU)."""
+
+    def __init__(self, probs: list[float], sleep_s: float) -> None:
+        super().__init__(probs)
+        self._sleep_s = sleep_s
+
+    def predict(self, pairs: Any, batch_size: int = 8,
+                show_progress_bar: bool = False) -> list[float]:
+        time.sleep(self._sleep_s)
+        return super().predict(pairs, batch_size, show_progress_bar)
+
+
+@pytest.fixture()
+def deadline_env(tmp_path, monkeypatch: pytest.MonkeyPatch):
+    """App + TestClient with a compressed request deadline via env vars.
+
+    REQUEST_DEADLINE_S / PER_ATTEMPT_TIMEOUT_S keep the same ratio as the
+    production values (17/8) but run in fractions of a second so tests stay
+    fast while proving the same arithmetic.
+    """
+    monkeypatch.setenv("REQUEST_DEADLINE_S", "0.5")
+    monkeypatch.setenv("PER_ATTEMPT_TIMEOUT_S", "0.4")
+    main_module.get_settings.cache_clear()
+    app = create_app(load_resources=False)
+    with TestClient(app) as client:
+        app.state.ask_logger = JsonlLogger(tmp_path, "ask")
+        app.state.feedback_logger = JsonlLogger(tmp_path, "feedback")
+        _configure(app.state)
+        yield client, app, tmp_path
+    main_module.get_settings.cache_clear()
+
+
+def _ksu_state(app: Any, reranker: _FakeReranker,
+               chain: list[BaseGenerator] | None = None) -> None:
+    _configure(
+        app.state,
+        retriever=_FakeRetriever(qa=[0.90], qa_type="ksu_qa",
+                                 doc_type="ksu_pdf"),
+        reranker=reranker,
+        chain=chain or [_FakeChainGenerator("fake"),
+                        _FakeChainGenerator("fake2")],
+    )
+
+
+def test_deadline_measured_from_request_start_with_slow_rerank(
+    deadline_env,
+) -> None:
+    """Rerank consumes the deadline budget: no generation attempt may start.
+
+    The deadline is anchored at /ask start (NOT at generation start): after
+    a 0.45s rerank inside a 0.5s request deadline, the remaining time is
+    below per_attempt_timeout_s, so BOTH providers must be skipped_budget
+    and the 502 must arrive immediately — total far below the frontend's
+    20s abort.
+    """
+    client, app, _tmp = deadline_env
+    _ksu_state(app, _SlowReranker([0.90], sleep_s=0.45))
+    t0 = time.perf_counter()
+    res = client.post("/ask",
+                      json={"question": "وش شروط الاعتذار؟",
+                            "university": "ksu"})
+    elapsed = time.perf_counter() - t0
+    assert res.status_code == 502
+    body = res.json()
+    assert "failover chain exhausted" in body["error"]
+    assert "skipped_budget" in body["error"]
+    assert "fake" in body["error"] and "fake2" in body["error"]
+    assert elapsed < 5.0  # 502 long before the frontend's 20s abort
+
+
+def test_exhausted_deadline_returns_502_immediately(deadline_env) -> None:
+    """Rerank itself overshoots the deadline: fail over fast, list outcomes."""
+    client, app, _tmp = deadline_env
+    _ksu_state(app, _SlowReranker([0.90], sleep_s=1.2))  # > 0.5s deadline
+    t0 = time.perf_counter()
+    res = client.post("/ask",
+                      json={"question": "وش شروط الاعتذار؟",
+                            "university": "ksu"})
+    elapsed = time.perf_counter() - t0
+    assert res.status_code == 502
+    body = res.json()
+    assert "fake[" in body["error"] and "fake2[" in body["error"]
+    # Returned right after the rerank finished — never near 20s.
+    assert elapsed < 5.0
+
+
+def test_generation_still_answers_when_rerank_leaves_room(deadline_env) -> None:
+    """Positive control: a light rerank leaves budget for generation."""
+    client, app, _tmp = deadline_env
+    _ksu_state(app, _SlowReranker([0.90], sleep_s=0.05))
+    res = client.post("/ask",
+                      json={"question": "وش شروط الاعتذار؟",
+                            "university": "ksu"})
+    assert res.status_code == 200
+    assert res.json()["answer"] == "إجابة وهمية من fake."

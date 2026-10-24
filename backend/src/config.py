@@ -86,11 +86,13 @@ class Settings(BaseSettings):
     # deliberately NOT part of the default chain.
     default_generation_providers: tuple[str, ...] = ("groq", "mistral", "gemini")
 
-    # Generation timing: ONE shared budget across the whole failover chain.
-    # The frontend gives up at 20s and retrieval + rerank already take up to
-    # ~3s, so generation must fit in 14s; no attempt may start unless it can
-    # finish within the remaining budget (per attempt timeout below).
-    generation_time_budget_s: float = 14.0
+    # Total-request deadline: anchored at the START of /ask handling
+    # (before retrieval/rerank), passed down into generate_with_meta as an
+    # absolute time.monotonic() timestamp. Retrieval + rerank consume the
+    # first share; generation gets the remaining time and no attempt may
+    # start unless it fits. The frontend aborts at 20s, so an exhausted
+    # deadline must surface as a fast 502 listing each provider's outcome.
+    request_deadline_s: float = 17.0
     per_attempt_timeout_s: float = 8.0
 
     # Embeddings (loaded once at startup in a later stage).

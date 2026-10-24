@@ -1,7 +1,8 @@
 """Failover chain (generate_with_meta) unit tests — fake HTTP only.
 
-Covers: 429-then-success, 500 failover, timeout failover, 401 skip,
-all providers failing, shared-deadline exhaustion, truncation flag.
+Covers: 429 immediate failover, 429 zero-limit process skip, 429 retry on
+the last provider, 500 failover, timeout failover, 401 skip, all providers
+failing, request-deadline exhaustion, truncation flag.
 """
 
 import logging
@@ -16,10 +17,14 @@ from src.generators import GenerationError, generate_with_meta
 
 
 class _FakeResponse:
-    def __init__(self, payload: dict[str, Any], status_code: int = 200) -> None:
+    def __init__(
+        self, payload: dict[str, Any], status_code: int = 200,
+        headers: dict[str, str] | None = None,
+    ) -> None:
         self._payload = payload
         self.status_code = status_code
         self.text = str(payload) if status_code != 200 else ""
+        self.headers = headers or {}
 
     def json(self) -> dict[str, Any]:
         return self._payload
@@ -43,7 +48,7 @@ def _chain_settings(**overrides: Any) -> Settings:
         mistral_base_url="https://api.mistral.invalid/v1",
         gemini_base_url="https://generativelanguage.invalid/v1beta",
         llm_retry_backoff_base_seconds=0.01,
-        generation_time_budget_s=30.0,
+        request_deadline_s=30.0,
         per_attempt_timeout_s=8.0,
     )
     base.update(overrides)
@@ -52,10 +57,12 @@ def _chain_settings(**overrides: Any) -> Settings:
 
 @pytest.fixture(autouse=True)
 def _clean_auth_skips():
-    """The process-global 401/403 skip set must not leak between tests."""
+    """The process-global skip sets must not leak between tests."""
     gens._AUTH_SKIPPED.clear()
+    gens._RATE_LIMIT_SKIPPED.clear()
     yield
     gens._AUTH_SKIPPED.clear()
+    gens._RATE_LIMIT_SKIPPED.clear()
 
 
 def _no_sleep(monkeypatch: pytest.MonkeyPatch) -> list[float]:
@@ -71,8 +78,8 @@ def _install_post(
     """Fake httpx.post.
 
     ``responder(provider, attempt_index_for_provider)`` returns either a
-    (status, payload) tuple or an Exception instance to raise. Calls are
-    recorded per provider.
+    (status, payload) tuple, a (status, payload, headers) tuple, or an
+    Exception instance to raise. Calls are recorded per provider.
     """
 
     def _fake_post(url: str, **kwargs: Any) -> _FakeResponse:
@@ -85,6 +92,9 @@ def _install_post(
         event = responder(provider, seen)
         if isinstance(event, Exception):
             raise event
+        if len(event) == 3:
+            status, payload, headers = event
+            return _FakeResponse(payload, status, headers)
         status, payload = event
         return _FakeResponse(payload, status)
 
@@ -116,9 +126,36 @@ def _outcomes(result) -> list[str]:
 # ------------------------------------------------------------- tests
 
 
-def test_429_then_success_retries_same_provider(
+def test_429_fails_over_immediately_when_next_provider_remains(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    settings = _chain_settings()
+    _no_sleep(monkeypatch)
+
+    def _responder(provider: str, seen: int) -> Any:
+        if provider == "groq":
+            return (429, {"error": "rate limited"})
+        return (200, _ok("الإجابة بعد الحد."))
+
+    calls = _install_post(monkeypatch, _responder)
+    result = generate_with_meta(
+        _chain(["groq", "mistral"], settings),
+        "sys", "prompt", label="t", settings=settings,
+    )
+    assert result.provider == "mistral"
+    assert result.model == "mistral-small-latest"
+    assert result.text == "الإجابة بعد الحد."
+    # No same-provider retry: one groq call, then straight to mistral.
+    assert _outcomes(result) == ["groq=http_429", "mistral=ok"]
+    groq_calls = [c for c in calls if "groq" in c["url"]]
+    assert len(groq_calls) == 1
+    assert result.truncated is False
+
+
+def test_429_on_last_provider_retries_same_provider(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Legacy retry stays for the LAST provider: there is nowhere to go."""
     settings = _chain_settings()
     _no_sleep(monkeypatch)
 
@@ -129,15 +166,75 @@ def test_429_then_success_retries_same_provider(
 
     _install_post(monkeypatch, _responder)
     result = generate_with_meta(
-        _chain(["groq", "mistral"], settings),
+        _chain(["groq"], settings),
         "sys", "prompt", label="t", settings=settings,
     )
     assert result.provider == "groq"
-    assert result.model == "openai/gpt-oss-120b"
-    assert result.text == "الإجابة بعد الحد."
     assert _outcomes(result) == ["groq=http_429", "groq=ok"]
-    assert result.total_seconds > 0
-    assert result.truncated is False
+
+
+def test_429_zero_limit_skips_provider_for_the_process(
+    monkeypatch: pytest.MonkeyPatch,
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    settings = _chain_settings()
+    _no_sleep(monkeypatch)
+
+    def _responder(provider: str, seen: int) -> Any:
+        if provider == "groq":
+            return (
+                429,
+                {"error": "rate limited"},
+                {"x-ratelimit-limit-req-minute": "0"},
+            )
+        return (200, _ok("من ميسترال بعد الصفر."))
+
+    calls = _install_post(monkeypatch, _responder)
+    chain = _chain(["groq", "mistral"], settings)
+    with caplog.at_level(logging.INFO, logger="capstone.generation"):
+        result = generate_with_meta(
+            chain, "sys", "prompt", label="t", settings=settings
+        )
+    assert result.provider == "mistral"
+    assert _outcomes(result) == ["groq=http_429", "mistral=ok"]
+    assert "groq" in gens._RATE_LIMIT_SKIPPED
+    assert "groq" not in gens._AUTH_SKIPPED
+    skips = [r for r in caplog.records if "RATE LIMIT 0" in r.getMessage()]
+    assert len(skips) == 1  # loud log fires exactly ONCE
+    groq_calls = [c for c in calls if "groq" in c["url"]]
+
+    # Second request in this process skips groq silently, no extra call.
+    result2 = generate_with_meta(
+        chain, "sys", "prompt", label="t2", settings=settings
+    )
+    assert result2.provider == "mistral"
+    assert _outcomes(result2) == ["groq=rate_limit_skipped", "mistral=ok"]
+    assert [c for c in calls if "groq" in c["url"]] == groq_calls
+
+
+def test_429_nonzero_limit_header_still_fails_over_not_skips(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A normal 429 (limit > 0) fails over but does NOT mark the provider."""
+    settings = _chain_settings()
+    _no_sleep(monkeypatch)
+
+    def _responder(provider: str, seen: int) -> Any:
+        if provider == "groq":
+            return (
+                429,
+                {"error": "rate limited"},
+                {"x-ratelimit-limit-req-minute": "30"},
+            )
+        return (200, _ok("من ميسترال."))
+
+    _install_post(monkeypatch, _responder)
+    result = generate_with_meta(
+        _chain(["groq", "mistral"], settings),
+        "sys", "prompt", label="t", settings=settings,
+    )
+    assert result.provider == "mistral"
+    assert gens._RATE_LIMIT_SKIPPED == set()
 
 
 def test_500_fails_over_to_next_provider(
@@ -243,7 +340,7 @@ def test_all_providers_fail_raises_one_clear_error(
 def test_shared_deadline_exhaustion_before_any_attempt(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    settings = _chain_settings(generation_time_budget_s=0.5,
+    settings = _chain_settings(request_deadline_s=0.5,
                                per_attempt_timeout_s=8.0)
 
     def _responder(provider: str, seen: int) -> Any:  # pragma: no cover
@@ -263,7 +360,7 @@ def test_shared_deadline_exhaustion_before_any_attempt(
 def test_attempt_never_started_without_enough_remaining_budget(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    settings = _chain_settings(generation_time_budget_s=2.0,
+    settings = _chain_settings(request_deadline_s=2.0,
                                per_attempt_timeout_s=8.0)
     _no_sleep(monkeypatch)
 

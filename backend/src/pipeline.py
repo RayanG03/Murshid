@@ -56,6 +56,7 @@ def answer_question(
     generator: BaseGenerator | list[BaseGenerator] | None,
     university: str = "kau",
     reranker: RerankerLike | None = None,
+    deadline: float | None = None,
 ) -> AnswerResult:
     """Answer a question from retrieval evidence; refuse when no context.
 
@@ -68,11 +69,13 @@ def answer_question(
     from one config entry point each so the three can never disagree for
     the same request. KAU keeps the floor/leader/gap quartet path
     unchanged; KSU instead reranks the top dense pool and refuses below
-    the threshold (reranker required).
+    the threshold (reranker required). ``deadline`` is the absolute
+    time.monotonic() request deadline anchored at /ask start; None
+    (offline callers) anchors it at generation start from config.
     """
     if university == "ksu":
         return _answer_question_ksu(
-            question, retriever, generator, reranker
+            question, retriever, generator, reranker, deadline=deadline
         )
     settings = get_settings()
     gates = get_university_gates(university)
@@ -106,7 +109,8 @@ def answer_question(
         )
 
     return _generate_answer(
-        question, context, generator, university, search_seconds
+        question, context, generator, university, search_seconds,
+        deadline=deadline,
     )
 
 
@@ -115,6 +119,7 @@ def _answer_question_ksu(
     retriever: Retriever,
     generator: BaseGenerator | None,
     reranker: RerankerLike | None,
+    deadline: float | None = None,
 ) -> AnswerResult:
     """KSU branch: rerank gate on the merged dense pool, then Q&A-first context.
 
@@ -172,6 +177,7 @@ def _answer_question_ksu(
     return _generate_answer(
         question, context, generator, "ksu",
         search_seconds, gate.rerank_seconds,
+        deadline=deadline,
     )
 
 
@@ -182,6 +188,7 @@ def _generate_answer(
     university: str,
     search_seconds: float = 0.0,
     rerank_seconds: float = 0.0,
+    deadline: float | None = None,
 ) -> AnswerResult:
     """Shared generation tail: labeled context -> failover chain -> result.
 
@@ -204,6 +211,7 @@ def _generate_answer(
         build_system_prompt(university),
         user_prompt,
         label=f"answer[{question[:30]}]",
+        deadline=deadline,
     )
     generation_seconds = time.perf_counter() - t0
     return AnswerResult(

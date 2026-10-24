@@ -3,7 +3,11 @@
 API contract (confirmed against frontend/src/app/app.ts, which hardcodes
 http://localhost:8000):
 - POST /ask {question, university} -> {"answer": <arabic text>}; refusals
-  return the deterministic CANNOT_CONFIRM string with status 200.
+  return the deterministic CANNOT_CONFIRM string with status 200. The
+  request deadline (settings.request_deadline_s) is anchored at the start
+  of this handler, BEFORE retrieval/rerank, so an exhausted deadline
+  surfaces as a fast 502 listing every provider's outcome — always before
+  the frontend's 20s abort (which masks failures as a demo answer).
 - POST /feedback {university, answer, feedback} -> 200 OK with an empty
   body; ``answer`` is the FULL answer text, ``feedback`` is "up"|"down"|null
   (null = the user removed their vote).
@@ -113,6 +117,11 @@ def _register_routes(app: FastAPI) -> None:
     def ask(payload: dict[str, Any], request: Request) -> Any:
         """Answer a question from RAG evidence (sync: runs in the threadpool)."""
         started = time.perf_counter()
+        # Request deadline anchored HERE — before validation, retrieval and
+        # rerank — so generation receives only the remaining time and can
+        # never push the total past settings.request_deadline_s (17s < the
+        # frontend's 20s abort). monotonic() is immune to system clock jumps.
+        deadline = time.monotonic() + get_settings().request_deadline_s
         state = request.app.state
 
         question = payload.get("question")
@@ -144,6 +153,7 @@ def _register_routes(app: FastAPI) -> None:
                 state.generation_chain,
                 university=university,
                 reranker=state.reranker if university == "ksu" else None,
+                deadline=deadline,
             )
         except GenerationError as exc:
             return _error_response(
