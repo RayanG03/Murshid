@@ -3,8 +3,6 @@ backend/.venv/
 backend/.env
 backend/uv.toml
 backend/*.env.local
-backend/data/
-backend/chroma_db/
 backend/__pycache__/
 backend/**/__pycache__/
 *.pyc
@@ -14,7 +12,6 @@ backend/**/__pycache__/
 .cache/
 huggingface/
 *.safetensors
-*.bin
 *.log
 
 # Frontend — compiled output
@@ -61,3 +58,12 @@ frontend/.vscode/*
 Thumbs.db
 .idea/
 .vscode/
+
+.env
+.venv/
+__pycache__/
+*.pyc
+frontend/node_modules/
+backend/data/logs/
+backend/data/extracted/
+backend/data/*_snapshot.json
