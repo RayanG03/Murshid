@@ -38,6 +38,7 @@ flowchart LR
     GEN --> ANS["Sourced answer + JSONL log"]
     REF --> ANS
     ANS --> UI
+```
 
 
 The backend pipeline (`backend/src/pipeline.py`) rewrites the follow-up into a standalone search
