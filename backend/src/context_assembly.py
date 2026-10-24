@@ -58,9 +58,12 @@ def _ksu_doc_source(md: dict) -> str:
     if md.get("type") == "pdf":
         doc = md.get("doc", "وثيقة رسمية")
         unit = md.get("unit", "")
-        # metadata.page is the PDF page; the printed page is 6 pages behind.
-        printed = int(md.get("page", 6)) - 6
-        return f"{doc} — {unit} (صفحة {printed})"
+        label = f"{doc} — {unit}" if unit else doc
+        # metadata.page is the PDF page; page_offset front-matter pages
+        # (cover + TOC) carry no printed number. The default of 6 keeps
+        # chunks stored before this field existed citing exactly as before.
+        printed = int(md.get("page", 6)) - int(md.get("page_offset", 6))
+        return f"{label} (صفحة {printed})"
     type_ = md.get("type")
     if type_ == "txt":
         src = str(md.get("main_section", ""))

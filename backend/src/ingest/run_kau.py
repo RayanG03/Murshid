@@ -38,7 +38,8 @@ def main() -> None:
     for name, added in counts.items():
         live = client.get_collection(name).count()
         print(f"{name}: ingested={added} stored={live}")
-    print("KSU collections: NOT BUILT (KSU sources not yet extracted — known gap).")
+    print("Tip: KSU collections are built separately: "
+          "uv run python -X utf8 -m src.ingest.run_ksu")
 
 
 if __name__ == "__main__":
