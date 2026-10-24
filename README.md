@@ -24,8 +24,8 @@ cites them — or explicitly refuses when the corpus cannot back an answer.
 - **Full observability** — every question/answer and 👍/👎 feedback event is appended to JSONL logs
   with per-stage timings (rewrite / search / rerank / generation / total).
 
-
 ## How it works
+
 ```mermaid
 flowchart LR
     U["Student"] -->|"Arabic question"| UI["Angular UI :4200"]
@@ -40,6 +40,8 @@ flowchart LR
     ANS --> UI
 ```
 
+Gates are calibrated per university: KSU uses a bge-reranker score ≥ 0.40, KAU uses cosine
+floors of 0.83 (QA pairs) / 0.79 (documents).
 
 The backend pipeline (`backend/src/pipeline.py`) rewrites the follow-up into a standalone search
 query (capped at 4 s, falls back to the raw question), retrieves from per-university ChromaDB
@@ -162,20 +164,83 @@ with timings, provider/model used, and refusal flags — handy for the demo and 
 
 ## Corpus and re-ingestion
 
-Official documents live in `backend/sources/` (in the repository):
+The official documents are **part of the repository** — they are committed under
+`backend/sources/`, so a fresh clone carries the whole corpus. Only derived artifacts stay out
+of git: `backend/chroma_db/` (the built index) and `backend/data/` (QA CSV datasets +
+interaction logs). Every teammate rebuilds the index locally instead.
 
 ```
 backend/sources/
-├── KAU/            # admission & regulations PDFs (Arabic) + captured web pages (markdown)
-│   └── web/        # facilities, financial services, housing, student affairs, …
-├── KSU/            # university documents (txt + PDFs: regulations, allowances)
-└── Final-Dataset_KAU_Audit.xlsx
+├── KAU/
+│   ├── دليل القبول لبرامج البكالوريوس والدبلوم.pdf        # bachelor's & diploma admission guide
+│   ├── دليل القبول للتحويل الخارجي إلى الجامعة.pdf        # external-transfer admission guide
+│   ├── دليل التحويل الداخلي.pdf                           # internal transfer guide
+│   ├── لائحة الدراسة والاختبارات.pdf                      # study & examinations regulations
+│   ├── لائحة الطالب الجامعي الحقوق والواجبات.pdf          # student rights & duties regulations
+│   ├── لائحة ضبط سلوك الطلاب والطالبات.pdf                # student conduct regulations
+│   ├── تقويم 26-27.pdf                                    # academic calendar 2026–27
+│   └── web/                                               # 7 captured pages (markdown): facilities,
+│                                                          #   financial & health services, myKAU app,
+│                                                          #   student affairs, housing, visitor/transfer
+├── KSU/
+│   ├── university documents(pdf).pdf                      # main KSU regulations (PDF)
+│   ├── university documents.txt                           # KSU documents (plain text)
+│   ├── اللائحة التنظيمية للشؤون الدراسية.pdf              # student affairs regulations
+│   ├── اللائحة التنظيمية للشؤون الدراسية24.pdf            # student affairs regulations (2nd copy)
+│   └── لائحة المكافآت.pdf                                 # allowances regulations
+└── Final-Dataset_KAU_Audit.xlsx                           # KAU QA-pair audit workbook
 ```
 
-Each source type becomes its own ChromaDB collection (`kau_qa`, `kau_web`, `kau_pdf`,
-`ksu_qa`, `ksu_txt`, `ksu_pdf`) under `backend/chroma_db/` (gitignored). After adding or updating
-a source document, re-run the matching ingest command (see Quick start step 3) — no code changes
-needed. Ingestion reports chunk counts and a p95 token-length check per collection.
+**New documents only reach your teammates once committed.** After adding or updating a file:
+
+```powershell
+git status backend/sources        # new files show up as untracked
+git add backend/sources/
+git commit -m "corpus: add <document>"
+git push
+```
+
+Nothing in `.gitignore` matches `backend/sources/`, so a plain `git add` is all it takes; the
+QA CSVs are the only corpus-adjacent files that must never be committed (see the note in
+Quick start).
+
+### Collection map
+
+Each source type becomes its own ChromaDB collection under `backend/chroma_db/`:
+
+| Collection | Built from | Ingest command (from `backend/`) |
+|---|---|---|
+| `kau_qa` | `kau_qa.csv` (team drive → `backend/data/`) | `uv run python -X utf8 -m src.ingest.run_kau --only qa` |
+| `kau_web` | `backend/sources/KAU/web/*.md` | `uv run python -X utf8 -m src.ingest.run_kau --only web` |
+| `kau_pdf` | `backend/sources/KAU/*.pdf` | `uv run python -X utf8 -m src.ingest.run_kau --only pdf` |
+| `ksu_qa` | `ksu_qa.csv` (team drive → `backend/data/`) | `uv run python -X utf8 -m src.ingest.run_ksu --only qa` |
+| `ksu_txt` | `backend/sources/KSU/*.txt` | `uv run python -X utf8 -m src.ingest.run_ksu --only txt` |
+| `ksu_pdf` | `backend/sources/KSU/*.pdf` | `uv run python -X utf8 -m src.ingest.run_ksu --only pdf` |
+
+Running a university's ingest **without** `--only` rebuilds all three of its collections
+(first run downloads ~2 GB of model weights — see Quick start). Every run prints per-collection
+chunk counts and a p95 token-length check; a collection that reports 0 chunks means the source
+files weren't found (check the path and extension).
+
+### Adding new information
+
+No code changes are needed — the ingestors pick up whatever sits in `backend/sources/`:
+
+1. **Drop the document in the right place.** KAU web page → `backend/sources/KAU/web/`,
+   KAU PDF → `backend/sources/KAU/`, KSU text or PDF → `backend/sources/KSU/`. Updated
+   question/answer rows go into the CSVs in `backend/data/` (kept out of git; share via the
+   team drive).
+2. **Re-run only the affected ingest**, e.g. after editing one KAU page:
+
+   ```powershell
+   uv run python -X utf8 -m src.ingest.run_kau --only web
+   ```
+3. **Check the ingest report** — chunk counts should move in line with what you added or
+   removed, and the p95 token-length check flags chunks that ran long.
+4. **Restart the backend** (`python main.py`) so the running API loads the rebuilt index cleanly.
+5. **Spot-check the answer** — ask something only the new document can answer; it must come back
+   cited. If Murshid refuses, run `src.retrieval_eval` / `src.ksu_gate_eval` (see Tests and dev
+   tools) before assuming the corpus is at fault.
 
 ## Project structure
 
@@ -204,7 +269,8 @@ code-Agent/
 
 - **The corpus is static.** If the official document doesn't cover a topic (e.g. KSU
   graduate/diploma admission requirements or semester registration dates), Murshid correctly
-  **refuses** rather than guessing. Adding the source document and re-ingesting closes the gap.
+  **refuses** rather than guessing. Adding the source document and re-ingesting closes the gap
+  (see [Corpus and re-ingestion](#corpus-and-re-ingestion)).
 - **UI request timeout.** If the backend takes longer than ~20 s (e.g. cold model load), the UI
   aborts the request and shows a canned demo message — check the `[backend]` logs or retry.
 - **CPU inference.** Embedding/reranking run on CPU; a cold start takes tens of seconds and the
