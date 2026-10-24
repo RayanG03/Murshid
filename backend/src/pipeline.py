@@ -19,6 +19,7 @@ from src.generators import (
 )
 from src.ksu_gate import KSU_QA_SOURCE, RerankerLike, rerank_and_gate
 from src.prompts import build_system_prompt, build_user_prompt
+from src.query_rewrite import Turn, rewrite_question
 from src.retrieval import Retrieved, Retriever
 
 logger = logging.getLogger("capstone.pipeline")
@@ -44,7 +45,9 @@ class AnswerResult:
     model: str = ""
     truncated: bool = False
     # Stage timings (seconds) for API logging; 0.0 when the stage did not
-    # run (refusals skip generation, KAU has no rerank stage).
+    # run (refusals skip generation, KAU has no rerank stage, questions
+    # without history skip the rewrite).
+    rewrite_seconds: float = 0.0
     search_seconds: float = 0.0
     rerank_seconds: float = 0.0
     generation_seconds: float = 0.0
@@ -57,6 +60,7 @@ def answer_question(
     university: str = "kau",
     reranker: RerankerLike | None = None,
     deadline: float | None = None,
+    history: list[Turn] | None = None,
 ) -> AnswerResult:
     """Answer a question from retrieval evidence; refuse when no context.
 
@@ -72,16 +76,25 @@ def answer_question(
     the threshold (reranker required). ``deadline`` is the absolute
     time.monotonic() request deadline anchored at /ask start; None
     (offline callers) anchors it at generation start from config.
+    ``history`` is the recent (question, answer) turns sent by the
+    frontend; when present, the follow-up is first rewritten into a
+    standalone search query (src/query_rewrite.py) and RETRIEVAL + RERANK
+    run against that query while the answer prompt keeps the user's
+    original wording. Rewrite failure degrades to the raw question.
     """
+    settings = get_settings()
+    search_query, rewrite_seconds = _maybe_rewrite(
+        question, generator, history, deadline, settings
+    )
     if university == "ksu":
         return _answer_question_ksu(
-            question, retriever, generator, reranker, deadline=deadline
+            question, retriever, generator, reranker, deadline=deadline,
+            search_query=search_query, rewrite_seconds=rewrite_seconds,
         )
-    settings = get_settings()
     gates = get_university_gates(university)
     t0 = time.perf_counter()
     qa_results, doc_results = retriever.retrieve_split(
-        question, university=university
+        search_query, university=university
     )
     search_seconds = time.perf_counter() - t0
     context = assemble_context(
@@ -105,12 +118,37 @@ def answer_question(
         return AnswerResult(
             question=question, answer=CANNOT_CONFIRM, context_text="",
             qa_items=[], doc_items=[], refused=True,
+            rewrite_seconds=rewrite_seconds,
             search_seconds=search_seconds,
         )
 
     return _generate_answer(
         question, context, generator, university, search_seconds,
-        deadline=deadline,
+        deadline=deadline, rewrite_seconds=rewrite_seconds,
+    )
+
+
+def _maybe_rewrite(
+    question: str,
+    generator: BaseGenerator | list[BaseGenerator] | None,
+    history: list[Turn] | None,
+    deadline: float | None,
+    settings: object,
+) -> tuple[str, float]:
+    """Rewrite conversational follow-ups; pass plain questions through.
+
+    Normalizes the generator to a chain exactly like _generate_answer does
+    so the rewrite walks the SAME failover chain as the answer. Returns
+    (search_query, rewrite_seconds); seconds are 0.0 when no rewrite ran.
+    """
+    if not history:
+        return question, 0.0
+    chain = [generator] if isinstance(generator, BaseGenerator) else (
+        list(generator) if generator is not None else get_generation_chain()
+    )
+    return rewrite_question(
+        chain, history, question, deadline=deadline,
+        settings=settings,  # type: ignore[arg-type]
     )
 
 
@@ -120,6 +158,8 @@ def _answer_question_ksu(
     generator: BaseGenerator | None,
     reranker: RerankerLike | None,
     deadline: float | None = None,
+    search_query: str | None = None,
+    rewrite_seconds: float = 0.0,
 ) -> AnswerResult:
     """KSU branch: rerank gate on the merged dense pool, then Q&A-first context.
 
@@ -137,11 +177,12 @@ def _answer_question_ksu(
     gates = get_university_gates("ksu")
     t0 = time.perf_counter()
     qa_results, doc_results = retriever.retrieve_split(
-        question, university="ksu"
+        search_query if search_query is not None else question,
+        university="ksu",
     )
     search_seconds = time.perf_counter() - t0
     gate = rerank_and_gate(
-        question,
+        search_query if search_query is not None else question,
         qa_results,
         doc_results,
         reranker,
@@ -159,6 +200,7 @@ def _answer_question_ksu(
         return AnswerResult(
             question=question, answer=CANNOT_CONFIRM, context_text="",
             qa_items=[], doc_items=[], refused=True,
+            rewrite_seconds=rewrite_seconds,
             search_seconds=search_seconds,
             rerank_seconds=gate.rerank_seconds,
         )
@@ -177,7 +219,7 @@ def _answer_question_ksu(
     return _generate_answer(
         question, context, generator, "ksu",
         search_seconds, gate.rerank_seconds,
-        deadline=deadline,
+        deadline=deadline, rewrite_seconds=rewrite_seconds,
     )
 
 
@@ -189,6 +231,7 @@ def _generate_answer(
     search_seconds: float = 0.0,
     rerank_seconds: float = 0.0,
     deadline: float | None = None,
+    rewrite_seconds: float = 0.0,
 ) -> AnswerResult:
     """Shared generation tail: labeled context -> failover chain -> result.
 
@@ -219,6 +262,7 @@ def _generate_answer(
         qa_items=context.qa_items, doc_items=context.doc_items, refused=False,
         provider=result.provider, model=result.model,
         truncated=result.truncated,
+        rewrite_seconds=rewrite_seconds,
         search_seconds=search_seconds, rerank_seconds=rerank_seconds,
         generation_seconds=generation_seconds,
     )

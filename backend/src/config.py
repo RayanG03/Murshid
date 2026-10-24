@@ -95,6 +95,21 @@ class Settings(BaseSettings):
     request_deadline_s: float = 17.0
     per_attempt_timeout_s: float = 8.0
 
+    # Conversational follow-ups ("summarize that in points", "are there
+    # dates?", ...): the frontend sends the last turns and the pipeline
+    # rewrites the follow-up into a standalone search query BEFORE
+    # retrieval (src/query_rewrite.py). The rewrite shares the request
+    # deadline but is additionally capped by query_rewrite_max_seconds so
+    # it can never eat the answer's budget; on any failure it falls back
+    # to the raw question and the request proceeds unchanged.
+    query_rewrite_enabled: bool = True
+    query_rewrite_max_history_turns: int = 2
+    query_rewrite_max_seconds: float = 4.0
+    query_rewrite_max_query_chars: int = 300
+    # Per-turn clipping for the history sent by the frontend (bounds the
+    # rewrite prompt size regardless of answer length).
+    query_rewrite_max_turn_chars: int = 1200
+
     # Embeddings (loaded once at startup in a later stage).
     embedding_model_name: str = "intfloat/multilingual-e5-large"
 

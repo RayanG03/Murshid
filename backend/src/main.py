@@ -2,12 +2,16 @@
 
 API contract (confirmed against frontend/src/app/app.ts, which hardcodes
 http://localhost:8000):
-- POST /ask {question, university} -> {"answer": <arabic text>}; refusals
+- POST /ask {question, university, history?} -> {"answer": <arabic text>}; refusals
   return the deterministic CANNOT_CONFIRM string with status 200. The
   request deadline (settings.request_deadline_s) is anchored at the start
   of this handler, BEFORE retrieval/rerank, so an exhausted deadline
   surfaces as a fast 502 listing every provider's outcome — always before
   the frontend's 20s abort (which masks failures as a demo answer).
+  ``history`` (optional) is the recent turns [{question, answer}, ...]
+  the frontend includes for conversational follow-ups: the pipeline
+  rewrites the follow-up into a standalone search query before retrieval
+  (src/query_rewrite.py); malformed history is ignored, never a 400.
 - POST /feedback {university, answer, feedback} -> 200 OK with an empty
   body; ``answer`` is the FULL answer text, ``feedback`` is "up"|"down"|null
   (null = the user removed their vote).
@@ -42,6 +46,7 @@ from src.config import (
 )
 from src.generators import GenerationError, get_generation_chain
 from src.pipeline import answer_question
+from src.query_rewrite import normalize_history
 
 logger = logging.getLogger("capstone.api")
 
@@ -145,6 +150,15 @@ def _register_routes(app: FastAPI) -> None:
             return _error_response(
                 503, f"university {university!r} is not available yet"
             )
+        # Conversational follow-ups: validate + clip the history the
+        # frontend sent (malformed shapes silently degrade to no history;
+        # the request must never 400 because of it).
+        settings = get_settings()
+        turns = normalize_history(
+            payload.get("history"),
+            max_turns=settings.query_rewrite_max_history_turns,
+            max_chars=settings.query_rewrite_max_turn_chars,
+        )
 
         try:
             result = answer_question(
@@ -154,6 +168,7 @@ def _register_routes(app: FastAPI) -> None:
                 university=university,
                 reranker=state.reranker if university == "ksu" else None,
                 deadline=deadline,
+                history=turns,
             )
         except GenerationError as exc:
             return _error_response(
@@ -166,6 +181,7 @@ def _register_routes(app: FastAPI) -> None:
             )
 
         seconds = {
+            "rewrite": round(result.rewrite_seconds, 3),
             "search": round(result.search_seconds, 3),
             "rerank": round(result.rerank_seconds, 3),
             "generation": round(result.generation_seconds, 3),

@@ -537,7 +537,11 @@ export class App {
       const res = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question, university: this.selected().id }),
+        body: JSON.stringify({
+          question,
+          university: this.selected().id,
+          history: this.recentTurns(),
+        }),
         signal: controller.signal,
       });
       clearTimeout(timer);
@@ -550,6 +554,22 @@ export class App {
       await this.wait(900);
       return this.demoAnswer(question);
     }
+  }
+
+  // Last up-to-2 (question, answer) pairs from the current conversation,
+  // sent so the backend can rewrite conversational follow-ups into
+  // standalone search queries. Error bubbles never enter the history.
+  private recentTurns(): { question: string; answer: string }[] {
+    const turns: { question: string; answer: string }[] = [];
+    const m = this.messages();
+    for (let i = m.length - 2; i >= 0 && turns.length < 2; i--) {
+      if (m[i].role !== 'user') continue;
+      const bot = m[i + 1];
+      if (bot && bot.role === 'bot' && !bot.isError) {
+        turns.unshift({ question: m[i].text, answer: bot.text });
+      }
+    }
+    return turns;
   }
 
   private demoAnswer(question: string): string {
