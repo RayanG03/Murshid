@@ -26,21 +26,19 @@ cites them — or explicitly refuses when the corpus cannot back an answer.
 
 
 ## How it works
-
 ```mermaid
 flowchart LR
-    U[Student] -->|Arabic question| UI[Angular UI :4200]
-    UI -->|POST /ask| API[FastAPI :8000]
-    API --> RW["History-aware rewrite (last 2 turns)"]
-    RW --> RET["Retrieval — ChromaDB + multilingual-e5-large"]
+    U["Student"] -->|"Arabic question"| UI["Angular UI :4200"]
+    UI -->|"POST /ask"| API["FastAPI :8000"]
+    API --> RW["History-aware rewrite<br/>(last 2 turns)"]
+    RW --> RET["Retrieval: ChromaDB + e5-large"]
     RET --> GATE{"Relevance gate"}
-    GATE -->|KSU: bge-reranker ≥ 0.40<br/>KAU: cosine ≥ 0.83 / 0.79| GEN
-    GATE -->|weak evidence| REF["Refusal (deterministic)"]
-    GEN["Generation — Groq → Mistral → Gemini failover, ≤ 17 s deadline"]
+    GATE -->|"weak evidence"| REF["Deterministic refusal"]
+    GATE -->|"strong evidence"| GEN["Generation failover:<br/>Groq, Mistral, Gemini<br/>17 s deadline"]
     GEN --> ANS["Sourced answer + JSONL log"]
     REF --> ANS
     ANS --> UI
-```
+
 
 The backend pipeline (`backend/src/pipeline.py`) rewrites the follow-up into a standalone search
 query (capped at 4 s, falls back to the raw question), retrieves from per-university ChromaDB
