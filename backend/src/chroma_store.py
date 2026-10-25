@@ -42,6 +42,41 @@ def get_existing_collection(
         return None
 
 
+class EmptyIngestError(SystemExit):
+    """Raised when an ingest produced 0 chunks (the collection is NOT wiped)."""
+
+
+def ensure_chunks(name: str, count: int, hint: str = "") -> None:
+    """Refuse to rebuild a collection from zero chunks.
+
+    Historically an ingest that found no source files deleted the existing
+    collection, recreated it empty and still reported success. Failing
+    loudly here keeps the previous index intact and tells the user what
+    is missing.
+    """
+    if count > 0:
+        return
+    message = (
+        f"[ingest] {name}: 0 chunks were built - the existing collection was "
+        f"left untouched. Check that the source files exist."
+    )
+    if hint:
+        message += f"\n  hint: {hint}"
+    logger.error(message)
+    raise EmptyIngestError(message)
+
+
+def collection_counts(
+    client: chromadb.api.ClientAPI, names: Sequence[str]
+) -> dict[str, int]:
+    """Record count per collection name (0 when missing); never creates."""
+    counts: dict[str, int] = {}
+    for name in names:
+        collection = get_existing_collection(client, name)
+        counts[name] = collection.count() if collection is not None else 0
+    return counts
+
+
 def rebuild_collection(
     client: chromadb.api.ClientAPI, name: str
 ) -> chromadb.api.Collection:

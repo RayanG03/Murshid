@@ -360,7 +360,9 @@ def test_shared_deadline_exhaustion_before_any_attempt(
 def test_attempt_never_started_without_enough_remaining_budget(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    settings = _chain_settings(request_deadline_s=2.0,
+    # 1.0s < min_attempt_seconds (1.5s since 2026-10-25): no attempt may
+    # start. (With >= 1.5s left an attempt now starts, timeout clipped.)
+    settings = _chain_settings(request_deadline_s=1.0,
                                per_attempt_timeout_s=8.0)
     _no_sleep(monkeypatch)
 
@@ -415,3 +417,27 @@ def test_default_chain_order_configured_groq_first() -> None:
     assert [g.name for g in chain] == ["groq", "mistral", "gemini"]
     # DeepInfra models stay out of the default chain:
     assert "deepseek" not in settings.default_generation_providers
+
+
+def test_attempt_starts_with_short_budget_and_clipped_timeout(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """5s left < per_attempt 8s: the attempt still starts (min 3s), with
+    its timeout clipped to the remaining budget (2026-10-25 change)."""
+    settings = _chain_settings(request_deadline_s=5.0,
+                               per_attempt_timeout_s=8.0)
+    seen_timeouts: list[float] = []
+    real_invoke = gens.GroqGenerator._invoke_once
+
+    def _spy(self, system, prompt, timeout_seconds):
+        seen_timeouts.append(timeout_seconds)
+        return real_invoke(self, system, prompt, timeout_seconds)
+
+    monkeypatch.setattr(gens.GroqGenerator, "_invoke_once", _spy)
+    _install_post(monkeypatch, lambda provider, seen: (200, _ok("جواب.")))
+    result = generate_with_meta(
+        _chain(["groq"], settings), "sys", "prompt", label="t",
+        settings=settings,
+    )
+    assert result.provider == "groq"
+    assert seen_timeouts and seen_timeouts[0] <= 5.0

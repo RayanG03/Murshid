@@ -235,11 +235,13 @@ def test_render_context_swaps_block_title_per_university() -> None:
 
 def test_get_university_gates_kau_exact() -> None:
     gates = get_university_gates("kau")
+    # Values from the 2026-10-25 recalibration on the full transcribed
+    # corpus (src/config.py); this test still pinned the old quartet.
     assert gates == {
         "floor_qa": 0.83,
-        "floor_docs": 0.79,
-        "strong_leader": 0.869,
-        "gap": 0.04,
+        "floor_docs": 0.80,
+        "strong_leader": 0.832,
+        "gap": 0.012,
     }
 
 

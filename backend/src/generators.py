@@ -169,6 +169,33 @@ class _HttpStatusError(Exception):
 _RETRYABLE = (httpx.HTTPError, TimeoutError)
 
 
+def _track_ok(provider: str, model: str, resp: Any, usage: Any) -> None:
+    """Feed the /status page; never raises (tracking must not fail /ask)."""
+    try:
+        from src.usage_tracker import get_tracker
+
+        u = usage if isinstance(usage, dict) else {}
+        get_tracker().record_response(
+            provider, model, getattr(resp, "headers", None),
+            prompt_tokens=u.get("prompt_tokens", 0) or 0,
+            completion_tokens=u.get("completion_tokens", 0) or 0,
+        )
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def _track_error(provider: str, resp: Any) -> None:
+    try:
+        from src.usage_tracker import get_tracker
+
+        get_tracker().record_error(
+            provider, getattr(resp, "status_code", 0),
+            str(getattr(resp, "text", ""))[:200], getattr(resp, "headers", None),
+        )
+    except Exception:  # noqa: BLE001
+        pass
+
+
 def _retryable_status(exc: Exception) -> bool:
     return getattr(exc, "status", 200) in (429, 503)
 
@@ -263,10 +290,13 @@ class DeepInfraGenerator(BaseGenerator):
             timeout=timeout_seconds,
         )
         if resp.status_code != 200:
+            _track_error(self.name, resp)
             raise _HttpStatusError(
                 resp.status_code, resp.text, dict(resp.headers)
             )
-        choice = resp.json()["choices"][0]
+        body = resp.json()
+        _track_ok(self.name, self.model, resp, body.get("usage"))
+        choice = body["choices"][0]
         finish_reason = str(choice.get("finish_reason", ""))
         truncated = finish_reason == "length"
         return choice["message"]["content"], truncated
@@ -325,10 +355,13 @@ class OpenAICompatGenerator(BaseGenerator):
             timeout=timeout_seconds,
         )
         if resp.status_code != 200:
+            _track_error(self.name, resp)
             raise _HttpStatusError(
                 resp.status_code, resp.text, dict(resp.headers)
             )
-        choice = resp.json()["choices"][0]
+        body = resp.json()
+        _track_ok(self.name, self.model, resp, body.get("usage"))
+        choice = body["choices"][0]
         finish_reason = str(choice.get("finish_reason", ""))
         truncated = finish_reason == "length"
         if truncated:
@@ -427,10 +460,16 @@ class GeminiGenerator(BaseGenerator):
             timeout=timeout_seconds,
         )
         if resp.status_code != 200:
+            _track_error(self.name, resp)
             raise _HttpStatusError(
                 resp.status_code, resp.text, dict(resp.headers)
             )
         data = resp.json()
+        meta = data.get("usageMetadata") or {}
+        _track_ok(self.name, self.model, resp, {
+            "prompt_tokens": meta.get("promptTokenCount", 0),
+            "completion_tokens": meta.get("candidatesTokenCount", 0),
+        })
         finish_reason = data["candidates"][0].get("finishReason", "")
         truncated = finish_reason == "MAX_TOKENS"
         if truncated:
@@ -568,23 +607,30 @@ def _run_provider_with_budget(
     attempt = 0
     attempts_cap = gen._max_attempts
     started_any = False
+    min_start = min(
+        settings.per_attempt_timeout_s,
+        getattr(settings, "min_attempt_seconds", settings.per_attempt_timeout_s),
+    )
     while True:
         remaining = deadline - time.monotonic()
-        # Never start an attempt that cannot finish within the budget.
-        if remaining < settings.per_attempt_timeout_s:
+        # Never start an attempt that cannot finish within the budget:
+        # it needs at least min_start seconds, and its timeout is clipped
+        # to the remaining time so it always ends before the deadline.
+        if remaining < min_start:
             if not started_any:
                 attempts.append(AttemptOutcome(
                     provider, "skipped_budget", 0.0,
                     f"remaining {remaining:.1f}s < "
-                    f"per_attempt {settings.per_attempt_timeout_s:.1f}s",
+                    f"min_attempt {min_start:.1f}s",
                 ))
             return None
+        attempt_timeout = min(settings.per_attempt_timeout_s, remaining)
         attempt += 1
         started_any = True
         t0 = time.monotonic()
         try:
             text, truncated = gen._invoke_once(
-                system, prompt, settings.per_attempt_timeout_s
+                system, prompt, attempt_timeout
             )
             seconds = time.monotonic() - t0
             attempts.append(AttemptOutcome(provider, "ok", seconds))

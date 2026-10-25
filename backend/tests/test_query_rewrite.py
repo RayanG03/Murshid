@@ -104,9 +104,12 @@ def test_history_rewrites_the_search_query() -> None:
     assert "هل هناك مواعيد محددة؟" in gen.calls[0]
     # The previous turn's content reached the rewrite prompt.
     assert "الشروط تشمل الجنسية." in gen.calls[0]
-    # The answer prompt keeps the user's original wording (not the rewrite).
+    # The answer prompt keeps the user's original wording AND (since the
+    # 2026-10-25 change, settings.pass_standalone_question) shows the
+    # standalone rewrite so the model knows what the follow-up refers to.
     assert REWRITE_MARKER not in gen.calls[1]
     assert "هل هناك مواعيد محددة؟" in gen.calls[1]
+    assert REWRITTEN in gen.calls[1]
     assert result.rewrite_seconds > 0
 
 
@@ -138,7 +141,8 @@ def test_rewrite_failure_falls_back_to_raw_question() -> None:
     )
     assert result.refused is False
     assert result.answer == "جواب بعد فشل إعادة الصياغة."
-    assert retriever.queries == ["لخّص الإجابة بنقاط"]
+    # Dependent follow-up: anchored to the previous question (2026-10-25)
+    assert retriever.queries == ["سؤال سابق لخّص الإجابة بنقاط"]
     assert result.rewrite_seconds > 0
     # rewrite attempt (1 call, failed) + answer call = 2 prompt records.
     assert len(gen.calls) == 2
@@ -159,7 +163,7 @@ def test_exhausted_deadline_skips_rewrite_and_answer_raises() -> None:
     assert gen.calls == []
     # The rewrite failed first and fell back; the answer then raised.
     assert retriever.queries == [] or retriever.queries == [
-        "هل هناك مواعيد محددة؟"
+        "سؤال سابق هل هناك مواعيد محددة؟"
     ]
 
 

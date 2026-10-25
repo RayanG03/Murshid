@@ -22,6 +22,12 @@ def ingest_ksu_qa(client, embedder: E5Embedder) -> int:
     """
     settings = get_settings()
     csv_path = settings.data_dir / "ksu_qa.csv"
+    if not csv_path.exists():
+        raise SystemExit(
+            f"[ingest] ksu_qa: {csv_path} not found - the existing collection "
+            "was left untouched. backend/data/ is not in git; copy ksu_qa.csv "
+            "from the team drive."
+        )
     df = pd.read_csv(csv_path)
     if len(df) != EXPECTED_ROWS:
         raise SystemExit(f"Expected {EXPECTED_ROWS} KSU pairs, found {len(df)}")

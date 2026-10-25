@@ -34,8 +34,9 @@ from typing import Any
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 
+from src.answer_cache import AnswerCache, cache_key
 from src.api_logging import JsonlLogger
 from src.config import (
     UNIVERSITY_COLLECTIONS,
@@ -49,6 +50,18 @@ from src.pipeline import answer_question
 from src.query_rewrite import normalize_history
 
 logger = logging.getLogger("capstone.api")
+
+# uvicorn only configures its own loggers, so the pipeline's INFO lines
+# (gate decisions with rerank_seconds, failover attempts, rewrites) were
+# invisible in the launcher console. Attach one console handler to the
+# project's "capstone" logger tree unless something already did.
+_capstone_logger = logging.getLogger("capstone")
+if not _capstone_logger.handlers:
+    _handler = logging.StreamHandler()
+    _handler.setFormatter(logging.Formatter("%(levelname)s %(name)s: %(message)s"))
+    _capstone_logger.addHandler(_handler)
+    _capstone_logger.setLevel(logging.INFO)
+    _capstone_logger.propagate = False
 
 # Per AGENTS.md validation: frontend question input cap.
 QUESTION_MAX_CHARS = 1000
@@ -71,7 +84,7 @@ def _load_resources(app: FastAPI, settings: Settings) -> None:
     Embedding model + KSU reranker (both CPU) plus the Chroma client and
     the default failover chain; request handlers only read app.state.
     """
-    from src.chroma_store import get_client
+    from src.chroma_store import collection_counts, get_client
     from src.embeddings import E5Embedder
     from src.retrieval import Retriever
     from sentence_transformers import CrossEncoder
@@ -87,12 +100,55 @@ def _load_resources(app: FastAPI, settings: Settings) -> None:
     app.state.chroma = client
     app.state.retriever = Retriever(client, embedder)
     app.state.generation_chain = get_generation_chain(settings=settings)
+
+    # Knowledge-base check: an empty collection used to be silent (the
+    # university looked "available" and every question was refused).
+    counts: dict[str, dict[str, int]] = {}
+    for uni, names in UNIVERSITY_COLLECTIONS.items():
+        counts[uni] = collection_counts(client, names)
+        for name, n in counts[uni].items():
+            if n == 0:
+                logger.warning(
+                    "[startup] collection '%s' (%s) is EMPTY or missing - "
+                    "run the ingest for it (see README)", name, uni,
+                )
+    app.state.collection_counts = counts
+    if settings.hybrid_lexical_extra > 0:
+        for uni in UNIVERSITY_COLLECTIONS:
+            app.state.retriever.warm_lexical(uni)
+    _warm_up(app, settings)
     logger.info(
         "Startup resources ready in %.1fs (embedding dim=%d, reranker=%s).",
         time.perf_counter() - started,
         embedder.dimension,
         settings.reranker_model_name,
     )
+
+
+def _warm_up(app: FastAPI, settings: Settings) -> None:
+    """One dummy search + rerank per university BEFORE /health turns ok.
+
+    Live 2026-10-25: the first real question after startup spent ~17s in
+    search + rerank (lazy Chroma index load + first cross-encoder pass,
+    while the Angular build was also using the CPU), left 0.2s for
+    generation and returned 502 -> the UI showed its canned demo answer.
+    Paying that cost here keeps it out of the 17s request budget.
+    Never fatal: a failed warm-up only logs.
+    """
+    if not settings.warm_up_on_startup:
+        return
+    started = time.perf_counter()
+    try:
+        probe = "ما شروط الحذف والإضافة؟"
+        for uni in UNIVERSITY_COLLECTIONS:
+            qa, docs = app.state.retriever.retrieve_split(probe, university=uni)
+            pool = (qa + docs)[: settings.ksu_rerank_pool_size]
+            if pool:
+                app.state.reranker.predict([(probe, r.document) for r in pool])
+        logger.info("Warm-up done in %.1fs (search + rerank per university).",
+                    time.perf_counter() - started)
+    except Exception as exc:  # noqa: BLE001 - warm-up must never block startup
+        logger.warning("Warm-up skipped (%s: %s)", type(exc).__name__, exc)
 
 
 def _lifespan_for(load_resources: bool) -> Callable[[FastAPI], AsyncIterator[None]]:
@@ -108,6 +164,9 @@ def _lifespan_for(load_resources: bool) -> Callable[[FastAPI], AsyncIterator[Non
         )
         app.state.feedback_logger = JsonlLogger(
             settings.data_dir / "logs", "feedback"
+        )
+        app.state.answer_cache = AnswerCache(
+            settings.answer_cache_size, settings.answer_cache_ttl_s
         )
         yield
         logger.info("Shutting down %s", settings.app_name)
@@ -150,6 +209,13 @@ def _register_routes(app: FastAPI) -> None:
             return _error_response(
                 503, f"university {university!r} is not available yet"
             )
+        counts = getattr(state, "collection_counts", None)
+        if counts is not None and sum(counts.get(university, {}).values()) == 0:
+            return _error_response(
+                503,
+                f"knowledge base for {university!r} is empty - run "
+                f"python -m src.ingest.run_{university} and restart",
+            )
         # Conversational follow-ups: validate + clip the history the
         # frontend sent (malformed shapes silently degrade to no history;
         # the request must never 400 because of it).
@@ -160,13 +226,33 @@ def _register_routes(app: FastAPI) -> None:
             max_chars=settings.query_rewrite_max_turn_chars,
         )
 
+        cache = getattr(state, "answer_cache", None)
+        key = cache_key(university, question)
+        if cache is not None and not turns:
+            cached = cache.get(key)
+            if cached is not None:
+                state.ask_logger.write(
+                    {
+                        "timestamp": _now_iso(),
+                        "university": university,
+                        "question": question,
+                        "answer": cached["answer"],
+                        "refused": cached["refused"],
+                        "cached": True,
+                        "seconds": {
+                            "total": round(time.perf_counter() - started, 3)
+                        },
+                    }
+                )
+                return {"answer": cached["answer"], "sources": cached["sources"]}
+
         try:
             result = answer_question(
                 question,
                 state.retriever,
                 state.generation_chain,
                 university=university,
-                reranker=state.reranker if university == "ksu" else None,
+                reranker=getattr(state, "reranker", None),
                 deadline=deadline,
                 history=turns,
             )
@@ -198,14 +284,29 @@ def _register_routes(app: FastAPI) -> None:
                 "model": result.model,
                 "truncated": result.truncated,
                 "seconds": seconds,
+                "search_query": result.search_query,
+                "gate": result.gate,
+                "gate_top_score": round(result.gate_top_score, 4),
+                "sources": result.sources,
+                "ungrounded_numbers": result.ungrounded_numbers,
+                "numeric_guard_refused": result.numeric_guard_refused,
+                "history_turns": len(turns),
             }
         )
+        if cache is not None and not turns and not result.truncated:
+            cache.put(
+                key,
+                {"answer": result.answer, "refused": result.refused,
+                 "sources": result.sources},
+            )
         logger.info(
             "[api] /ask university=%s refused=%s provider=%s total=%.2fs",
             university, result.refused, result.provider, seconds["total"],
         )
-        # Always the "answer" key ("response" is only a frontend fallback).
-        return {"answer": result.answer}
+        # Always the "answer" key ("response" is only a frontend fallback);
+        # "sources" lists the evidence actually sent to the model (ignored
+        # by the current frontend, useful for API clients and the demo).
+        return {"answer": result.answer, "sources": result.sources}
 
     @app.post("/feedback")
     def feedback(payload: dict[str, Any], request: Request) -> dict[str, str]:
@@ -255,6 +356,42 @@ def _register_routes(app: FastAPI) -> None:
     def health() -> dict[str, str]:
         """Report service liveness for smoke checks."""
         return {"status": "ok"}
+
+    @app.get("/usage")
+    def usage(live: bool = False) -> dict[str, Any]:
+        """Provider-reported quotas (no secrets). ``live=true`` asks every
+        provider now (Groq /models or a tiny call, Tavily /usage, ...)."""
+        from src.status_page import build_usage_report
+        from src.usage_tracker import get_tracker
+
+        return build_usage_report(get_settings(), get_tracker(), live=live)
+
+    @app.post("/usage/probe")
+    def usage_probe() -> dict[str, Any]:
+        """Tiny request per generator to refresh the quota headers."""
+        from src.status_page import probe_providers
+
+        return {"results": probe_providers(get_settings())}
+
+    @app.get("/status", response_class=HTMLResponse)
+    def status_page() -> str:
+        """Human-readable quota page: http://localhost:8000/status"""
+        from src.status_page import STATUS_HTML
+
+        return STATUS_HTML
+
+    @app.get("/health/details")
+    def health_details(request: Request) -> dict[str, Any]:
+        """Knowledge-base status: record count per collection (startup)."""
+        counts = getattr(request.app.state, "collection_counts", None)
+        if counts is None:
+            return {"status": "ok", "collections": None}
+        empty = [n for uni in counts.values() for n, c in uni.items() if c == 0]
+        return {
+            "status": "ok" if not empty else "degraded",
+            "collections": counts,
+            "empty_collections": empty,
+        }
 
 
 def create_app(load_resources: bool = True) -> FastAPI:

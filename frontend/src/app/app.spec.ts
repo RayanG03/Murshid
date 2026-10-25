@@ -20,6 +20,16 @@ describe('App', () => {
     expect(app.selected().id).toBe('ksu');
   });
 
+  it('should toggle the usage page and return to chat on university switch', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+    expect(app.view()).toBe('chat');
+    app.toggleUsage();
+    expect(app.view()).toBe('usage');
+    app.selectUniversity(app.universities[1]);
+    expect(app.view()).toBe('chat');
+  });
+
   it('should switch university and clear messages', () => {
     const fixture = TestBed.createComponent(App);
     const app = fixture.componentInstance;

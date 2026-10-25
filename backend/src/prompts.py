@@ -44,7 +44,9 @@ _SYSTEM_TEMPLATE = (
     "3. اكتب الإجابة بالعربية وبأسلوب واضح ومختصر.\n"
     "4. إذا كان السياق فارغًا أو غير كافٍ للإجابة عن السؤال، اكتب حصرًا "
     "العبارة التالية دون أي إضافة: لا يمكنني تأكيد الإجابة من المصادر المتاحة.\n"
-    "5. لا تختلق أرقامًا أو تواريخ أو نسبًا أو إجراءات غير موجودة في السياق."
+    "5. لا تختلق أرقامًا أو تواريخ أو نسبًا أو إجراءات غير موجودة في السياق.\n"
+    "6. اكتب نصًا عاديًا دون صيغ رياضية أو رموز LaTeX، واكتب أي معادلة "
+    "بالكلمات (مثل: مجموع النقاط ÷ مجموع الساعات)."
 )
 
 # Back-compat alias: the exact KAU wording as it always was.
@@ -59,7 +61,9 @@ SYSTEM_PROMPT = (
     "3. اكتب الإجابة بالعربية وبأسلوب واضح ومختصر.\n"
     "4. إذا كان السياق فارغًا أو غير كافٍ للإجابة عن السؤال، اكتب حصرًا "
     "العبارة التالية دون أي إضافة: لا يمكنني تأكيد الإجابة من المصادر المتاحة.\n"
-    "5. لا تختلق أرقامًا أو تواريخ أو نسبًا أو إجراءات غير موجودة في السياق."
+    "5. لا تختلق أرقامًا أو تواريخ أو نسبًا أو إجراءات غير موجودة في السياق.\n"
+    "6. اكتب نصًا عاديًا دون صيغ رياضية أو رموز LaTeX، واكتب أي معادلة "
+    "بالكلمات (مثل: مجموع النقاط ÷ مجموع الساعات)."
 )
 
 # Cross-check the template against the historical constant at import time.
@@ -94,10 +98,21 @@ def qa_block_title(university: str = "kau") -> str:
 
 
 def build_user_prompt(
-    question: str, qa_block: str, doc_block: str, university: str = "kau"
+    question: str, qa_block: str, doc_block: str, university: str = "kau",
+    standalone_question: str | None = None,
 ) -> str:
-    """Assemble the labeled context blocks and the question."""
+    """Assemble the labeled context blocks and the question.
+
+    ``standalone_question`` (follow-ups only) is the history-aware rewrite
+    used for retrieval; it is shown right under the user's wording so the
+    answer model knows what a short follow-up refers to. Omitted when it
+    is missing or identical to the question (prompt unchanged).
+    """
     parts = [f"السؤال: {question}"]
+    if standalone_question and standalone_question.strip() != question.strip():
+        parts.append(
+            f"المقصود بالسؤال (صيغة مستقلة): {standalone_question}"
+        )
     if qa_block:
         parts.append(qa_block_title(university) + "\n" + qa_block)
     if doc_block:

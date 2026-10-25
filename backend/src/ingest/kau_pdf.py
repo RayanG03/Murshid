@@ -22,7 +22,12 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from src.chroma_store import COL_KAU_PDF, add_batched, rebuild_collection
+from src.chroma_store import (
+    COL_KAU_PDF,
+    add_batched,
+    ensure_chunks,
+    rebuild_collection,
+)
 from src.config import get_settings
 from src.embeddings import E5Embedder
 from src.text import normalize_digits_for_search
@@ -65,6 +70,23 @@ def doc_page_chunks(
     citation header '<title> — صفحة <page>'.
     """
     blocks = [b.strip() for b in re.split(r"\n\s*\n", page_text) if b.strip()]
+    header = f"{title} — صفحة {page}"
+    sections = catalogue_sections(blocks)
+    if sections is not None:
+        # Catalogue page (e.g. the colleges -> programs list): one chunk per
+        # heading + its list, so "كلية الحاسبات" is not diluted among a
+        # dozen engineering programs (live miss 2026-10-25, rerank 0.36).
+        out: list[str] = []
+        for section in sections:
+            if len(section) <= max_chars:
+                out.append(f"{header}\n{section}")
+            else:  # oversized section: historical packing, heading kept
+                head, _, rest = section.partition("\n")
+                out.extend(
+                    f"{header}\n{head}\n{part.split(chr(10), 1)[1]}"
+                    for part in doc_page_chunks(rest, title, page, target, max_chars)
+                )
+        return out
     chunks: list[str] = []
     current: list[str] = []
     current_len = 0
@@ -80,8 +102,48 @@ def doc_page_chunks(
             current, current_len = [], 0
     if current:
         chunks.append("\n".join(current))
-    header = f"{title} — صفحة {page}"
     return [f"{header}\n{c}" for c in chunks]
+
+
+_BULLET_RE = re.compile(r"^\s*(?:[-•*]|\d{1,2}[.)-])\s*")
+
+
+def _is_heading_block(block: str) -> bool:
+    """A single short line that is not a bullet or a table row."""
+    return (
+        "\n" not in block
+        and len(block) <= 60
+        and not _BULLET_RE.match(block)
+        and "|" not in block
+    )
+
+
+def _is_list_block(block: str) -> bool:
+    lines = [ln for ln in block.splitlines() if ln.strip()]
+    return bool(lines) and all(_BULLET_RE.match(ln) for ln in lines)
+
+
+def catalogue_sections(blocks: list[str], min_sections: int = 3) -> list[str] | None:
+    """Heading + list sections for catalogue-like pages, else None.
+
+    A page qualifies when at least ``min_sections`` short heading blocks are
+    each directly followed by a bullet-list block. Blocks before the first
+    heading form their own leading section. Pages that do not qualify keep
+    the historical blank-line packing unchanged.
+    """
+    pairs = sum(
+        1 for a, b in zip(blocks, blocks[1:])
+        if _is_heading_block(a) and _is_list_block(b)
+    )
+    if pairs < min_sections:
+        return None
+    sections: list[list[str]] = [[]]
+    for i, block in enumerate(blocks):
+        next_is_list = i + 1 < len(blocks) and _is_list_block(blocks[i + 1])
+        if _is_heading_block(block) and next_is_list and sections[-1]:
+            sections.append([])
+        sections[-1].append(block)
+    return ["\n".join(s) for s in sections if s]
 
 
 def chunk_page_blocks(
@@ -229,6 +291,10 @@ def ingest_kau_pdf(client, embedder: E5Embedder) -> int:
             "into sources/KAU/transcribed/%s/ first.",
             stem, stem,
         )
+    ensure_chunks(
+        COL_KAU_PDF, len(chunks),
+        "expected page_NN.txt files under sources/KAU/transcribed/<pdf stem>/",
+    )
     embeddings = embedder.embed_passages(
         [normalize_digits_for_search(c.display) for c in chunks]
     )

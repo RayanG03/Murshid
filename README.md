@@ -5,7 +5,9 @@ academic regulations of **King Abdulaziz University (KAU)** and **King Saud Univ
 Students ask in plain Arabic; Murshid answers **only from the ingested official sources** and
 cites them — or explicitly refuses when the corpus cannot back an answer.
 
-`Python 3.12 · FastAPI · ChromaDB · sentence-transformers (e5-large) · Angular 22`
+`Python 3.12 · FastAPI · ChromaDB · sentence-transformers (e5-large) · Angular 22
+
+> **2026-10-25 backend improvements** — ingest safety, `/health/details`, follow-up context, rerank context filter, optional KAU rerank gate / hybrid keyword search / dialect mapping, numeric grounding guard, `sources` in `/ask`, answer cache and a held-out evaluation suite. See [IMPROVEMENTS.md](IMPROVEMENTS.md).`
 
 ---
 

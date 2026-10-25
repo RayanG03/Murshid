@@ -135,6 +135,9 @@ def test_ask_happy_path_kau(env) -> None:
     assert set(rec) == {
         "timestamp", "university", "question", "answer", "refused",
         "provider", "model", "truncated", "seconds",
+        # diagnostics added 2026-10-25
+        "search_query", "gate", "gate_top_score", "sources",
+        "ungrounded_numbers", "numeric_guard_refused", "history_turns",
     }
 
 

@@ -1,0 +1,85 @@
+<section class="usage" aria-labelledby="usage-title">
+  <div class="usage-head">
+    <div>
+      <h2 id="usage-title">رصيد المزوّدين</h2>
+      <p class="sub" aria-live="polite">{{ subtitle() }}</p>
+    </div>
+    <div class="head-actions">
+      <button class="btn primary" (click)="refreshLive()" [disabled]="refreshing()"
+        title="يسأل كل مزوّد الآن ويعرض أرقامه كما هي">
+        {{ refreshing() ? 'جارٍ التحديث...' : 'تحديث مباشر' }}
+      </button>
+      <button class="btn" (click)="closed.emit()">رجوع للمحادثة</button>
+    </div>
+  </div>
+
+  @if (error()) {
+    <p class="alert" role="alert">{{ error() }}</p>
+  }
+
+  <div class="grid">
+    @for (c of cards(); track c.id) {
+      <article class="card" [attr.aria-label]="c.name">
+        <header class="card-head">
+          <h3>{{ c.name }}</h3>
+          <span class="badge" [class]="c.tone">{{ c.state }}</span>
+        </header>
+        <p class="role">
+          {{ c.role }}
+          @if (c.model) { · <code>{{ c.model }}</code> }
+        </p>
+
+        @for (m of c.meters; track m.label) {
+          <div class="metric">
+            <div class="row">
+              <span>{{ m.label }}</span>
+              <b>{{ num(m.remaining) }} / {{ num(m.limit) }}</b>
+            </div>
+            <div class="bar" role="progressbar" [attr.aria-label]="m.label"
+              aria-valuemin="0" [attr.aria-valuemax]="m.limit" [attr.aria-valuenow]="m.remaining">
+              <i [class]="level(m)" [style.width.%]="percent(m)"></i>
+            </div>
+            @if (m.resetAt) {
+              <span class="small">يتجدد بعد: {{ countdown(m.resetAt) }}</span>
+            }
+          </div>
+        }
+
+        @for (line of c.extraLines; track $index) {
+          <p class="small">{{ line }}</p>
+        }
+
+        <div class="metric">
+          <div class="row">
+            <span>طلبات هذا الجهاز اليوم</span>
+            <b>{{ c.todayMain }}</b>
+          </div>
+          <span class="small">{{ c.todayDetail }}</span>
+        </div>
+
+        @if (c.error) {
+          <p class="err" [class.current]="c.error.current">{{ c.error.text }}</p>
+        }
+
+        @if (c.note) {
+          <p class="small doc">{{ c.note }}</p>
+        }
+        <p class="small">آخر استخدام ناجح: {{ ago(c.lastOk) }}</p>
+      </article>
+    }
+
+    @if (report(); as r) {
+      <article class="card" aria-label="النماذج المحلية">
+        <header class="card-head">
+          <h3>النماذج المحلية</h3>
+          <span class="badge ok">بلا حدود</span>
+        </header>
+        <p class="role">تعمل على جهازك: البحث وإعادة الترتيب</p>
+        @for (m of r.local_models; track m) {
+          <p><code>{{ m }}</code></p>
+        }
+        <p class="small doc">لا تستهلك توكنز ولا رصيداً</p>
+      </article>
+    }
+  </div>
+</section>

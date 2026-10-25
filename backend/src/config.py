@@ -94,6 +94,24 @@ class Settings(BaseSettings):
     # deadline must surface as a fast 502 listing each provider's outcome.
     request_deadline_s: float = 17.0
     per_attempt_timeout_s: float = 8.0
+    # Smallest remaining budget that may still START a provider attempt
+    # (its timeout is then clipped to the remaining time). Before this,
+    # an attempt needed the full per_attempt_timeout_s (8s) left: on a
+    # laptop CPU where KSU search + rerank took ~9-11s, the LLM was never
+    # called and /ask returned 502 (shown as a canned answer by the UI)
+    # although Groq usually answers in 1-3s. The attempt still ends
+    # before the deadline, so the 17s < 20s frontend guarantee holds.
+    # Lowered 3.0 -> 1.5 (live 2026-10-25): Groq answers in 1.0-1.4s on
+    # this project's prompts, and a question whose search + rerank took
+    # 14.2s was refused generation with 2.8s still left (502 -> canned UI
+    # answer).
+    min_attempt_seconds: float = 1.5
+    # Run one dummy search + rerank per university at startup (src/main.py
+    # _warm_up) so the first real question is not slowed by lazy loading.
+    warm_up_on_startup: bool = True
+    # Per-provider usage counters for the /status page, persisted to
+    # data/logs/usage.json (no keys, no request text).
+    usage_tracking_persist: bool = True
 
     # Conversational follow-ups ("summarize that in points", "are there
     # dates?", ...): the frontend sends the last turns and the pipeline
@@ -109,6 +127,13 @@ class Settings(BaseSettings):
     # Per-turn clipping for the history sent by the frontend (bounds the
     # rewrite prompt size regardless of answer length).
     query_rewrite_max_turn_chars: int = 1200
+    # Safety net for rewrite topic drift: when the REWRITTEN query is
+    # refused by the gate, retry the gate once with the user's own wording
+    # if at least this much of the request deadline remains (one more
+    # search + rerank, ~5-8s on a laptop CPU). Live case 2026-10-25: a new
+    # question after a CS-admission turn was rewritten "... في كلية علوم
+    # الحاسب" and refused although the regulation answers it.
+    rewrite_fallback_min_remaining_s: float = 9.0
 
     # Embeddings (loaded once at startup in a later stage).
     embedding_model_name: str = "intfloat/multilingual-e5-large"
@@ -188,6 +213,85 @@ class Settings(BaseSettings):
     # KAU keeps the 1200-char setting unchanged (known truncation risk,
     # deferred to the evaluation stage).
     ksu_chunk_max_tokens: int = 450
+
+    # ------------------------------------------------------------------
+    # Improvements (2026-10-25). Every switch that changes retrieval scores
+    # or gate decisions defaults to the CALIBRATED behavior above; flip it
+    # only after src.eval_suite shows it helps (compare with --set).
+    # ------------------------------------------------------------------
+
+    # KAU gate: "cosine" = calibrated floor/leader/gap quartet (default);
+    # "rerank" = the KSU-style cross-encoder gate. The reranker is already
+    # loaded at startup; calibrate kau_rerank_refuse_threshold with
+    # `python -m src.eval_suite --university kau --set kau_gate_mode=rerank`.
+    # Enabled 2026-10-25 from src.eval_suite (51 held-out questions): the
+    # cosine scores OVERLAP (max refuse 0.8624 > min hit 0.8411, so no
+    # cosine threshold separates them) while rerank scores separate
+    # cleanly (max refuse 0.34 < min hit 0.42; 0.58 with dialect mapping).
+    # Refusals 4/6 -> 6/6, hits unchanged. Cost: ~7s per KAU request on a
+    # laptop CPU (same as KSU). Set KAU_GATE_MODE=cosine to revert.
+    kau_gate_mode: str = "rerank"
+    kau_rerank_pool_size: int = 6
+    kau_rerank_refuse_threshold: float = 0.40
+
+    # Rerank-gate context filter: after the gate passes, keep only items
+    # scoring >= max(min_score, relative * top). Before this, every pool
+    # item reached the LLM even with a near-zero rerank probability.
+    rerank_context_filter: bool = True
+    rerank_context_min_score: float = 0.10
+    rerank_context_relative: float = 0.20
+
+    # Follow-ups: also show the rewritten standalone question to the
+    # answer model (retrieval already used it; the answer prompt did not).
+    pass_standalone_question: bool = True
+
+    # Opt-in fallback AFTER a gate refusal (src/general_fallback.py):
+    # "off" | "web" (Gemini + Google Search on the official domain only,
+    # links shown) | "llm" (general questions only, labeled "not verified")
+    # | "web_then_llm". Off by default: it changes the project's
+    # "official sources only" guarantee — enable after team agreement.
+    general_fallback_mode: str = "off"
+    general_fallback_search_model: str = "gemini-flash-latest"
+    # Web search backend for the "web" fallback: "tavily" (official domain
+    # enforced by the API's include_domains; page text answered by the
+    # normal provider chain), "gemini" (Google Search grounding), or
+    # "auto" = tavily when TAVILY_API_KEY is set, else gemini.
+    web_search_provider: str = "auto"
+    tavily_api_key: str = ""
+    # Live 2026-10-25: 3 results x 2500 chars on the raw dialect question
+    # found only one program page for "الكليات في المزاحمية" (incomplete
+    # answer). Search now uses the normalized query + university name.
+    tavily_max_results: int = 5
+    tavily_max_chars_per_page: int = 12000
+    # "advanced" returns the most relevant chunks per page (2 credits per
+    # search; the free plan's monthly credits cover a few hundred questions).
+    tavily_search_depth: str = "advanced"
+    tavily_chunks_per_source: int = 3
+    # Passage selection: pages are split into ~700-char passages, scored
+    # with BM25 against the query (src.lexical, no extra model -> no CPU
+    # cost), and the best N passages across all pages go to the model.
+    web_passage_chars: int = 700
+    web_context_passages: int = 8
+
+    # Saudi-dialect -> MSA word mapping on the SEARCH query only (the
+    # answer prompt keeps the user's wording). Changes cosine scores, so it
+    # is off until evaluated.
+    # Enabled 2026-10-25: KSU hits 17/19 -> 18/19, no regressions, no
+    # latency cost (src.eval_suite --matrix).
+    dialect_normalization: bool = True
+
+    # Hybrid retrieval: add up to N keyword (BM25) candidates per side to
+    # the rerank pool (rerank gates only). 0 = off.
+    hybrid_lexical_extra: int = 0
+
+    # Numeric grounding guard: numbers in the answer that appear nowhere in
+    # the context. "off" | "log" (record in ask.jsonl) | "refuse".
+    numeric_guard_mode: str = "log"
+
+    # In-process answer cache for repeated questions without history
+    # (protects free-tier provider quotas during demos). 0 disables.
+    answer_cache_size: int = 256
+    answer_cache_ttl_s: float = 3600.0
 
 
 @lru_cache

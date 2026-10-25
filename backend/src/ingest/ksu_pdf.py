@@ -41,7 +41,12 @@ from pathlib import Path
 
 import fitz
 
-from src.chroma_store import COL_KSU_PDF, add_batched, rebuild_collection
+from src.chroma_store import (
+    COL_KSU_PDF,
+    add_batched,
+    ensure_chunks,
+    rebuild_collection,
+)
 from src.config import get_settings
 from src.embeddings import E5Embedder
 from src.ingest.token_cap import split_to_fit
@@ -525,6 +530,10 @@ def ingest_ksu_pdf(client, embedder: E5Embedder) -> int:
     logger.info(
         "ksu_pdf: %d chunks from %d documents.",
         len(chunks), sum(1 for i in infos if i["source"] != "none"),
+    )
+    ensure_chunks(
+        COL_KSU_PDF, len(chunks),
+        "expected PDFs or page_NN.txt files under sources/KSU/",
     )
     embeddings = embedder.embed_passages(
         [normalize_digits_for_search(t) for t in texts]

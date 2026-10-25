@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from src.chroma_store import get_existing_collection
 from src.config import UNIVERSITY_COLLECTIONS, get_settings
 from src.embeddings import E5Embedder
+from src.lexical import LexicalIndexes
 
 
 @dataclass
@@ -40,6 +41,7 @@ class Retriever:
         self._client = client
         self._embedder = embedder
         self._settings = get_settings()
+        self._lexical = LexicalIndexes(client)
 
     def _query_collection(self, collection, embedding, k: int) -> list[Retrieved]:
         if collection is None or collection.count() == 0:
@@ -95,3 +97,35 @@ class Retriever:
             )
         docs = sorted(doc_hits, key=lambda r: -r.score)
         return qa, docs[:k]
+
+    def warm_lexical(self, university: str) -> None:
+        """Build the BM25 indexes of a university up front (startup)."""
+        qa_name, doc_names = _university_collections(university)
+        for name in (qa_name, *doc_names):
+            self._lexical.get(name)
+
+    def lexical_split(
+        self, query: str, k: int, university: str = "kau",
+    ) -> tuple[list[Retrieved], list[Retrieved]]:
+        """Keyword (BM25) hits as (qa_hits, doc_hits), each side top-k.
+
+        ``score`` carries the raw BM25 score (NOT comparable to cosine);
+        these candidates are only ever judged by the reranker.
+        """
+        qa_name, doc_names = _university_collections(university)
+
+        def side(names: tuple[str, ...]) -> list[Retrieved]:
+            hits: list[Retrieved] = []
+            for name in names:
+                index = self._lexical.get(name)
+                if index is None:
+                    continue
+                for i, score in index.search(query, k):
+                    hits.append(Retrieved(
+                        source_type=name, score=score,
+                        document=index.documents[i],
+                        metadata=dict(index.metadatas[i]),
+                    ))
+            return sorted(hits, key=lambda r: -r.score)[:k]
+
+        return side((qa_name,)), side(doc_names)

@@ -23,7 +23,12 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from src.chroma_store import COL_KSU_TXT, add_batched, rebuild_collection
+from src.chroma_store import (
+    COL_KSU_TXT,
+    add_batched,
+    ensure_chunks,
+    rebuild_collection,
+)
 from src.config import get_settings
 from src.embeddings import E5Embedder
 from src.ingest.token_cap import split_to_fit
@@ -243,6 +248,34 @@ def build_txt_chunks(
     return chunks
 
 
+def build_ksu_web_chunks(
+    web_dir: Path,
+    max_chars: int,
+    token_len: Callable[[str], int] | None = None,
+    max_tokens: int = 450,
+) -> list[TxtChunk]:
+    """General-information pages (sources/KSU/web/*.md) for the ksu_txt
+    collection: same markdown layout and chunker as the KAU web pages,
+    then held under the KSU token cap with the heading on every part.
+    Metadata keeps type "web" (page_title, section, source_url), so
+    citations render as "page_title > section (url)".
+    """
+    from src.ingest.kau_web import build_web_chunks
+
+    if not web_dir.is_dir():
+        return []
+    out: list[TxtChunk] = []
+    for chunk in build_web_chunks(web_dir, max_chars):
+        heading, _, body = chunk.display.partition("\n")
+        parts = (
+            split_to_fit(heading, [body], "\n", max_chars, token_len,
+                         max_tokens, granularity="sentences")
+            if body else [chunk.display]
+        )
+        out.extend(TxtChunk(display=p, metadata=dict(chunk.metadata)) for p in parts)
+    return out
+
+
 def ingest_ksu_txt(client, embedder: E5Embedder) -> int:
     """Chunk and ingest the KSU registrar text dump into ksu_txt."""
     settings = get_settings()
@@ -254,6 +287,16 @@ def ingest_ksu_txt(client, embedder: E5Embedder) -> int:
         max_tokens=settings.ksu_chunk_max_tokens,
     )
     logger.info("ksu_txt: %d chunks.", len(chunks))
+    ensure_chunks(COL_KSU_TXT, len(chunks), f"expected {txt_path}")
+    web = build_ksu_web_chunks(
+        settings.sources_dir / "KSU" / "web",
+        settings.chunk_max_chars,
+        token_len=embedder.token_length,
+        max_tokens=settings.ksu_chunk_max_tokens,
+    )
+    if web:
+        logger.info("ksu_txt: +%d general-information web chunks.", len(web))
+        chunks = chunks + web
     embeddings = embedder.embed_passages(
         [normalize_digits_for_search(c.display) for c in chunks]
     )

@@ -20,6 +20,12 @@ def ingest_kau_qa(client, embedder: E5Embedder) -> int:
     """
     settings = get_settings()
     csv_path = settings.data_dir / "kau_qa.csv"
+    if not csv_path.exists():
+        raise SystemExit(
+            f"[ingest] kau_qa_verified: {csv_path} not found - the existing "
+            "collection was left untouched. backend/data/ is not in git; "
+            "copy kau_qa.csv from the team drive."
+        )
     df = pd.read_csv(csv_path)
     if len(df) != 371:
         raise SystemExit(f"Expected 371 verified KAU pairs, found {len(df)}")

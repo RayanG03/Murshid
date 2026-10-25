@@ -1,5 +1,6 @@
 import { Component, signal, computed, effect, ElementRef, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { UsageStatus } from './usage-status/usage-status';
 
 interface ChatMessage {
   id: number;
@@ -33,7 +34,7 @@ const MAX_AGE_MS = 3 * 24 * 60 * 60 * 1000;
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, UsageStatus],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -47,6 +48,9 @@ export class App {
   readonly messages = signal<ChatMessage[]>([]);
   readonly draft = signal('');
   readonly loading = signal(false);
+
+  // العرض الحالي في المنطقة الرئيسية: المحادثة أو صفحة رصيد المزوّدين
+  readonly view = signal<'chat' | 'usage'>('chat');
 
   readonly history = signal<Conversation[]>([]);
   readonly currentId = signal<string | null>(null);
@@ -116,7 +120,12 @@ export class App {
     });
   }
 
+  toggleUsage(): void {
+    this.view.update((v) => (v === 'usage' ? 'chat' : 'usage'));
+  }
+
   selectUniversity(u: University): void {
+    this.view.set('chat');
     if (u.id === this.selected().id) return;
     this.stopSpeak();
     this.selected.set(u);
@@ -131,6 +140,7 @@ export class App {
   }
 
   openConversation(c: Conversation): void {
+    this.view.set('chat');
     this.stopSpeak();
     const uni = this.universities.find((u) => u.id === c.uni);
     if (uni) this.selected.set(uni);
@@ -149,6 +159,7 @@ export class App {
   }
 
   clearChat(): void {
+    this.view.set('chat');
     this.stopSpeak();
     this.messages.set([]);
     this.currentId.set(null);

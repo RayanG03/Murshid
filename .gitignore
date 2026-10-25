@@ -67,3 +67,8 @@ frontend/node_modules/
 backend/data/logs/
 backend/data/extracted/
 backend/data/*_snapshot.json
+
+# Local-only (2026-10-25): eval run outputs, backups, files queued for deletion
+backend/data/eval/
+_backup_before_improvements/
+_to_delete/

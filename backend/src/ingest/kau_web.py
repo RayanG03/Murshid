@@ -7,7 +7,12 @@ from pathlib import Path
 
 import yaml
 
-from src.chroma_store import COL_KAU_WEB, add_batched, rebuild_collection
+from src.chroma_store import (
+    COL_KAU_WEB,
+    add_batched,
+    ensure_chunks,
+    rebuild_collection,
+)
 from src.config import get_settings
 from src.embeddings import E5Embedder
 from src.text import normalize_digits_for_search
@@ -111,6 +116,7 @@ def ingest_kau_web(client, embedder: E5Embedder) -> int:
     chunks = build_web_chunks(web_dir, settings.chunk_max_chars)
     logger.info("kau_web: %d chunks from %d pages.",
                 len(chunks), len(list(web_dir.glob('*.md'))))
+    ensure_chunks(COL_KAU_WEB, len(chunks), f"expected *.md files in {web_dir}")
     embeddings = embedder.embed_passages(
         [normalize_digits_for_search(c.display) for c in chunks]
     )

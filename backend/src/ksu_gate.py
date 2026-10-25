@@ -64,6 +64,7 @@ def rerank_and_gate(
     reranker: RerankerLike,
     pool_size: int,
     threshold: float,
+    extra_candidates: Sequence[Retrieved] = (),
 ) -> KsuGateResult:
     """Rerank the dense pool and apply the refusal threshold.
 
@@ -72,6 +73,14 @@ def rerank_and_gate(
     list is ordered by reranking (descending), stable for ties.
     """
     pool = dense_pool(qa_results, doc_results, pool_size)
+    # Hybrid retrieval: keyword candidates the dense pool missed are added
+    # (deduplicated by source + text) so the reranker can judge them too.
+    seen = {(r.source_type, r.document) for r in pool}
+    for cand in extra_candidates:
+        key = (cand.source_type, cand.document)
+        if key not in seen:
+            seen.add(key)
+            pool.append(cand)
     if not pool:
         return KsuGateResult(
             passed=False, top_score=0.0, pool_size=0,
@@ -95,3 +104,18 @@ def rerank_and_gate(
         scores=scores,
         rerank_seconds=seconds,
     )
+
+
+def filter_ranked(
+    gate: KsuGateResult, min_score: float, relative: float,
+) -> list[Retrieved]:
+    """Ranked items worth sending to the LLM after a passing gate.
+
+    Keeps items scoring >= max(min_score, relative * top_score); the top
+    item always survives (it passed the gate threshold).
+    """
+    if not gate.ranked:
+        return []
+    floor = max(min_score, relative * gate.top_score)
+    kept = [r for r, s in zip(gate.ranked, gate.scores) if s >= floor]
+    return kept or gate.ranked[:1]

@@ -37,10 +37,65 @@ _SYSTEM_PROMPT = (
     "بالاعتماد على سياق المحادثة السابقة. "
     "القواعد: "
     "1) أخرج السؤال المعاد صياغته فقط، دون أي شرح أو مقدمة أو علامات تنصيص. "
-    "2) إذا كان سؤال المتابعة مستقلاً بذاته أعده كما هو دون تغيير. "
-    "3) إذا كانت آخر إجابة في المحادثة رفضاً أو غير مفيدة، اعتمد على السؤال نفسه. "
-    "4) لا تجب على السؤال إطلاقاً، فقط أعد صياغته كسؤال بحثي."
+    "2) إذا كان سؤال المتابعة مستقلاً بذاته أو يتناول موضوعاً جديداً، أعده كما "
+    "هو حرفياً، ولا تضف إليه أي كلمة من المحادثة السابقة (لا تضف اسم كلية أو "
+    "تخصص أو برنامج لم يذكره المستخدم في سؤاله الحالي). "
+    "3) استخدم المحادثة السابقة فقط لإكمال ما ينقص السؤال: الضمائر والإحالات "
+    "مثل (ها، هذا، ذلك، نفسه، وماذا عن، وهل فيه، طيب كيف). "
+    "4) إذا كانت آخر إجابة في المحادثة رفضاً أو غير مفيدة، اعتمد على السؤال نفسه. "
+    "5) لا تجب على السؤال إطلاقاً، فقط أعد صياغته كسؤال بحثي.\n"
+    "أمثلة:\n"
+    "- السابق: ما شروط القبول في كلية علوم الحاسب؟ | المتابعة: هل فيه مواعيد "
+    "محددة؟ | الناتج: ما مواعيد القبول في كلية علوم الحاسب؟\n"
+    "- السابق: ما شروط القبول في كلية علوم الحاسب؟ | المتابعة: كم المعدل اللي "
+    "يجي عليه إنذار؟ | الناتج: كم المعدل اللي يجي عليه إنذار؟\n"
+    "- السابق: ما هي مكافأة التفوق؟ | المتابعة: طيب كيف أقدم عليها؟ | الناتج: "
+    "كيف أقدم على مكافأة التفوق؟\n"
+    "- السابق: ما التخصصات المتاحة في كلية الحاسبات؟ | المتابعة: لخّص الإجابة "
+    "بنقاط | الناتج: ما التخصصات المتاحة في كلية الحاسبات؟\n"
+    "- السابق: ما شروط مرتبة الشرف؟ | المتابعة: أعطني مثالاً | الناتج: "
+    "مثال على شروط مرتبة الشرف"
 )
+
+# Follow-ups that only make sense with the previous turn (the frontend's
+# suggestion chips: "اشرح لي أكثر", "لخّص الإجابة بنقاط", "هل هناك مواعيد
+# محددة؟", "أعطني مثالاً"). If the model returns such a question unchanged,
+# the previous question is prepended deterministically so retrieval still
+# finds the topic (live regression 2026-10-25: "لخّص الإجابة بنقاط" was
+# searched verbatim and refused).
+_DEPENDENT_WORDS = frozenset((
+    "الإجابة", "الاجابة", "الجواب", "أكثر", "اكثر", "لخص", "لخّص", "وضح",
+    "وضّح", "اشرح", "بنقاط", "ذلك", "هذا", "هذه", "عليها", "منها", "عنها",
+))
+_DEPENDENT_PREFIXES = ("مثال",)
+_DEPENDENT_PHRASES = ("هل هناك", "هل فيه")
+_DEPENDENT_MAX_WORDS = 6
+_PUNCT_RE = re.compile(r"[؟?!.,،:؛]")
+
+
+def looks_dependent(question: str) -> bool:
+    """Short question that refers back to the previous turn (whole-word
+    markers only, so e.g. "يجي عليه انذار" is NOT treated as dependent)."""
+    words = _PUNCT_RE.sub(" ", question).split()
+    if len(words) > _DEPENDENT_MAX_WORDS:
+        return False
+    return (
+        any(w in _DEPENDENT_WORDS for w in words)
+        or any(w.startswith(_DEPENDENT_PREFIXES) for w in words)
+        or any(p in question for p in _DEPENDENT_PHRASES)
+    )
+
+
+def _fallback_query(question: str, history: Sequence[Turn]) -> str:
+    """Search query when the rewrite call failed: dependent follow-ups are
+    anchored to the previous question, everything else stays raw."""
+    return anchor_to_history(question, history) if looks_dependent(question) else question
+
+
+def anchor_to_history(question: str, history: Sequence[Turn]) -> str:
+    """Previous question + follow-up, used when the rewrite kept a
+    dependent follow-up unchanged."""
+    return f"{history[-1][0]} {question}" if history else question
 
 _USER_TEMPLATE = (
     "المحادثة السابقة:\n{history_block}\n\n"
@@ -174,17 +229,21 @@ def rewrite_question(
             "[rewrite] chain failed for %r (%s); falling back to the "
             "raw question", question[:60], exc,
         )
-        return question, time.perf_counter() - t0
+        return _fallback_query(question, history), time.perf_counter() - t0
     except Exception as exc:  # noqa: BLE001 - rewrite must never fail a request
         logger.warning(
             "[rewrite] unexpected error (%s); falling back to the raw "
             "question", type(exc).__name__,
         )
-        return question, time.perf_counter() - t0
+        return _fallback_query(question, history), time.perf_counter() - t0
 
     rewritten = sanitize_rewrite(
         result.text, question, s.query_rewrite_max_query_chars
     )
+    if rewritten.strip() == question.strip() and looks_dependent(question):
+        rewritten = anchor_to_history(question, history)
+        logger.info("[rewrite] dependent follow-up kept verbatim; anchored "
+                    "to the previous question")
     seconds = time.perf_counter() - t0
     if rewritten == question:
         logger.info(
