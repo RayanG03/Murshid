@@ -5,6 +5,8 @@ backend/uv.toml
 backend/*.env.local
 backend/__pycache__/
 backend/**/__pycache__/
+backend/chroma_db/
+backend/data/logs/
 *.pyc
 .pytest_cache/
 .ruff_cache/
