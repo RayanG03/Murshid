@@ -18,18 +18,21 @@ from src.text import normalize_digits_for_search
 
 logger = logging.getLogger("capstone.lexical")
 
-_TOKEN_RE = re.compile(r"[ء-ي0-9A-Za-z]+")
+_TOKEN_RE = re.compile(r"\d+(?:[.,]\d+)?|[ء-يA-Za-z]+")
 _DIACRITICS_RE = re.compile(r"[ً-ْـ]")
 
 STOPWORDS = frozenset(
     "في من على إلى الى عن مع ما ماذا هل كيف متى أين اين هو هي هذا هذه ذلك "
-    "التي الذي الذين و او أو ثم لا لم لن قد كل بعد قبل عند بين أن ان إن "
+    "التي الذي الذين و او أو ثم قد كل بعد قبل عند بين أن ان إن "
     "كان كانت يكون تكون له لها لهم به بها فيه فيها وش ايش ابي ابغى".split()
 )
 
 
 def normalize_token(token: str) -> str:
     """Light Arabic normalization + prefix stripping for keyword matching."""
+    if token[0].isdigit():
+        from src.grounding import _canonical
+        return _canonical(token)
     t = _DIACRITICS_RE.sub("", token)
     t = re.sub("[إأآ]", "ا", t).replace("ى", "ي").replace("ة", "ه")
     for prefix in ("وال", "بال", "فال", "كال", "لل", "ال"):
@@ -41,9 +44,9 @@ def normalize_token(token: str) -> str:
 
 def tokenize(text: str) -> list[str]:
     """Normalized, stopword-free tokens."""
-    raw = _TOKEN_RE.findall(normalize_digits_for_search(text))
+    raw = _TOKEN_RE.findall(_DIACRITICS_RE.sub("", normalize_digits_for_search(text)))
     tokens = [normalize_token(t) for t in raw]
-    return [t for t in tokens if t and t not in STOPWORDS and len(t) > 1]
+    return [t for t in tokens if t and t not in STOPWORDS and (len(t) > 1 or t.isdigit())]
 
 
 class Bm25Index:
@@ -106,7 +109,8 @@ class LexicalIndexes:
         data = collection.get(include=["documents", "metadatas"])
         index = Bm25Index(
             [str(d) for d in data["documents"]],
-            [dict(m or {}) for m in data["metadatas"]],
+            [{**dict(m or {}), "source_id": str(i)}
+             for i, m in zip(data["ids"], data["metadatas"])],
         )
         logger.info("BM25 index for '%s': %d documents.", name, len(index.documents))
         return index

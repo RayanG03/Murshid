@@ -28,6 +28,9 @@ latency. Every run writes a CSV to backend/data/eval/.
 import argparse
 import csv
 import logging
+import hashlib
+import json
+import math
 import statistics
 import time
 from datetime import datetime
@@ -44,15 +47,10 @@ QUESTIONS = BACKEND_DIR / "eval" / "questions.csv"
 # Named configurations for --matrix (gate-only). Each is a set of
 # settings overrides applied on top of config/.env.
 MATRIX: dict[str, dict[str, str]] = {
-    "baseline": {},
-    "kau_rerank": {"kau_gate_mode": "rerank"},
-    "dialect": {"dialect_normalization": "true"},
-    "hybrid": {"hybrid_lexical_extra": "3"},
-    # hybrid roughly doubled KSU rerank time on a laptop CPU (bigger pool)
-    # without gains in the first run, so "all" leaves it out.
-    "rerank+dialect": {"kau_gate_mode": "rerank", "dialect_normalization": "true"},
+    "dense": {"retrieval_mode":"dense", "hybrid_lexical_extra":"0", "kau_gate_mode":"rerank"},
+    "lexical": {"retrieval_mode":"lexical", "hybrid_lexical_extra":"0", "kau_gate_mode":"rerank"},
+    "hybrid": {"retrieval_mode":"hybrid", "hybrid_lexical_extra":"3", "kau_gate_mode":"rerank"},
 }
-
 
 class _GateOnlyGenerator(BaseGenerator):
     """Stand-in 'LLM' for gate-only runs: never calls the network."""
@@ -89,6 +87,11 @@ def apply_overrides(pairs: dict[str, str]) -> dict[str, object]:
 def load_rows(path: Path, university: str) -> list[dict]:
     with path.open(encoding="utf-8-sig", newline="") as fh:
         rows = list(csv.DictReader(fh))
+    ids = set()
+    for r in rows:
+        if not r.get("id") or r["id"] in ids or r.get("university") not in ("ksu", "kau") or r.get("expect") not in ("answer", "refuse") or not r.get("question", "").strip():
+            raise ValueError("Invalid evaluation row or duplicate ID")
+        ids.add(r["id"])
     return [r for r in rows if university in ("all", r["university"])]
 
 
@@ -147,16 +150,22 @@ def run(rows: list[dict], retriever, reranker, generate: bool) -> list[dict]:
                 row["question"], retriever, chain, university=row["university"],
                 reranker=reranker, history=history, deadline=deadline,
             )
-        except GenerationError as exc:
-            out.append({**row, "status": f"generation_error: {exc}"[:200]})
+        except Exception as exc:
+            out.append({**row, "status": f"error: {type(exc).__name__}: {exc}"[:200], "seconds": round(time.perf_counter()-started,3), "correct": False})
             continue
         seconds = time.perf_counter() - started
         evidence = _evidence_text(res)
         keys = _keywords(row)
-        hit = (not res.refused) and _contains_any(evidence, keys)
+        evidence_ids = [str(i.metadata.get("source_id", "")) for i in res.qa_items + res.doc_items]
+        gold = [x.strip() for x in row.get("expected_source_ids", "").split("|") if x.strip()]
+        hit = (not res.refused) and (bool(set(gold)&set(evidence_ids)) if gold else _contains_any(evidence, keys))
         rec = {
             **row,
             "status": "ok",
+            "hit_method": "gold_source_ids" if gold else "keyword_proxy",
+            "evidence_ids": "|".join(evidence_ids),
+            "citation_issues": "|".join(res.citation_issues),
+            "truncated": res.truncated,
             "refused": res.refused,
             "gate": res.gate,
             "gate_top_score": round(res.gate_top_score, 4),
@@ -172,6 +181,7 @@ def run(rows: list[dict], retriever, reranker, generate: bool) -> list[dict]:
             rec.update({
                 "answer": res.answer,
                 "provider": res.provider,
+                "required_answer_facts_proxy": all(f.strip() in res.answer for f in row.get("required_answer_facts", "").split("|") if f.strip()),
                 "keyword_in_answer": _contains_any(res.answer, keys),
                 "ungrounded_numbers": " ".join(res.ungrounded_numbers),
             })
@@ -187,7 +197,15 @@ def summarize(records: list[dict], label: str = "") -> dict[str, dict]:
         ans = [r for r in recs if r["expect"] == "answer"]
         ref = [r for r in recs if r["expect"] == "refuse"]
         hits = [r for r in ans if r["hit"] is True]
+        all_rows = [r for r in records if r["university"] == uni]
+        times = sorted(r["seconds"] for r in all_rows if "seconds" in r)
         m = {
+            "total_rows": len(all_rows),
+            "errors": sum(r.get("status", "").startswith("error:") for r in all_rows),
+            "skipped": sum(r.get("status", "").startswith("skipped") for r in all_rows),
+            "gold_labeled_rows": sum(bool(r.get("expected_source_ids")) for r in all_rows),
+            "correct_over_all_attempts": _rate([r.get("correct") is True for r in all_rows]),
+            "p95_seconds": times[math.ceil(.95*len(times))-1] if times else None,
             "n": len(recs),
             "answerable_pass": _rate([not r["refused"] for r in ans]),
             "hit_rate": _rate([r["hit"] is True for r in ans]),
@@ -229,6 +247,17 @@ def write_csv(records: list[dict], tag: str) -> Path:
         writer = csv.DictWriter(fh, fieldnames=keys)
         writer.writeheader()
         writer.writerows(records)
+    settings = get_settings()
+    manifest = {
+        "settings": {k:getattr(settings,k) for k in (
+            "evidence_mode","retrieval_mode","hybrid_lexical_extra","kau_gate_mode","numeric_guard_mode",
+            "citation_guard_mode","reranker_model_name","embedding_model_name","general_fallback_mode")},
+        "evaluation_rows_sha256": hashlib.sha256(json.dumps([{k:v for k,v in r.items() if k in ("id","university","question","expect","expect_any","expected_source_ids")} for r in records],ensure_ascii=False,sort_keys=True).encode()).hexdigest(),
+        "source_sha256": {str(p.relative_to(settings.sources_dir)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(settings.sources_dir.rglob("*")) if p.is_file()},
+        "qa_sha256": {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in settings.data_dir.glob("*_qa.csv")},
+        "note":"Keywords and fact substrings are proxies, not academic answer accuracy. Indexed QA self-retrieval is not a held-out benchmark."
+    }
+    path.with_suffix(".manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding="utf-8")
     return path
 
 

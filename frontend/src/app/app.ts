@@ -8,6 +8,7 @@ interface ChatMessage {
   text: string;
   time: string;
   feedback?: 'up' | 'down' | null;
+  requestId?: string;
   isError?: boolean;
 }
 
@@ -185,6 +186,7 @@ export class App {
         id: this.uid(),
         role: 'bot',
         text: answer,
+        requestId: this.lastRequestId,
         time: this.time(),
         feedback: null,
       };
@@ -231,6 +233,7 @@ export class App {
         id: this.uid(),
         role: 'bot',
         text: answer,
+        requestId: this.lastRequestId,
         time: this.time(),
         feedback: null,
       };
@@ -276,7 +279,7 @@ export class App {
       const answer = await this.ask(q);
       this.messages.update((l) =>
         l.map((x) =>
-          x.id === m.id ? { ...x, text: answer, time: this.time(), feedback: null } : x,
+          x.id === m.id ? { ...x, text: answer, requestId: this.lastRequestId, time: this.time(), feedback: null } : x,
         ),
       );
     } catch {
@@ -401,7 +404,7 @@ export class App {
       fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ university: this.selected().id, answer: m.text, feedback: value }),
+        body: JSON.stringify({ university: this.selected().id, answer: m.text, feedback: value, request_id: m.requestId }),
       }).catch(() => {});
     } catch {
       // تجاهل
@@ -522,6 +525,7 @@ export class App {
             text: m.text,
             time: m.time,
             feedback: m.feedback ?? null,
+            requestId: typeof m.requestId === "string" ? m.requestId : undefined,
             isError: m.isError ?? false,
           })),
         }));
@@ -539,6 +543,8 @@ export class App {
       // تجاهل
     }
   }
+
+  private lastRequestId: string | undefined;
 
   private async ask(question: string): Promise<string> {
     const apiUrl = 'http://localhost:8000/ask';
@@ -558,12 +564,13 @@ export class App {
       clearTimeout(timer);
       if (!res.ok) throw new Error('bad response');
       const data = await res.json();
-      return data.answer ?? data.response ?? 'لم يصل رد من النظام.';
+      const answer = data.answer ?? data.response;
+      if (typeof answer !== 'string' || !answer.trim()) throw new Error('empty answer');
+      this.lastRequestId = typeof data.request_id === 'string' ? data.request_id : undefined;
+      return answer;
     } catch (e) {
       clearTimeout(timer);
-      // رد تجريبي محلي. عند ربط الخادم احذف السطرين التاليين ليظهر الخطأ الحقيقي وزر إعادة المحاولة:
-      await this.wait(900);
-      return this.demoAnswer(question);
+      throw e;
     }
   }
 
@@ -581,19 +588,6 @@ export class App {
       }
     }
     return turns;
-  }
-
-  private demoAnswer(question: string): string {
-    return (
-      'هذا رد تجريبي من الواجهة (لم يُربط الخادم بعد).\n' +
-      'الجامعة المختارة: ' + this.selected().name + '\n' +
-      'سؤالك: ' + question + '\n' +
-      'بعد ربط النظام سيظهر هنا الرد الحقيقي المبني على مصادر الجامعة.'
-    );
-  }
-
-  private wait(ms: number): Promise<void> {
-    return new Promise((r) => setTimeout(r, ms));
   }
 
   private time(): string {

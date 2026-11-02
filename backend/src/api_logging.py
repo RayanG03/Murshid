@@ -26,7 +26,7 @@ class JsonlLogger:
             with self.path.open("a", encoding="utf-8") as fh:
                 fh.write(line + "\n")
 
-    def last_assembly(self, university: str, answer_text: str) -> str | None:
+    def last_assembly(self, university: str, answer_text: str, request_id: str | None = None) -> str | None:
         """Question text of the LAST ask.jsonl entry matching this answer.
 
         POST /feedback identifies the request by the FULL answer text (API
@@ -46,6 +46,7 @@ class JsonlLogger:
             if (
                 record.get("university") == university
                 and record.get("answer") == answer_text
+                and (request_id is None or record.get("request_id") == request_id)
             ):
                 return record.get("question")
         return None

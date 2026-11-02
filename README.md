@@ -1,3 +1,5 @@
+> **Updated release with both 1,074-question workbooks:** start with [دليل تشغيل النسخة الجديدة](START_HERE_AR.md). KSU has 1,074 original QA records; KAU has 658 eligible records and 416 retained for review. Original workbooks and source catalogs are included. Older fixed-count build instructions below describe the legacy dataset; use the new importer and guide for this release. Rebuild the vector index before serving.
+
 # مُرشِد — Murshid · Arabic University Regulations Assistant
 
 An Arabic **RAG (Retrieval-Augmented Generation)** question-answering chatbot over the official

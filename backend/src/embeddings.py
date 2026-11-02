@@ -3,7 +3,6 @@
 import logging
 from collections.abc import Sequence
 
-from sentence_transformers import SentenceTransformer
 
 from src.config import E5_PASSAGE_PREFIX, E5_QUERY_PREFIX
 
@@ -19,7 +18,8 @@ class E5Embedder:
 
     def __init__(self, model_name: str) -> None:
         logger.info("Loading embedding model '%s' ...", model_name)
-        self._model = SentenceTransformer(model_name)
+        from sentence_transformers import SentenceTransformer
+        self._model = SentenceTransformer(model_name, device="cpu")
         self.dimension = int(self._model.get_embedding_dimension())
         logger.info("Embedding model loaded (dim=%d).", self.dimension)
 

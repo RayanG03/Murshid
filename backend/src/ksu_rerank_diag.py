@@ -27,7 +27,6 @@ import time
 from collections.abc import Callable, Sequence
 from typing import Any, Protocol
 
-from sentence_transformers import CrossEncoder
 
 from src.chroma_store import get_client
 from src.config import get_settings
@@ -387,6 +386,7 @@ def build_report(rows: list[dict[str, Any]]) -> dict[str, Any]:
 
 
 def main() -> None:
+    from sentence_transformers import CrossEncoder
     """Build the real components once, then print + write the report."""
     settings = get_settings()
     embedder = E5Embedder(settings.embedding_model_name)

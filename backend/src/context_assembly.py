@@ -7,6 +7,8 @@ the pipeline must refuse to answer (known-gaps principle wired in here).
 
 from dataclasses import dataclass, field
 
+from src.config import get_settings
+
 from src.prompts import DOC_BLOCK_TITLE, qa_block_title
 from src.retrieval import Retrieved
 
@@ -36,6 +38,9 @@ def _qa_line(item: Retrieved, university: str = "kau") -> str:
         f"- س: {item.document}\n"
         f"  ج: {item.metadata.get('answer', '')}\n"
         f"  {tag}"
+        + (f"\n  حالة التوثيق: {item.metadata['evidence_status']}" if item.metadata.get('evidence_status') else "")
+        + (f"\n  رابط الدليل: {item.metadata['source_url']}" if item.metadata.get('source_url') else "")
+        + (f"\n  موضع الدليل: {item.metadata['source_locator']}" if item.metadata.get('source_locator') else "")
     )
 
 
@@ -63,6 +68,12 @@ def _ksu_doc_source(md: dict) -> str:
         # (cover + TOC) carry no printed number. The default of 6 keeps
         # chunks stored before this field existed citing exactly as before.
         printed = int(md.get("page", 6)) - int(md.get("page_offset", 6))
+        if get_settings().evidence_mode == "documents_only":
+            page = md.get("page", "?")
+            location = f"صفحة PDF {page}"
+            if printed > 0:
+                location += f"، الصفحة المطبوعة {printed}"
+            return f"{label} ({location})"
         return f"{label} (صفحة {printed})"
     type_ = md.get("type")
     if type_ == "txt":
@@ -70,6 +81,11 @@ def _ksu_doc_source(md: dict) -> str:
         service = md.get("service", "")
         if service:
             src += f" > {service}"
+        if get_settings().evidence_mode == "documents_only":
+            filename = str(md.get("source_file", "university documents.txt"))
+            src = f"خدمات القبول والتسجيل — {filename}" + (f" > {src}" if src else "")
+            if md.get("source_url"):
+                src += f" ({md['source_url']})"
         return src
     # Unknown KSU shape: fall back to the KAU line so nothing renders empty.
     return _kau_doc_source(md)
@@ -137,7 +153,7 @@ def render_context(context: AssembledContext, university: str = "kau") -> str:
     if context.is_empty:
         return ""
     blocks: list[str] = []
-    if context.qa_items:
+    if context.qa_items and get_settings().evidence_mode == "qa_and_documents":
         blocks.append(
             qa_block_title(university)
             + "\n"

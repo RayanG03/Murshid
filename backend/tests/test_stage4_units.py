@@ -78,7 +78,7 @@ def test_prompt_has_labeled_blocks() -> None:
     assert "س?" in prompt
 
 
-def test_retry_backoff_and_failure(caplog: pytest.LogCaptureFixture) -> None:
+def test_retry_backoff_and_failure(caplog: pytest.LogCaptureFixture, monkeypatch) -> None:
     from src.config import Settings
 
     offline = Settings(
@@ -88,6 +88,10 @@ def test_retry_backoff_and_failure(caplog: pytest.LogCaptureFixture) -> None:
         "deepseek", "test-model", settings=offline,
         backoff_base=0.01, max_attempts=3,
     )
+    import httpx
+    def disconnected(*args, **kwargs):
+        raise httpx.ConnectError("simulated connection refusal")
+    monkeypatch.setattr(gen, "_invoke", disconnected)
     with caplog.at_level(logging.WARNING, logger="capstone.generation"):
         with pytest.raises(GenerationError):
             gen.generate("sys", "prompt", label="simulated-failure")

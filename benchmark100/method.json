@@ -1,0 +1,16 @@
+{
+  "seed": 20261030,
+  "candidate_counts": {
+    "ksu": 50,
+    "kau": 49
+  },
+  "selected_counts": {
+    "kau": 50,
+    "ksu": 50
+  },
+  "answerable": 90,
+  "refusal": 10,
+  "method": "45 source-derived questions sampled without replacement per university, plus five personal-data refusal controls per university; final order shuffled. Not a uniform sample of the 1074-row workbooks. Not a held-out benchmark.",
+  "sources_date": "2026-10-30",
+  "source_evidence": "Existing project text and committed page transcriptions, not freshly verified university websites. Reference answers are manually synthesized from saved passages; independent academic review remains appropriate."
+}

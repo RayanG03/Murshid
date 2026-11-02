@@ -65,3 +65,49 @@ def ungrounded_numbers(answer: str, context: str, question: str = "") -> list[st
             continue
         missing.append(num)
     return missing
+
+
+def invalid_citations(answer: str, allowed: list[str]) -> list[str]:
+    """Find citation labels not present in the assembled evidence."""
+    labels = [m[len("[المصدر:"):-1].strip() for m in _CITATION_RE.findall(answer)]
+    return sorted(set(labels) - set(allowed))
+
+
+_QA_REFERENCE_RE = re.compile(r"\b(?:KSU|KAU)[-_]\d+\b|(?:سؤال|السؤال)\s+(?:موث[قّ]+\s+)?رقم", re.I)
+
+
+_DOCUMENT_CITATION_RE = re.compile(r"\[\s*المصدر\s*:\s*([^\]]+)\]")
+
+
+def render_document_citations(answer: str, labels: list[str]) -> tuple[str, list[str]]:
+    """Validate document identities and expand aliases without guessing sources.
+
+    This checks citation identity/presence, not claim entailment. QA IDs,
+    unknown references and missing citations fail closed. Alias digit/space
+    variants are harmless; full document labels still match exactly.
+    """
+    aliases = {f"مرجع {n}": label for n, label in enumerate(labels, 1)}
+    aliases.update({label: label for label in labels if label})
+
+    def resolve(key: str) -> str | None:
+        key = key.strip()
+        numbered = re.fullmatch(r"مرجع\s*(\d+)", normalize_digits_for_search(key))
+        if numbered:
+            key = f"مرجع {int(numbered[1])}"
+        return aliases.get(key)
+
+    issues = []
+    tags = list(_DOCUMENT_CITATION_RE.finditer(answer))
+    if not tags:
+        issues.append("missing_document_citation")
+    if _QA_REFERENCE_RE.search(answer):
+        issues.append("qa_reference_forbidden")
+    for tag in tags:
+        if not resolve(tag[1]):
+            issues.append(f"unknown_document_citation:{tag[1].strip()}")
+    if issues:
+        return answer, sorted(set(issues))
+    rendered = _DOCUMENT_CITATION_RE.sub(
+        lambda m: "[المصدر: " + str(resolve(m[1])) + "]", answer,
+    )
+    return rendered, []

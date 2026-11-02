@@ -1,0 +1,27 @@
+{
+  "file": "KAU_All_1074_Questions.xlsx",
+  "input_sha256": "cd764fa0b3c1db5a347987acbbe791e727e416bdce6e29d7d31986c59640b67f",
+  "university": "kau",
+  "input_rows": 1074,
+  "accepted": 658,
+  "review": 416,
+  "source_catalog_rows": 23,
+  "allow_legacy_reviewed": true,
+  "status_counts": {
+    "مراجعة سابقة — مطابق بالمعنى": 225,
+    "مراجعة سابقة — إجابة معدلة لعبدالعزيز": 146,
+    "موثق بشروط / تطبيق للحكم": 149,
+    "موثق": 138,
+    "غير موثّق رسميًا — مراجعة سابقة": 203,
+    "يحتاج تحقق رسمي إضافي": 138,
+    "إرشاد عام؛ ليس حكمًا جامعيًا": 57,
+    "صياغة خاصة بسعود؛ تحتاج تكييف": 13,
+    "يحتاج توضيح السؤال": 5
+  },
+  "reason_counts": {
+    "evidence_not_eligible": 416,
+    "missing_official_kau_url": 62,
+    "missing_question_or_answer": 12
+  },
+  "note": "Input evidence labels preserved; no new official verification. KSU comparison links are not KSU evidence."
+}

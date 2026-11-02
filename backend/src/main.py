@@ -18,15 +18,14 @@ http://localhost:8000):
 - GET /universities -> [{id, name, available}]; not called by the current
   frontend (it hardcodes ksu/kau locally) but built per the contract.
 
-KNOWN ISSUE (flagged, deliberately NOT fixed — frontend changes are out of
-scope): on any /ask failure or timeout the frontend silently shows a canned
-demo answer instead of surfacing the error, so backend problems arrive as
-fake answers. These endpoints therefore log every failing request at
-WARNING so masking is always visible in the backend logs.
+Frontend failures are surfaced as retryable errors. Request IDs correlate feedback
+with the exact answer attempt. Stage deadline checks cannot cancel active CPU work.
 """
 
 import logging
 import time
+import threading
+from uuid import uuid4
 from collections.abc import AsyncIterator, Callable
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
@@ -113,7 +112,7 @@ def _load_resources(app: FastAPI, settings: Settings) -> None:
                     "run the ingest for it (see README)", name, uni,
                 )
     app.state.collection_counts = counts
-    if settings.hybrid_lexical_extra > 0:
+    if settings.hybrid_lexical_extra > 0 or settings.retrieval_mode != "dense":
         for uni in UNIVERSITY_COLLECTIONS:
             app.state.retriever.warm_lexical(uni)
     _warm_up(app, settings)
@@ -168,6 +167,7 @@ def _lifespan_for(load_resources: bool) -> Callable[[FastAPI], AsyncIterator[Non
         app.state.answer_cache = AnswerCache(
             settings.answer_cache_size, settings.answer_cache_ttl_s
         )
+        app.state.question_slots = threading.BoundedSemaphore(max(1, settings.max_concurrent_questions))
         yield
         logger.info("Shutting down %s", settings.app_name)
 
@@ -180,6 +180,7 @@ def _register_routes(app: FastAPI) -> None:
     @app.post("/ask")
     def ask(payload: dict[str, Any], request: Request) -> Any:
         """Answer a question from RAG evidence (sync: runs in the threadpool)."""
+        request_id = uuid4().hex
         started = time.perf_counter()
         # Request deadline anchored HERE — before validation, retrieval and
         # rerank — so generation receives only the remaining time and can
@@ -227,7 +228,7 @@ def _register_routes(app: FastAPI) -> None:
         )
 
         cache = getattr(state, "answer_cache", None)
-        key = cache_key(university, question)
+        key = cache_key(f"{university}:{settings.evidence_mode}", question)
         if cache is not None and not turns:
             cached = cache.get(key)
             if cached is not None:
@@ -239,13 +240,19 @@ def _register_routes(app: FastAPI) -> None:
                         "answer": cached["answer"],
                         "refused": cached["refused"],
                         "cached": True,
+                        "evidence_mode": settings.evidence_mode,
+                        "request_id": request_id,
+                        "sources": cached["sources"],
+                        "source_details": cached.get("source_details", []),
                         "seconds": {
                             "total": round(time.perf_counter() - started, 3)
                         },
                     }
                 )
-                return {"answer": cached["answer"], "sources": cached["sources"]}
+                return {**cached, "request_id": request_id}
 
+        if not state.question_slots.acquire(blocking=False):
+            return _error_response(429, "system is busy; retry shortly")
         try:
             result = answer_question(
                 question,
@@ -266,6 +273,10 @@ def _register_routes(app: FastAPI) -> None:
                 500, f"internal error: {type(exc).__name__}"
             )
 
+        finally:
+            state.question_slots.release()
+
+        details = source_details(result)
         seconds = {
             "rewrite": round(result.rewrite_seconds, 3),
             "search": round(result.search_seconds, 3),
@@ -291,13 +302,20 @@ def _register_routes(app: FastAPI) -> None:
                 "ungrounded_numbers": result.ungrounded_numbers,
                 "numeric_guard_refused": result.numeric_guard_refused,
                 "history_turns": len(turns),
+                "evidence_mode": settings.evidence_mode,
+                "request_id": request_id,
+                "source_details": details,
+                "citation_issues": result.citation_issues,
+                "refusal_reason": result.refusal_reason,
+                **({"diagnostics": result.diagnostics}
+                   if settings.retrieval_diagnostics else {}),
             }
         )
-        if cache is not None and not turns and not result.truncated:
+        if cache is not None and not turns and not result.truncated and not result.refused:
             cache.put(
                 key,
                 {"answer": result.answer, "refused": result.refused,
-                 "sources": result.sources},
+                 "sources": result.sources, "source_details": details},
             )
         logger.info(
             "[api] /ask university=%s refused=%s provider=%s total=%.2fs",
@@ -306,7 +324,8 @@ def _register_routes(app: FastAPI) -> None:
         # Always the "answer" key ("response" is only a frontend fallback);
         # "sources" lists the evidence actually sent to the model (ignored
         # by the current frontend, useful for API clients and the demo).
-        return {"answer": result.answer, "sources": result.sources}
+        return {"answer": result.answer, "sources": result.sources,
+                "refused": result.refused, "request_id": request_id, "source_details": details}
 
     @app.post("/feedback")
     def feedback(payload: dict[str, Any], request: Request) -> dict[str, str]:
@@ -328,7 +347,12 @@ def _register_routes(app: FastAPI) -> None:
             return _error_response(
                 400, "feedback must be 'up', 'down' or null"
             )
-        question = state.ask_logger.last_assembly(university, answer_text)
+        request_id = payload.get("request_id")
+        if request_id is not None and (not isinstance(request_id, str) or len(request_id) > 64):
+            return _error_response(400, "invalid request_id")
+        if len(answer_text) > 20000:
+            return _error_response(400, "answer exceeds maximum length")
+        question = state.ask_logger.last_assembly(university, answer_text, request_id)
         state.feedback_logger.write(
             {
                 "timestamp": _now_iso(),
@@ -336,6 +360,7 @@ def _register_routes(app: FastAPI) -> None:
                 "answer": answer_text,
                 "feedback": value,
                 "matched_question": question,
+                "request_id": request_id,
             }
         )
         return {}
@@ -391,6 +416,7 @@ def _register_routes(app: FastAPI) -> None:
             "status": "ok" if not empty else "degraded",
             "collections": counts,
             "empty_collections": empty,
+            "evidence_mode": get_settings().evidence_mode,
         }
 
 
@@ -417,6 +443,19 @@ def create_app(load_resources: bool = True) -> FastAPI:
     )
     _register_routes(app)
     return app
+
+
+def source_details(result) -> list[dict]:
+    """Structured evidence actually sent to the model, empty on refusal."""
+    if result.refused or "+fallback:" in result.gate:
+        return []
+    return [{"source_id": i.metadata.get("source_id", ""),
+             "title": i.metadata.get("page_title", i.metadata.get("doc", i.metadata.get("filename", ""))),
+             "url": i.metadata.get("source_url", ""),
+             "page": i.metadata.get("page", ""),
+             "q_id": i.metadata.get("q_id", ""),
+             "evidence_status": i.metadata.get("evidence_status", "")}
+            for i in result.qa_items + result.doc_items]
 
 
 app = create_app()

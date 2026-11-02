@@ -58,6 +58,7 @@ class _FakeCollection:
     def query(self, **_: int) -> dict:
         """Minimal query response with a single result."""
         return {
+            "ids": [["fake-3"]],
             "documents": [["نص"]],
             "metadatas": [[{"q_id": 3, "answer": "جواب"}]],
             "distances": [[0.05]],

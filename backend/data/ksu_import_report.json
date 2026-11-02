@@ -1,0 +1,15 @@
+{
+  "file": "KSU_All_1074_Questions.xlsx",
+  "input_sha256": "7c518f0ba4fca897f21ad49fda9eb2dd0c1137b001ac5660ab461b1e3a5f4628",
+  "university": "ksu",
+  "input_rows": 1074,
+  "accepted": 1074,
+  "review": 0,
+  "source_catalog_rows": 23,
+  "allow_legacy_reviewed": false,
+  "status_counts": {
+    "إجابة أصلية؛ لم تُراجع رسميًا في هذا الدمج": 1074
+  },
+  "reason_counts": {},
+  "note": "Input evidence labels preserved; no new official verification. KSU comparison links are not KSU evidence."
+}

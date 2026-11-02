@@ -1,10 +1,15 @@
 """ChromaDB persistent store: collections per university and source type."""
 
+from __future__ import annotations
+
 import logging
 from collections.abc import Sequence
 from pathlib import Path
 
-import chromadb
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import chromadb
 
 logger = logging.getLogger("capstone.chroma")
 
@@ -23,6 +28,12 @@ ALL_KSU_COLLECTIONS = (COL_KSU_QA, COL_KSU_TXT, COL_KSU_PDF)
 
 def get_client(chroma_dir: Path) -> chromadb.api.ClientAPI:
     """Open (or create) the persistent ChromaDB client."""
+    from src.config import get_settings
+    settings = get_settings()
+    if settings.vector_backend == "flat":
+        from src.flat_store import FlatClient
+        return FlatClient(settings.flat_index_dir)
+    import chromadb
     chroma_dir.mkdir(parents=True, exist_ok=True)
     return chromadb.PersistentClient(path=str(chroma_dir))
 

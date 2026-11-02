@@ -17,14 +17,16 @@ from src.context_assembly import (
 from src.dialect import normalize_dialect
 from src.generators import (
     BaseGenerator,
+    GenerationError,
     generate_with_meta,
     get_generation_chain,
 )
-from src.grounding import ungrounded_numbers
+from src.grounding import ungrounded_numbers, invalid_citations, render_document_citations
 from src.ksu_gate import RerankerLike, filter_ranked, rerank_and_gate
 from src.prompts import build_system_prompt, build_user_prompt
 from src.query_rewrite import Turn, rewrite_question
 from src.retrieval import Retrieved, Retriever
+from src.retrieval_diagnostics import evidence_trace
 
 logger = logging.getLogger("capstone.pipeline")
 
@@ -62,6 +64,10 @@ class AnswerResult:
     sources: list[str] = field(default_factory=list)
     ungrounded_numbers: list[str] = field(default_factory=list)
     numeric_guard_refused: bool = False
+    output_guard_refused: bool = False
+    citation_issues: list[str] = field(default_factory=list)
+    refusal_reason: str = ""
+    diagnostics: dict = field(default_factory=dict)
 
 
 def answer_question(
@@ -145,9 +151,11 @@ def _maybe_fallback(
     settings = get_settings()
     gate_refused = result.refused and result.provider == "none"
     model_refused = (
-        not result.numeric_guard_refused
+        not result.numeric_guard_refused and not result.output_guard_refused
         and result.answer.strip() == CANNOT_CONFIRM
     )
+    if settings.evidence_mode == "documents_only":
+        return result
     if settings.general_fallback_mode == "off" or not (gate_refused or model_refused):
         return result
     from src.general_fallback import try_fallback
@@ -177,8 +185,11 @@ def _answer_for_query(
     deadline: float | None,
     rewrite_seconds: float,
 ) -> AnswerResult:
-    """Gate + generation for one search query (see answer_question)."""
+    """Gate + generation; document mode excludes QA before every gate."""
     settings = get_settings()
+    _check_deadline(deadline, "before retrieval")
+    if settings.retrieval_mode != "dense" and university == "kau" and (settings.kau_gate_mode != "rerank" or reranker is None):
+        raise ValueError("lexical/hybrid retrieval requires the rerank gate")
     use_rerank = university == "ksu" or (
         university == "kau" and settings.kau_gate_mode == "rerank"
     )
@@ -200,7 +211,11 @@ def _answer_for_query(
     qa_results, doc_results = retriever.retrieve_split(
         search_query, university=university
     )
+    if settings.evidence_mode == "documents_only":
+        qa_results = []
+        doc_results = _documents_only(doc_results, university)
     search_seconds = time.perf_counter() - t0
+    _check_deadline(deadline, "after retrieval")
     context = assemble_context(
         qa_results,
         doc_results,
@@ -226,6 +241,7 @@ def _answer_for_query(
             rewrite_seconds=rewrite_seconds,
             search_seconds=search_seconds,
             search_query=search_query, gate=gate_label, gate_top_score=top,
+            refusal_reason="retrieval_gate",
         )
 
     result = _generate_answer(
@@ -305,14 +321,23 @@ def _answer_question_rerank(
     pool_size, threshold = _rerank_params(university)
     query = search_query if search_query is not None else question
     t0 = time.perf_counter()
-    qa_results, doc_results = retriever.retrieve_split(query, university=university)
+    if settings.retrieval_mode == "lexical":
+        qa_results, doc_results = retriever.lexical_split(query, pool_size, university=university)
+    else:
+        qa_results, doc_results = retriever.retrieve_split(query, university=university)
     extra: list[Retrieved] = []
-    if settings.hybrid_lexical_extra > 0 and hasattr(retriever, "lexical_split"):
+    lexical_extra = settings.hybrid_lexical_extra or (3 if settings.retrieval_mode == "hybrid" else 0)
+    if settings.retrieval_mode != "lexical" and lexical_extra > 0 and hasattr(retriever, "lexical_split"):
         lex_qa, lex_docs = retriever.lexical_split(
-            query, settings.hybrid_lexical_extra, university=university
+            query, lexical_extra, university=university
         )
         extra = lex_qa + lex_docs
+    if settings.evidence_mode == "documents_only":
+        qa_results = []
+        doc_results = _documents_only(doc_results, university)
+        extra = _documents_only(extra, university)
     search_seconds = time.perf_counter() - t0
+    _check_deadline(deadline, "after retrieval")
     gate = rerank_and_gate(
         query, qa_results, doc_results, reranker,
         pool_size=pool_size, threshold=threshold, extra_candidates=extra,
@@ -323,6 +348,7 @@ def _answer_question_rerank(
         university, gate.pool_size, gate.top_score,
         "pass" if gate.passed else "refuse", gate.rerank_seconds, question,
     )
+    _check_deadline(deadline, "after reranking")
     remaining = None if deadline is None else deadline - time.monotonic()
     logger.info(
         "[timing] %s search=%.2fs rerank=%.2fs remaining_for_answer=%s",
@@ -330,6 +356,11 @@ def _answer_question_rerank(
         "n/a" if remaining is None else f"{remaining:.1f}s",
     )
     gate_label = "rerank-pass" if gate.passed else "rerank-refuse"
+    trace = ({"retrieval_mode": settings.retrieval_mode,
+              "threshold": threshold, "passed": gate.passed,
+              "pool_size": gate.pool_size,
+              "ranked_candidates": evidence_trace(gate.ranked, gate.scores)}
+             if settings.retrieval_diagnostics else {})
     if not gate.passed:
         return AnswerResult(
             question=question, answer=CANNOT_CONFIRM, context_text="",
@@ -338,6 +369,7 @@ def _answer_question_rerank(
             search_seconds=search_seconds,
             rerank_seconds=gate.rerank_seconds,
             search_query=query, gate=gate_label, gate_top_score=gate.top_score,
+            refusal_reason="retrieval_gate", diagnostics=trace,
         )
     ranked = (
         filter_ranked(
@@ -364,6 +396,8 @@ def _answer_question_rerank(
         search_query=query,
     )
     result.gate, result.gate_top_score = gate_label, gate.top_score
+    if trace:
+        result.diagnostics.update(trace)
     return result
 
 
@@ -378,7 +412,7 @@ def _answer_question_ksu(question, retriever, generator, reranker, **kwargs):
 def context_sources(context: AssembledContext, university: str) -> list[str]:
     """Citation strings for the evidence actually sent to the LLM."""
     out: list[str] = []
-    for item in context.qa_items:
+    for item in (context.qa_items if get_settings().evidence_mode == "qa_and_documents" else []):
         q_id = item.metadata.get("q_id", "?")
         out.append(
             f"سؤال موثّق رقم {q_id}" if university == "kau" else f"سؤال رقم {q_id}"
@@ -407,11 +441,35 @@ def _generate_answer(
     with the context (settings.numeric_guard_mode).
     """
     settings = get_settings()
+    if settings.evidence_mode == "documents_only":
+        context = AssembledContext(
+            qa_items=[], doc_items=_documents_only(context.doc_items, university),
+            qa_gate="documents-only", doc_gate=context.doc_gate,
+        )
+    if context.is_empty:
+        return AnswerResult(
+            question=question, answer=CANNOT_CONFIRM, context_text="",
+            qa_items=[], doc_items=[], refused=True,
+            search_seconds=search_seconds, rerank_seconds=rerank_seconds,
+            rewrite_seconds=rewrite_seconds, search_query=search_query or question,
+            refusal_reason="empty_context",
+        )
     context_text = render_context(context, university)
     chain = _as_chain(generator)
 
     qa_block = "\n".join(_qa_line(i, university) for i in context.qa_items)
     doc_block = "\n".join(_doc_line(i, university) for i in context.doc_items)
+    document_labels = [(_ksu_doc_source(i.metadata) if university == "ksu" else _kau_doc_source(i.metadata))
+                       for i in context.doc_items]
+    if settings.evidence_mode == "documents_only":
+        qa_block = ""
+        doc_block = "\n\n".join(
+            f"مرجع {n}\nالمصدر الأصلي: {label}\nالنص: {item.document}\n"
+            f"وسم الاستشهاد: [المصدر: مرجع {n}]"
+            for n, (label, item) in enumerate(zip(document_labels, context.doc_items), 1)
+        )
+        # Numeric checks use exactly the same evidence that reaches the model.
+        context_text = doc_block
     user_prompt = build_user_prompt(
         question, qa_block, doc_block, university,
         standalone_question=(
@@ -428,7 +486,23 @@ def _generate_answer(
     )
     generation_seconds = time.perf_counter() - t0
 
-    answer = result.text
+    raw_generation_text = result.text.strip()
+    answer = raw_generation_text
+    refusal_reason = ("generation_truncated" if result.truncated else
+                      "generation_empty" if not answer else
+                      "model_refusal" if answer == CANNOT_CONFIRM else "")
+    output_guard = not answer or result.truncated
+    output_refused = output_guard or answer == CANNOT_CONFIRM
+    if output_refused:
+        answer = CANNOT_CONFIRM
+    if settings.evidence_mode == "documents_only" and not output_refused:
+        answer, citation_issues = render_document_citations(answer, document_labels)
+    else:
+        citation_issues = (invalid_citations(answer, context_sources(context, university))
+                           if settings.citation_guard_mode != "off" else [])
+    if citation_issues and (settings.evidence_mode == "documents_only" or settings.citation_guard_mode == "refuse"):
+        answer, output_refused, output_guard = CANNOT_CONFIRM, True, True
+        refusal_reason = "citation_guard"
     missing: list[str] = []
     guard_refused = False
     if settings.numeric_guard_mode in ("log", "refuse") and answer.strip() != CANNOT_CONFIRM:
@@ -442,18 +516,41 @@ def _generate_answer(
             )
             if settings.numeric_guard_mode == "refuse":
                 answer, guard_refused = CANNOT_CONFIRM, True
+                refusal_reason = "numeric_guard"
 
     return AnswerResult(
         question=question, answer=answer, context_text=context_text,
         qa_items=context.qa_items, doc_items=context.doc_items,
-        refused=guard_refused,
+        refused=guard_refused or output_refused,
         provider=result.provider, model=result.model,
         truncated=result.truncated,
         rewrite_seconds=rewrite_seconds,
         search_seconds=search_seconds, rerank_seconds=rerank_seconds,
         generation_seconds=generation_seconds,
         search_query=search_query or question,
-        sources=[] if guard_refused else context_sources(context, university),
+        sources=[] if guard_refused or output_refused else context_sources(context, university),
+        citation_issues=citation_issues,
+        output_guard_refused=output_guard,
         ungrounded_numbers=missing,
         numeric_guard_refused=guard_refused,
+        refusal_reason=refusal_reason,
+        diagnostics=({
+            "selected_context": evidence_trace(context.qa_items + context.doc_items),
+            "raw_generation_text": raw_generation_text[:6000],
+            "raw_generation_truncated_in_log": len(raw_generation_text) > 6000,
+        } if settings.retrieval_diagnostics else {}),
     )
+
+
+def _check_deadline(deadline: float | None, stage: str) -> None:
+    """Check between stages; does not cancel active CPU inference."""
+    if deadline is not None and time.monotonic() >= deadline:
+        raise GenerationError(f"request deadline exhausted {stage}")
+
+
+def _documents_only(items: list[Retrieved], university: str) -> list[Retrieved]:
+    """Only document collections of the selected university may supply evidence."""
+    allowed = set(UNIVERSITY_COLLECTIONS[university][1:])
+    return [i for i in items if i.source_type in allowed
+            and i.metadata.get("type") != "qa"
+            and i.metadata.get("university", university) == university]

@@ -1,0 +1,680 @@
+{
+  "university": "kau",
+  "pages": 133,
+  "warnings": 3,
+  "manual_references": 0,
+  "details": [
+    {
+      "path": "تقويم 26-27/page_01.txt",
+      "characters": 2496,
+      "flags": []
+    },
+    {
+      "path": "دليل التحويل الداخلي/page_01.txt",
+      "characters": 158,
+      "flags": []
+    },
+    {
+      "path": "دليل التحويل الداخلي/page_02.txt",
+      "characters": 306,
+      "flags": []
+    },
+    {
+      "path": "دليل التحويل الداخلي/page_03.txt",
+      "characters": 155,
+      "flags": []
+    },
+    {
+      "path": "دليل التحويل الداخلي/page_04.txt",
+      "characters": 1570,
+      "flags": []
+    },
+    {
+      "path": "دليل التحويل الداخلي/page_05.txt",
+      "characters": 629,
+      "flags": []
+    },
+    {
+      "path": "دليل التحويل الداخلي/page_06.txt",
+      "characters": 1266,
+      "flags": []
+    },
+    {
+      "path": "دليل التحويل الداخلي/page_07.txt",
+      "characters": 1709,
+      "flags": []
+    },
+    {
+      "path": "دليل التحويل الداخلي/page_08.txt",
+      "characters": 1516,
+      "flags": []
+    },
+    {
+      "path": "دليل التحويل الداخلي/page_09.txt",
+      "characters": 1938,
+      "flags": []
+    },
+    {
+      "path": "دليل التحويل الداخلي/page_10.txt",
+      "characters": 59,
+      "flags": []
+    },
+    {
+      "path": "دليل التحويل الداخلي/page_11.txt",
+      "characters": 1633,
+      "flags": []
+    },
+    {
+      "path": "دليل التحويل الداخلي/page_12.txt",
+      "characters": 130,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول لبرامج البكالوريوس والدبلوم/page_01.txt",
+      "characters": 135,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول لبرامج البكالوريوس والدبلوم/page_02.txt",
+      "characters": 513,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول لبرامج البكالوريوس والدبلوم/page_03.txt",
+      "characters": 93,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول لبرامج البكالوريوس والدبلوم/page_04.txt",
+      "characters": 488,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول لبرامج البكالوريوس والدبلوم/page_05.txt",
+      "characters": 1240,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول لبرامج البكالوريوس والدبلوم/page_06.txt",
+      "characters": 1419,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول لبرامج البكالوريوس والدبلوم/page_07.txt",
+      "characters": 729,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول لبرامج البكالوريوس والدبلوم/page_08.txt",
+      "characters": 1266,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول لبرامج البكالوريوس والدبلوم/page_09.txt",
+      "characters": 1441,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول لبرامج البكالوريوس والدبلوم/page_10.txt",
+      "characters": 632,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول لبرامج البكالوريوس والدبلوم/page_11.txt",
+      "characters": 951,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول لبرامج البكالوريوس والدبلوم/page_12.txt",
+      "characters": 1027,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول لبرامج البكالوريوس والدبلوم/page_13.txt",
+      "characters": 1101,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول لبرامج البكالوريوس والدبلوم/page_14.txt",
+      "characters": 238,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول لبرامج البكالوريوس والدبلوم/page_15.txt",
+      "characters": 44,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول للتحويل الخارجي إلى الجامعة/page_01.txt",
+      "characters": 158,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول للتحويل الخارجي إلى الجامعة/page_02.txt",
+      "characters": 240,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول للتحويل الخارجي إلى الجامعة/page_03.txt",
+      "characters": 105,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول للتحويل الخارجي إلى الجامعة/page_04.txt",
+      "characters": 134,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول للتحويل الخارجي إلى الجامعة/page_05.txt",
+      "characters": 1412,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول للتحويل الخارجي إلى الجامعة/page_06.txt",
+      "characters": 1452,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول للتحويل الخارجي إلى الجامعة/page_07.txt",
+      "characters": 1671,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول للتحويل الخارجي إلى الجامعة/page_08.txt",
+      "characters": 1099,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول للتحويل الخارجي إلى الجامعة/page_09.txt",
+      "characters": 1456,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول للتحويل الخارجي إلى الجامعة/page_10.txt",
+      "characters": 642,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول للتحويل الخارجي إلى الجامعة/page_11.txt",
+      "characters": 963,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول للتحويل الخارجي إلى الجامعة/page_12.txt",
+      "characters": 1039,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول للتحويل الخارجي إلى الجامعة/page_13.txt",
+      "characters": 1113,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول للتحويل الخارجي إلى الجامعة/page_14.txt",
+      "characters": 361,
+      "flags": []
+    },
+    {
+      "path": "دليل القبول للتحويل الخارجي إلى الجامعة/page_15.txt",
+      "characters": 44,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_01.txt",
+      "characters": 225,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_02.txt",
+      "characters": 480,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_03.txt",
+      "characters": 523,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_04.txt",
+      "characters": 1959,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_05.txt",
+      "characters": 2162,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_06.txt",
+      "characters": 2210,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_07.txt",
+      "characters": 2431,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_08.txt",
+      "characters": 2445,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_09.txt",
+      "characters": 2016,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_10.txt",
+      "characters": 596,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_11.txt",
+      "characters": 1938,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_12.txt",
+      "characters": 1731,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_13.txt",
+      "characters": 1840,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_14.txt",
+      "characters": 1647,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_15.txt",
+      "characters": 1843,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_16.txt",
+      "characters": 1836,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_17.txt",
+      "characters": 970,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_18.txt",
+      "characters": 1953,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_19.txt",
+      "characters": 1803,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_20.txt",
+      "characters": 2022,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_21.txt",
+      "characters": 1998,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_22.txt",
+      "characters": 1795,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_23.txt",
+      "characters": 1797,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_24.txt",
+      "characters": 1480,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_25.txt",
+      "characters": 1393,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_26.txt",
+      "characters": 1966,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_27.txt",
+      "characters": 1813,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_28.txt",
+      "characters": 2037,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_29.txt",
+      "characters": 1619,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_30.txt",
+      "characters": 1745,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_31.txt",
+      "characters": 2082,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_32.txt",
+      "characters": 2212,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_33.txt",
+      "characters": 652,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_34.txt",
+      "characters": 1544,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_35.txt",
+      "characters": 1945,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_36.txt",
+      "characters": 1916,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_37.txt",
+      "characters": 2016,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_38.txt",
+      "characters": 1899,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_39.txt",
+      "characters": 915,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_40.txt",
+      "characters": 934,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_41.txt",
+      "characters": 1853,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_42.txt",
+      "characters": 1115,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_43.txt",
+      "characters": 1663,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_44.txt",
+      "characters": 1285,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_45.txt",
+      "characters": 791,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_46.txt",
+      "characters": 1552,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_47.txt",
+      "characters": 1134,
+      "flags": []
+    },
+    {
+      "path": "لائحة الدراسة والاختبارات/page_48.txt",
+      "characters": 0,
+      "flags": [
+        "blank"
+      ]
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_01.txt",
+      "characters": 112,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_02.txt",
+      "characters": 0,
+      "flags": [
+        "blank"
+      ]
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_03.txt",
+      "characters": 523,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_04.txt",
+      "characters": 1066,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_05.txt",
+      "characters": 533,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_06.txt",
+      "characters": 944,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_07.txt",
+      "characters": 643,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_08.txt",
+      "characters": 310,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_09.txt",
+      "characters": 1244,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_10.txt",
+      "characters": 1351,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_11.txt",
+      "characters": 1321,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_12.txt",
+      "characters": 1670,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_13.txt",
+      "characters": 1383,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_14.txt",
+      "characters": 1124,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_15.txt",
+      "characters": 1278,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_16.txt",
+      "characters": 1157,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_17.txt",
+      "characters": 1315,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_18.txt",
+      "characters": 1281,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_19.txt",
+      "characters": 1313,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_20.txt",
+      "characters": 933,
+      "flags": []
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_21.txt",
+      "characters": 0,
+      "flags": [
+        "blank"
+      ]
+    },
+    {
+      "path": "لائحة الطالب الجامعي الحقوق والواجبات/page_22.txt",
+      "characters": 66,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_01.txt",
+      "characters": 129,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_02.txt",
+      "characters": 305,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_03.txt",
+      "characters": 1698,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_04.txt",
+      "characters": 130,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_05.txt",
+      "characters": 2063,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_06.txt",
+      "characters": 130,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_07.txt",
+      "characters": 2085,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_08.txt",
+      "characters": 130,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_09.txt",
+      "characters": 2010,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_10.txt",
+      "characters": 131,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_11.txt",
+      "characters": 2071,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_12.txt",
+      "characters": 130,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_13.txt",
+      "characters": 2017,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_14.txt",
+      "characters": 130,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_15.txt",
+      "characters": 2214,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_16.txt",
+      "characters": 130,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_17.txt",
+      "characters": 2021,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_18.txt",
+      "characters": 131,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_19.txt",
+      "characters": 1586,
+      "flags": []
+    },
+    {
+      "path": "لائحة ضبط سلوك الطلاب والطالبات/page_20.txt",
+      "characters": 130,
+      "flags": []
+    }
+  ],
+  "note": "Numeric overlap does not establish the rule attached to a number. Blank pages can be covers."
+}

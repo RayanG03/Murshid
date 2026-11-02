@@ -632,6 +632,8 @@ def _run_provider_with_budget(
             text, truncated = gen._invoke_once(
                 system, prompt, attempt_timeout
             )
+            if not isinstance(text, str) or not text.strip():
+                raise ValueError("provider returned an empty answer")
             seconds = time.monotonic() - t0
             attempts.append(AttemptOutcome(provider, "ok", seconds))
             logger.info(
@@ -694,6 +696,8 @@ def _run_provider_with_budget(
                         "future request in this process.",
                         provider, provider,
                     )
+                return None
+            if has_next or not retryable:
                 return None
             if retryable:
                 attempts_cap = max(attempts_cap, 6)

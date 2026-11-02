@@ -1,8 +1,10 @@
-"""Ingest backend/data/ksu_qa.csv (all 574 KSU pairs) into ksu_qa."""
+"""Ingest backend/data/ksu_qa.csv (validated KSU pairs) into ksu_qa."""
 
 import logging
 
 import pandas as pd
+
+from src.ingest.qa_validation import validate_qa, qa_record_id
 
 from src.chroma_store import COL_KSU_QA, add_batched, rebuild_collection
 from src.config import get_settings
@@ -11,7 +13,6 @@ from src.text import normalize_digits_for_search
 
 logger = logging.getLogger("capstone.ingest.ksu_qa")
 
-EXPECTED_ROWS = 574
 
 
 def ingest_ksu_qa(client, embedder: E5Embedder) -> int:
@@ -28,9 +29,8 @@ def ingest_ksu_qa(client, embedder: E5Embedder) -> int:
             "was left untouched. backend/data/ is not in git; copy ksu_qa.csv "
             "from the team drive."
         )
-    df = pd.read_csv(csv_path)
-    if len(df) != EXPECTED_ROWS:
-        raise SystemExit(f"Expected {EXPECTED_ROWS} KSU pairs, found {len(df)}")
+    df = pd.read_csv(csv_path, dtype=str, keep_default_na=False)
+    validate_qa(df, "ksu", settings.qa_expected_ksu_rows)
 
     questions = df["question_original"].astype(str).tolist()
     logger.info("Embedding %d questions ...", len(questions))
@@ -41,16 +41,14 @@ def ingest_ksu_qa(client, embedder: E5Embedder) -> int:
     collection = rebuild_collection(client, COL_KSU_QA)
     added = add_batched(
         collection,
-        ids=[f"ksu_qa_{int(q)}" for q in df["Q_ID"]],
+        ids=[qa_record_id("ksu", q) for q in df["Q_ID"]],
         documents=questions,
         metadatas=[
-            {
-                "type": "qa",
-                "q_id": int(row.Q_ID),
-                "answer": str(row.answer),
-                "category": str(row.category),
-            }
-            for row in df.itertuples(index=False)
+            {"type": "qa", "q_id": row["Q_ID"], "answer": row["answer"],
+             **{key: row.get(key, "") for key in (
+                 "category", "match_status", "source_url", "evidence_status",
+                 "source_locator", "source_codes", "verification_date", "university")}}
+            for row in df.to_dict("records")
         ],
         embeddings=embeddings,
         batch_size=settings.embedding_batch_size,

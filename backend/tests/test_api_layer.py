@@ -138,6 +138,7 @@ def test_ask_happy_path_kau(env) -> None:
         # diagnostics added 2026-10-25
         "search_query", "gate", "gate_top_score", "sources",
         "ungrounded_numbers", "numeric_guard_refused", "history_turns",
+        "request_id", "source_details", "citation_issues", "evidence_mode", "refusal_reason",
     }
 
 
@@ -382,7 +383,7 @@ def test_exhausted_deadline_returns_502_immediately(deadline_env) -> None:
     elapsed = time.perf_counter() - t0
     assert res.status_code == 502
     body = res.json()
-    assert "fake[" in body["error"] and "fake2[" in body["error"]
+    assert "request deadline exhausted after reranking" in body["error"]
     # Returned right after the rerank finished — never near 20s.
     assert elapsed < 5.0
 

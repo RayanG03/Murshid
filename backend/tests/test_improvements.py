@@ -164,7 +164,8 @@ def test_api_cache_sources_and_empty_kb(tmp_path) -> None:
         body = {"question": "سؤال مكرر", "university": "kau"}
         first = client.post("/ask", json=body).json()
         second = client.post("/ask", json=body).json()
-        assert first == second and gen.calls == 1  # served from cache
+        assert {k:v for k,v in first.items() if k != "request_id"} == {k:v for k,v in second.items() if k != "request_id"} and gen.calls == 1
+        assert first["request_id"] != second["request_id"]  # served from cache
         assert len(first["sources"]) == 1
         assert first["sources"][0].startswith("سؤال موثّق رقم")
 

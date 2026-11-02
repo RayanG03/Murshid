@@ -38,7 +38,6 @@ from pathlib import Path
 from typing import Any, Protocol
 
 import numpy as np
-from sentence_transformers import CrossEncoder
 
 from src.chroma_store import COL_KSU_PDF, COL_KSU_QA, COL_KSU_TXT
 from src.chroma_store import get_client, get_existing_collection
@@ -197,6 +196,7 @@ def _rerank_probs(
 
 
 def main() -> None:
+    from sentence_transformers import CrossEncoder
     """Run the full read-only experiment and print numbers only."""
     t_embed_fixed = 0.0
     t_embed_pdf = 0.0

@@ -1,0 +1,514 @@
+{
+  "university": "ksu",
+  "pages": 101,
+  "warnings": 0,
+  "manual_references": 0,
+  "details": [
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_01.txt",
+      "characters": 63,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_02.txt",
+      "characters": 38,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_03.txt",
+      "characters": 1272,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_04.txt",
+      "characters": 1810,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_05.txt",
+      "characters": 1576,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_06.txt",
+      "characters": 1437,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_07.txt",
+      "characters": 1699,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_08.txt",
+      "characters": 1711,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_09.txt",
+      "characters": 1332,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_10.txt",
+      "characters": 1146,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_11.txt",
+      "characters": 1249,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_12.txt",
+      "characters": 1456,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_13.txt",
+      "characters": 1411,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_14.txt",
+      "characters": 1497,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_15.txt",
+      "characters": 1506,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_16.txt",
+      "characters": 1544,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_17.txt",
+      "characters": 1467,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_18.txt",
+      "characters": 1501,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_19.txt",
+      "characters": 1596,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_20.txt",
+      "characters": 1342,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_21.txt",
+      "characters": 1535,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_22.txt",
+      "characters": 1520,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_23.txt",
+      "characters": 1510,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_24.txt",
+      "characters": 1460,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_25.txt",
+      "characters": 1288,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_26.txt",
+      "characters": 1391,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_27.txt",
+      "characters": 1340,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_28.txt",
+      "characters": 1503,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_29.txt",
+      "characters": 1294,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_30.txt",
+      "characters": 1531,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_31.txt",
+      "characters": 1548,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_32.txt",
+      "characters": 1438,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_33.txt",
+      "characters": 1356,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_34.txt",
+      "characters": 1442,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_35.txt",
+      "characters": 1454,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_36.txt",
+      "characters": 1648,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_37.txt",
+      "characters": 1005,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_38.txt",
+      "characters": 1988,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية/page_39.txt",
+      "characters": 593,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_01.txt",
+      "characters": 314,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_02.txt",
+      "characters": 189,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_03.txt",
+      "characters": 1010,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_04.txt",
+      "characters": 1087,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_05.txt",
+      "characters": 1014,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_06.txt",
+      "characters": 602,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_07.txt",
+      "characters": 1608,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_08.txt",
+      "characters": 1974,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_09.txt",
+      "characters": 1738,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_10.txt",
+      "characters": 1772,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_11.txt",
+      "characters": 1947,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_12.txt",
+      "characters": 1748,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_13.txt",
+      "characters": 1668,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_14.txt",
+      "characters": 1195,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_15.txt",
+      "characters": 1638,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_16.txt",
+      "characters": 1571,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_17.txt",
+      "characters": 1640,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_18.txt",
+      "characters": 1548,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_19.txt",
+      "characters": 1601,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_20.txt",
+      "characters": 1817,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_21.txt",
+      "characters": 2062,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_22.txt",
+      "characters": 1658,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_23.txt",
+      "characters": 1610,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_24.txt",
+      "characters": 1914,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_25.txt",
+      "characters": 1538,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_26.txt",
+      "characters": 1921,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_27.txt",
+      "characters": 1602,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_28.txt",
+      "characters": 1788,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_29.txt",
+      "characters": 2022,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_30.txt",
+      "characters": 1946,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_31.txt",
+      "characters": 2010,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_32.txt",
+      "characters": 1996,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_33.txt",
+      "characters": 1805,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_34.txt",
+      "characters": 1822,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_35.txt",
+      "characters": 2061,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_36.txt",
+      "characters": 1877,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_37.txt",
+      "characters": 1829,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_38.txt",
+      "characters": 1615,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_39.txt",
+      "characters": 1805,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_40.txt",
+      "characters": 1758,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_41.txt",
+      "characters": 1615,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_42.txt",
+      "characters": 1740,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_43.txt",
+      "characters": 1900,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_44.txt",
+      "characters": 1747,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_45.txt",
+      "characters": 1955,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_46.txt",
+      "characters": 1984,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_47.txt",
+      "characters": 1790,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_48.txt",
+      "characters": 1743,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_49.txt",
+      "characters": 1985,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_50.txt",
+      "characters": 1899,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_51.txt",
+      "characters": 666,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_52.txt",
+      "characters": 1627,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_53.txt",
+      "characters": 1164,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_54.txt",
+      "characters": 659,
+      "flags": []
+    },
+    {
+      "path": "اللائحة التنظيمية للشؤون الدراسية24/page_55.txt",
+      "characters": 423,
+      "flags": []
+    },
+    {
+      "path": "لائحة المكافئات/page_01.txt",
+      "characters": 213,
+      "flags": []
+    },
+    {
+      "path": "لائحة المكافئات/page_02.txt",
+      "characters": 348,
+      "flags": []
+    },
+    {
+      "path": "لائحة المكافئات/page_03.txt",
+      "characters": 1142,
+      "flags": []
+    },
+    {
+      "path": "لائحة المكافئات/page_04.txt",
+      "characters": 1082,
+      "flags": []
+    },
+    {
+      "path": "لائحة المكافئات/page_05.txt",
+      "characters": 1409,
+      "flags": []
+    },
+    {
+      "path": "لائحة المكافئات/page_06.txt",
+      "characters": 1467,
+      "flags": []
+    },
+    {
+      "path": "لائحة المكافئات/page_07.txt",
+      "characters": 551,
+      "flags": []
+    }
+  ],
+  "note": "Numeric overlap does not establish the rule attached to a number. Blank pages can be covers."
+}

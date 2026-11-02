@@ -1,0 +1,28 @@
+{
+  "start_utc": "20261030T175657680349Z",
+  "base_url": "http://127.0.0.1:8000",
+  "health": {
+    "status": "ok"
+  },
+  "health_details": {
+    "status": "ok",
+    "collections": {
+      "kau": {
+        "kau_qa_verified": 658,
+        "kau_web": 50,
+        "kau_pdf": 342
+      },
+      "ksu": {
+        "ksu_qa": 1074,
+        "ksu_txt": 90,
+        "ksu_pdf": 218
+      }
+    },
+    "empty_collections": [],
+    "evidence_mode": "documents_only"
+  },
+  "total": 100,
+  "history": "empty for every request",
+  "execution": "sequential, no automatic retries",
+  "answer_cache": "not cleared; elapsed times may include cache hits"
+}

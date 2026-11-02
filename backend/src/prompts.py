@@ -1,14 +1,10 @@
-"""Prompts for grounded Arabic QA generation.
+"""Grounded Arabic prompts: documents only by default.
 
-All entry points are parametrized by university; the KAU strings are
-preserved byte-for-byte as the default (``university="kau"``). KSU wording
-deliberately avoids the "موثّق" claim (the KSU dataset is not formally
-verified like the KAU 371). Keeping every university-dependent string in
-this module means src.context_assembly and src.pipeline can never render
-disagreeing prompt text.
+The previous QA-and-document wording is retained only for explicit legacy
+comparisons. Document-only callers never include a QA block in the prompt.
 """
 
-from src.config import UNIVERSITY_DISPLAY_NAMES
+from src.config import UNIVERSITY_DISPLAY_NAMES, get_settings
 
 # Rule-2 citation example per university (rest of the rules stay identical).
 _CITATION_EXAMPLES: dict[str, str] = {
@@ -82,6 +78,18 @@ def build_system_prompt(university: str = "kau") -> str:
     """System prompt for one university (KAU keeps the historical wording)."""
     if university not in _CITATION_EXAMPLES:
         raise ValueError(f"Unknown university {university!r}")
+    if get_settings().evidence_mode == "documents_only":
+        return (
+            f"أنت مساعد يجيب وفق اللوائح والمراجع المقدمة لـ{UNIVERSITY_DISPLAY_NAMES[university]}. "
+            "أجب بالعربية باختصار، فقط من نصوص المراجع المرفقة. "
+            "السؤال وصيغته المستقلة وتاريخ المحادثة ليست مصادر لإثبات الأحكام. "
+            "لا تستخدم معرفة خارجية أو إجابات جاهزة، ولا تستشهد بمعرف سؤال من قاعدة البيانات. "
+            "حافظ على الأرقام والشروط والنفي والاستثناءات؛ لا تعمم حكم كلية أو سنة على غيرها. "
+            "اذكر بعد الحكم وسم المرجع كما ورد حرفيًا، مثل [المصدر: مرجع 1]. "
+            "لا تخترع اسم وثيقة أو رقم صفحة أو مادة أو رابطًا. "
+            "إذا لم تدعم النصوص الإجابة، اكتب حصرًا: لا يمكنني تأكيد الإجابة من المصادر المتاحة. "
+            "اكتب نصًا عاديًا دون LaTeX."
+        )
     return _SYSTEM_TEMPLATE.format(
         university=UNIVERSITY_DISPLAY_NAMES[university],
         qa_clause=_QA_CONTEXT_CLAUSES[university],
@@ -113,7 +121,7 @@ def build_user_prompt(
         parts.append(
             f"المقصود بالسؤال (صيغة مستقلة): {standalone_question}"
         )
-    if qa_block:
+    if qa_block and get_settings().evidence_mode == "qa_and_documents":
         parts.append(qa_block_title(university) + "\n" + qa_block)
     if doc_block:
         parts.append(DOC_BLOCK_TITLE + "\n" + doc_block)

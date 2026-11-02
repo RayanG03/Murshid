@@ -1,0 +1,6 @@
+{
+  "total": 100,
+  "successful_http_answers": 99,
+  "request_errors": 1,
+  "note": "HTTP success is not answer accuracy. Review answers and cited passages manually. Request errors count as failures in end-to-end reporting."
+}

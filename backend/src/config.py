@@ -7,6 +7,7 @@ never hardcode them in source files.
 
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -46,6 +47,15 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         extra="ignore",
     )
+
+    evidence_mode: Literal["documents_only", "qa_and_documents"] = "documents_only"
+    vector_backend: Literal["chroma", "flat"] = "chroma"
+    flat_index_dir: Path = BACKEND_DIR / "flat_index"
+    retrieval_mode: Literal["dense", "lexical", "hybrid"] = "dense"
+    citation_guard_mode: Literal["off", "log", "refuse"] = "log"
+    qa_expected_ksu_rows: int | None = None
+    qa_expected_kau_rows: int | None = None
+    max_concurrent_questions: int = 2
 
     app_name: str = "Capstone II Arabic RAG Backend"
 
@@ -203,6 +213,8 @@ class Settings(BaseSettings):
     # Retrieval / embedding runtime.
     embedding_batch_size: int = 32
     retrieval_top_k: int = 5
+    # Opt-in local log of candidates, selected passages and raw model output.
+    retrieval_diagnostics: bool = False
     chunk_max_chars: int = 1200
     chunk_target_chars: int = 700
 

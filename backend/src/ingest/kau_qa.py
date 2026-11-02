@@ -1,9 +1,11 @@
-"""Ingest backend/data/kau_qa.csv (371 verified pairs) into kau_qa_verified."""
+"""Ingest backend/data/kau_qa.csv (eligible KAU pairs) into kau_qa_verified."""
 
 import logging
 from pathlib import Path
 
 import pandas as pd
+
+from src.ingest.qa_validation import validate_qa, qa_record_id
 
 from src.chroma_store import COL_KAU_QA, add_batched, rebuild_collection
 from src.config import get_settings
@@ -26,9 +28,8 @@ def ingest_kau_qa(client, embedder: E5Embedder) -> int:
             "collection was left untouched. backend/data/ is not in git; "
             "copy kau_qa.csv from the team drive."
         )
-    df = pd.read_csv(csv_path)
-    if len(df) != 371:
-        raise SystemExit(f"Expected 371 verified KAU pairs, found {len(df)}")
+    df = pd.read_csv(csv_path, dtype=str, keep_default_na=False)
+    validate_qa(df, "kau", settings.qa_expected_kau_rows)
 
     questions = df["question_original"].astype(str).tolist()
     logger.info("Embedding %d questions ...", len(questions))
@@ -39,18 +40,14 @@ def ingest_kau_qa(client, embedder: E5Embedder) -> int:
     collection = rebuild_collection(client, COL_KAU_QA)
     added = add_batched(
         collection,
-        ids=[f"kau_qa_{int(q)}" for q in df["Q_ID"]],
+        ids=[qa_record_id("kau", q) for q in df["Q_ID"]],
         documents=questions,
         metadatas=[
-            {
-                "type": "qa",
-                "q_id": int(row.Q_ID),
-                "answer": str(row.answer),
-                "category": str(row.category),
-                "match_status": str(row.match_status),
-                "source_url": str(row.source_url),
-            }
-            for row in df.itertuples(index=False)
+            {"type": "qa", "q_id": row["Q_ID"], "answer": row["answer"],
+             **{key: row.get(key, "") for key in (
+                 "category", "match_status", "source_url", "evidence_status",
+                 "source_locator", "source_codes", "verification_date", "university")}}
+            for row in df.to_dict("records")
         ],
         embeddings=embeddings,
         batch_size=settings.embedding_batch_size,
