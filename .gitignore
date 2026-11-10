@@ -1,76 +1,14 @@
-# Backend
-backend/.venv/
-backend/.env
-backend/uv.toml
-backend/*.env.local
-backend/__pycache__/
-backend/**/__pycache__/
-backend/chroma_db/
-backend/data/logs/
-*.pyc
-.pytest_cache/
-.ruff_cache/
-.mypy_cache/
-.cache/
-huggingface/
-*.safetensors
-*.log
+api_key.txt
+datalab_key.txt
 
-# Frontend — compiled output
-frontend/dist/
-frontend/tmp/
-frontend/out-tsc/
-frontend/bazel-out/
-
-# Frontend — Node
-frontend/node_modules/
-frontend/npm-debug.log
-frontend/yarn-error.log
-
-# Frontend — Angular
-frontend/.angular/
-frontend/.sass-cache/
-frontend/connect.lock
-frontend/coverage/
-frontend/libpeerconnection.log
-frontend/testem.log
-frontend/typings/
-frontend/**/__screenshots__/
-
-# Frontend — IDEs and editors
-frontend/.idea/
-frontend/.project
-frontend/.classpath
-frontend/.c9/
-frontend/*.launch
-frontend/.settings/
-frontend/*.sublime-workspace
-frontend/.history/*
-
-# Frontend — VS Code (keep shared config files, ignore the rest)
-frontend/.vscode/*
-!frontend/.vscode/settings.json
-!frontend/.vscode/tasks.json
-!frontend/.vscode/launch.json
-!frontend/.vscode/extensions.json
-!frontend/.vscode/mcp.json
-
-# OS / editor (project-wide)
-.DS_Store
-Thumbs.db
-.idea/
-.vscode/
-
-.env
 .venv/
 __pycache__/
 *.pyc
-frontend/node_modules/
-backend/data/logs/
-backend/data/extracted/
-backend/data/*_snapshot.json
+*.tmp
 
-# Local-only (2026-10-25): eval run outputs, backups, files queued for deletion
-backend/data/eval/
-_backup_before_improvements/
-_to_delete/
+tmp/
+backup_*/
+*.bak
+
+logs/
+data/eval/cache/
