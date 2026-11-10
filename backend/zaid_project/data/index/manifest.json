@@ -1,0 +1,43 @@
+{
+  "model": "BAAI/bge-m3",
+  "revision": "9a0624b896d81da7492a910ffa53731274b6cf3d",
+  "count": 1047,
+  "dimensions": 1024,
+  "normalized": true,
+  "created_at_utc": "2026-10-24T15:09:45.271646+00:00",
+  "sources": [
+    {
+      "file": "kau.jsonl",
+      "chunks": 561,
+      "excluded_review_chunks": 0,
+      "sha256": "e783a17466f577af4a52dca997423782db83173dcb8f8da7fac4041edba042c3"
+    },
+    {
+      "file": "ksu.jsonl",
+      "chunks": 486,
+      "excluded_review_chunks": 0,
+      "sha256": "ab85badfc8b7faa5fd0c62014d873abff412dcff0a8225edd28ab488bfe77eca"
+    }
+  ],
+  "sparse_head": "sparse_linear.pt",
+  "universities": {
+    "KAU": {
+      "folder": "kau",
+      "count": 561,
+      "sha256": {
+        "chunks.jsonl": "a7fe7385d31f009cbab79186b0467f85b0b5134aacae3ccfca5c037616f3025d",
+        "embeddings.npy": "e5b9de94f7531eb11b126bffb4a70054dc6741db0f72af9f74c62970fb58f66a",
+        "sparse_weights.json": "46a8738ddb77f7fa2bade944ef55c2cfc5e83b117da4e27879b4a2ba7f6c4263"
+      }
+    },
+    "KSU": {
+      "folder": "ksu",
+      "count": 486,
+      "sha256": {
+        "chunks.jsonl": "506eb7a9f4b093960efdc55a7658b4388a4f1155567394aa4376f59abcc798a1",
+        "embeddings.npy": "d5862cd2092faa26f53a33bb38b86dbb3cbc40bafe35f3bc94e3175aec4ecfd6",
+        "sparse_weights.json": "c243ced478cef37a240aa086a6a6ae3b5b954196b6cbee45370f19af5c23cf35"
+      }
+    }
+  }
+}

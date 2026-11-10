@@ -1,0 +1,5 @@
+*.py text eol=lf
+*.html text eol=lf
+*.ini text eol=lf
+requirements.txt text eol=lf
+prompts/*.txt text eol=lf

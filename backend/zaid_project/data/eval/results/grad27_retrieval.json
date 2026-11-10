@@ -1,0 +1,789 @@
+{
+ "settings": {
+  "created": "2026-10-24T18:12:21",
+  "git_commit": "45df4f9",
+  "rerank": true,
+  "sets": [
+   "grad"
+  ],
+  "new_rerank_calls": 23,
+  "usage_cost": 0.062672,
+  "credit_before": 4.724744628,
+  "credit_after": 4.674095227999999,
+  "seconds": 106
+ },
+ "metrics": {
+  "overall": {
+   "questions": 23,
+   "hit@1": 19,
+   "hit@4": 22,
+   "hit@15": 22,
+   "mrr@10": 0.891
+  },
+  "by_file": {
+   "grad_diploma27.jsonl": {
+    "questions": 23,
+    "hit@1": 19,
+    "hit@4": 22,
+    "hit@15": 22,
+    "mrr@10": 0.891
+   }
+  },
+  "by_type": {
+   "حكم": {
+    "questions": 4,
+    "hit@1": 3,
+    "hit@4": 4,
+    "hit@15": 4,
+    "mrr@10": 0.875
+   },
+   "رقم": {
+    "questions": 9,
+    "hit@1": 7,
+    "hit@4": 8,
+    "hit@15": 8,
+    "mrr@10": 0.833
+   },
+   "شروط": {
+    "questions": 7,
+    "hit@1": 6,
+    "hit@4": 7,
+    "hit@15": 7,
+    "mrr@10": 0.929
+   },
+   "قائمة": {
+    "questions": 2,
+    "hit@1": 2,
+    "hit@4": 2,
+    "hit@15": 2,
+    "mrr@10": 1.0
+   },
+   "كلية": {
+    "questions": 1,
+    "hit@1": 1,
+    "hit@4": 1,
+    "hit@15": 1,
+    "mrr@10": 1.0
+   }
+  }
+ },
+ "questions": [
+  {
+   "id": "g01",
+   "file": "grad_diploma27.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "وش شروط التقديم لبرامج الماجستير؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_ulya_qabul_sec_ffe5462f"
+   ],
+   "ranked": [
+    "ksu_ulya_qabul_sec_ffe5462f",
+    "ksu_ulya_qawaid_art005_p2",
+    "ksu_ulya_qawaid_exec012",
+    "ksu_ulya_qawaid_art005_p3",
+    "ksu_ulya_qawaid_art017",
+    "ksu_qabul_dalil_sec_fbc9c0ef_p2",
+    "ksu_ulya_qawaid_exec036_p1",
+    "ksu_qabul_dalil_sec_49891c3c",
+    "ksu_qabul_sec_8ad1bb6a",
+    "ksu_ulya_qawaid_art012",
+    "ksu_ulya_qawaid_art057",
+    "ksu_ulya_qawaid_exec039",
+    "ksu_tahwil_dakhili_sec_f042fdf0",
+    "ksu_tahwil_dakhili_sec_6a585ce4",
+    "ksu_diploma_qabul_sec_2b3a1eaf_p1"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g02",
+   "file": "grad_diploma27.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "كم لازم أجيب في القدرات والانجليزي عشان أقدم دكتوراه في جامعة الملك سعود؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_ulya_qabul_sec_ffe5462f"
+   ],
+   "ranked": [
+    "ksu_ulya_qabul_sec_ffe5462f",
+    "ksu_ulya_qawaid_exec013",
+    "ksu_ulya_qawaid_exec013_2",
+    "ksu_qabul_dalil_sec_d92e7a80",
+    "ksu_tahwil_dakhili_sec_e69f5bea",
+    "ksu_ulya_qawaid_exec039",
+    "ksu_qabul_dalil_sec_fbc9c0ef_p1",
+    "ksu_ulya_qawaid_art005_p2",
+    "ksu_qabul_dalil_sec_49891c3c",
+    "ksu_ulya_qawaid_art017",
+    "ksu_tahwil_dakhili_sec_6a585ce4",
+    "ksu_ulya_qawaid_exec012",
+    "ksu_qabul_sec_739e54f2",
+    "ksu_ulya_qawaid_art013",
+    "ksu_ulya_baramij_sec_c1aef7b9_p2"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g03",
+   "file": "grad_diploma27.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "أنا غير سعودي وأبي منحة ماجستير في جامعة الملك سعود، فيه حد للعمر؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_ulya_qabul_sec_ffe5462f"
+   ],
+   "ranked": [
+    "ksu_ulya_qabul_sec_ffe5462f",
+    "ksu_qabul_dalil_sec_49891c3c",
+    "ksu_ulya_qawaid_exec012_2",
+    "ksu_qabul_sec_739e54f2",
+    "ksu_ulya_qawaid_exec039",
+    "ksu_ulya_qawaid_exec012",
+    "ksu_tahwil_khariji_sec_91ce0db1",
+    "ksu_zaer_sec_00cfa51c",
+    "ksu_qabul_dalil_sec_fbc9c0ef_p1",
+    "ksu_shuun_art001_p5",
+    "ksu_ulya_qawaid_art012",
+    "ksu_ulya_qawaid_art033",
+    "ksu_ulya_qawaid_art005_p2",
+    "ksu_ulya_qawaid_art057",
+    "ksu_ulya_qawaid_exec013_2"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g04",
+   "file": "grad_diploma27.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "وش شروط التقديم لبرامج الدبلوم ؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_diploma_qabul_sec_2b3a1eaf_p1",
+    "ksu_diploma_qabul_sec_2b3a1eaf_p2",
+    "ksu_diploma_qabul_sec_2b3a1eaf_p3"
+   ],
+   "ranked": [
+    "ksu_diploma_qabul_sec_2b3a1eaf_p2",
+    "ksu_diploma_qabul_sec_2b3a1eaf_p1",
+    "ksu_diploma_qabul_sec_2b3a1eaf_p3",
+    "ksu_shuun_art018",
+    "ksu_qabul_dalil_sec_fbc9c0ef_p2",
+    "ksu_qabul_dalil_sec_49891c3c",
+    "ksu_tahwil_dakhili_sec_6a585ce4",
+    "ksu_ulya_qabul_sec_ffe5462f",
+    "ksu_qabul_dalil_sec_d197b9a2",
+    "ksu_qabul_sec_8ad1bb6a",
+    "ksu_qabul_dalil_sec_d92e7a80",
+    "ksu_qabul_dalil_sec_fbc9c0ef_p1",
+    "ksu_tahwil_dakhili_sec_f042fdf0",
+    "ksu_shuun_exec014_p8",
+    "ksu_khadamat_sec_c213d1f9_p1"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g05",
+   "file": "grad_diploma27.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "دبلوم الأمن السيبراني في جامعة الملك سعود وش يبي له؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_diploma_qabul_sec_2b3a1eaf_p3"
+   ],
+   "ranked": [
+    "ksu_diploma_qabul_sec_2b3a1eaf_p3",
+    "ksu_tahwil_dakhili_sec_6a585ce4",
+    "ksu_ulya_baramij_sec_9daa17a1",
+    "ksu_diploma_qabul_sec_2b3a1eaf_p2",
+    "ksu_diploma_qabul_sec_2b3a1eaf_p1",
+    "ksu_ulya_qawaid_art011",
+    "ksu_ulya_qawaid_art057",
+    "ksu_ulya_qawaid_art005_p2",
+    "ksu_shuun_exec014_p1",
+    "ksu_shuun_exec017",
+    "ksu_qabul_sec_739e54f2",
+    "ksu_qabul_sec_8ad1bb6a",
+    "ksu_shuun_art001_p1",
+    "ksu_qabul_dalil_sec_fbc9c0ef_p1",
+    "ksu_ulya_qawaid_art001_p1"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g06",
+   "file": "grad_diploma27.jsonl",
+   "type": "قائمة",
+   "university": "KSU",
+   "question": "وش برامج الماجستير اللي في قسم علوم الحاسب بجامعة الملك سعود؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_ulya_baramij_sec_9daa17a1"
+   ],
+   "ranked": [
+    "ksu_ulya_baramij_sec_9daa17a1",
+    "ksu_qabul_dalil_sec_9daa17a1",
+    "ksu_ulya_baramij_sec_40b142e0_p2",
+    "ksu_qabul_dalil_sec_17462119",
+    "ksu_ulya_baramij_sec_c1aef7b9_p1",
+    "ksu_ulya_baramij_sec_c1aef7b9_p2",
+    "ksu_tahwil_khariji_sec_9f3efc29_p2",
+    "ksu_qabul_dalil_sec_f12b08bc",
+    "ksu_ulya_baramij_sec_8f0ca7aa_p2",
+    "ksu_ulya_baramij_sec_40b142e0_p1",
+    "ksu_qabul_sec_b91faa0d_p3",
+    "ksu_ulya_baramij_sec_eb0b2603_p3",
+    "ksu_tahwil_dakhili_sec_06c371ba",
+    "ksu_ulya_baramij_sec_8f0ca7aa_p1",
+    "ksu_ulya_baramij_sec_592915bc_p1"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g07",
+   "file": "grad_diploma27.jsonl",
+   "type": "كلية",
+   "university": "KSU",
+   "question": "فيه دبلوم عالي في الملكية الفكرية بجامعة الملك سعود؟ يتبع أي كلية؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_ulya_baramij_sec_b49837d1"
+   ],
+   "ranked": [
+    "ksu_ulya_baramij_sec_b49837d1",
+    "ksu_diploma_qabul_sec_2b3a1eaf_p3",
+    "ksu_ulya_qawaid_art001_p1",
+    "ksu_diploma_qabul_sec_2b3a1eaf_p2",
+    "ksu_ulya_qawaid_art057",
+    "ksu_ulya_qawaid_exec015",
+    "ksu_ulya_qawaid_art011",
+    "ksu_ulya_baramij_sec_eb0b2603_p4",
+    "ksu_ulya_baramij_sec_8f0ca7aa_p2",
+    "ksu_ulya_baramij_sec_ec2180f2_p2",
+    "ksu_ulya_baramij_sec_ec2180f2_p1",
+    "ksu_ulya_baramij_sec_eb0b2603_p1",
+    "ksu_ulya_baramij_sec_8f0ca7aa_p1",
+    "ksu_ulya_baramij_sec_c1aef7b9_p1",
+    "ksu_ulya_baramij_sec_9daa17a1"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g08",
+   "file": "grad_diploma27.jsonl",
+   "type": "حكم",
+   "university": "KSU",
+   "question": "انقبلت ماجستير في جامعة الملك سعود، أقدر أأجل قبولي؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_ulya_qawaid_art020"
+   ],
+   "ranked": [
+    "ksu_ulya_qawaid_art020",
+    "ksu_ulya_qabul_sec_ffe5462f",
+    "ksu_ulya_qawaid_art001_p2",
+    "ksu_qabul_dalil_sec_49891c3c",
+    "ksu_ulya_qawaid_exec012",
+    "ksu_ulya_qawaid_exec012_2",
+    "ksu_qabul_sec_739e54f2",
+    "ksu_qabul_dalil_sec_57ca6e75_p1",
+    "ksu_shuun_exec014_p1",
+    "ksu_shuun_exec017",
+    "ksu_ulya_qawaid_art012",
+    "ksu_ulya_qawaid_art017",
+    "ksu_ulya_qawaid_exec039",
+    "ksu_shuun_art018",
+    "ksu_ulya_qawaid_exec017"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g09",
+   "file": "grad_diploma27.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "كم أقصى نسبة مقررات أقدر أعادلها في الماجستير بجامعة الملك سعود؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_ulya_qawaid_exec019"
+   ],
+   "ranked": [
+    "ksu_shuun_exec043_p1",
+    "ksu_ulya_qawaid_exec012",
+    "ksu_shuun_exec034",
+    "ksu_ulya_qawaid_art005_p4",
+    "ksu_ulya_qawaid_art005_p3",
+    "ksu_shuun_exec014_p1",
+    "ksu_shuun_art028",
+    "ksu_ulya_qawaid_exec013",
+    "ksu_ulya_qabul_sec_ffe5462f",
+    "ksu_shuun_art061",
+    "ksu_ulya_qawaid_art012",
+    "ksu_qabul_dalil_sec_50348783",
+    "ksu_qabul_dalil_sec_f12b08bc",
+    "ksu_qabul_sec_8ad1bb6a",
+    "ksu_ulya_qawaid_art034"
+   ],
+   "gold_rank": null
+  },
+  {
+   "id": "g10",
+   "file": "grad_diploma27.jsonl",
+   "type": "حكم",
+   "university": "KSU",
+   "question": "يصير أدرس برنامجين دراسات عليا بنفس الوقت في جامعة الملك سعود؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_ulya_qawaid_art018",
+    "ksu_ulya_qawaid_exec018"
+   ],
+   "ranked": [
+    "ksu_ulya_qawaid_art018",
+    "ksu_shuun_exec014_p1",
+    "ksu_shuun_exec014_p2",
+    "ksu_ulya_qawaid_exec018",
+    "ksu_shuun_exec014_p7",
+    "ksu_shuun_exec014_p8",
+    "ksu_ulya_qawaid_art001_p1",
+    "ksu_ulya_qawaid_exec009_p2",
+    "ksu_ulya_qawaid_art058",
+    "ksu_ulya_qawaid_art005_p2",
+    "ksu_ulya_qawaid_exec012_2",
+    "ksu_ulya_qawaid_exec009_p3",
+    "ksu_ulya_qawaid_art012",
+    "ksu_ulya_qawaid_art011",
+    "ksu_ulya_qawaid_art032"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g13",
+   "file": "grad_diploma27.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "وش شروط القبول في الماجستير بجامعة الملك عبدالعزيز؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_ulya_qabul_sec_9017034a"
+   ],
+   "ranked": [
+    "kau_ulya_qabul_sec_9017034a",
+    "kau_ulya_qabul_sec_0f63f4d7",
+    "kau_ulya_qabul_sec_a4f79963",
+    "kau_dirasa_exec011_p1",
+    "kau_ulya_qawaid_art017",
+    "kau_qabul_sec_c249b220",
+    "kau_ulya_qabul_sec_84822ad4_p1",
+    "kau_ulya_qabul_sec_84822ad4_p20",
+    "kau_ulya_qabul_sec_84822ad4_p6",
+    "kau_ulya_qabul_sec_f0b524d3",
+    "kau_ulya_qabul_sec_84822ad4_p19",
+    "kau_ulya_qabul_sec_480dc936",
+    "kau_ulya_qabul_sec_84822ad4_p5",
+    "kau_ulya_qabul_sec_84822ad4_p18",
+    "kau_ulya_qabul_sec_84822ad4_p17"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g14",
+   "file": "grad_diploma27.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كم درجة القدرات المطلوبة للدراسات العليا في جامعة الملك عبدالعزيز؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_ulya_qabul_sec_9017034a"
+   ],
+   "ranked": [
+    "kau_ulya_qabul_sec_9017034a",
+    "kau_ulya_qabul_sec_6f628e0a_p1",
+    "kau_ulya_qabul_sec_84822ad4_p5",
+    "kau_ulya_qabul_sec_6f628e0a_p4",
+    "kau_ulya_qabul_sec_84822ad4_p1",
+    "kau_ulya_qabul_sec_6f628e0a_p2",
+    "kau_ulya_qabul_sec_6f628e0a_p3",
+    "kau_ulya_qabul_sec_84822ad4_p6",
+    "kau_ulya_qabul_sec_84822ad4_p19",
+    "kau_ulya_qabul_sec_84822ad4_p18",
+    "kau_ulya_qabul_sec_84822ad4_p2",
+    "kau_ulya_qabul_sec_84822ad4_p20",
+    "kau_ulya_qabul_sec_84822ad4_p7",
+    "kau_ulya_qabul_sec_84822ad4_p16",
+    "kau_ulya_qabul_sec_84822ad4_p4"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g15",
+   "file": "grad_diploma27.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "عندي آيلتس 5، كم يعادل في ستيب عند جامعة الملك عبدالعزيز؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_ulya_qabul_sec_627db703"
+   ],
+   "ranked": [
+    "kau_ulya_qabul_sec_627db703",
+    "kau_ulya_qabul_sec_6f628e0a_p2",
+    "kau_ulya_qabul_sec_84822ad4_p1",
+    "kau_ulya_qabul_sec_6f628e0a_p1",
+    "kau_ulya_qabul_sec_6f628e0a_p4",
+    "kau_ulya_qabul_sec_84822ad4_p19",
+    "kau_ulya_qabul_sec_84822ad4_p2",
+    "kau_ulya_qabul_sec_84822ad4_p6",
+    "kau_ulya_qabul_sec_84822ad4_p7",
+    "kau_ulya_qabul_sec_84822ad4_p12",
+    "kau_ulya_qabul_sec_84822ad4_p4",
+    "kau_ulya_qabul_sec_84822ad4_p18",
+    "kau_ulya_qabul_sec_84822ad4_p3",
+    "kau_ulya_qabul_sec_6f628e0a_p3",
+    "kau_ulya_qabul_sec_84822ad4_p5"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g16",
+   "file": "grad_diploma27.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "أنا لسا ما تخرجت من البكالوريوس، أقدر أقدم على ماجستير في جامعة الملك عبدالعزيز؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_ulya_qabul_sec_a4f79963"
+   ],
+   "ranked": [
+    "kau_ulya_qabul_sec_9017034a",
+    "kau_ulya_qabul_sec_a4f79963",
+    "kau_dirasa_exec009",
+    "kau_dirasa_exec012",
+    "kau_dirasa_art012",
+    "kau_dirasa_exec010",
+    "kau_diploma_bued_sec_e67fd95f",
+    "kau_ulya_qabul_sec_84822ad4_p5",
+    "kau_ulya_qabul_sec_84822ad4_p6",
+    "kau_ulya_qabul_sec_84822ad4_p7",
+    "kau_ulya_qabul_sec_84822ad4_p1",
+    "kau_ulya_qabul_sec_f0b524d3",
+    "kau_ulya_qawaid_art012",
+    "kau_ulya_qabul_sec_84822ad4_p19",
+    "kau_ulya_qawaid_art001_p2"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "g17",
+   "file": "grad_diploma27.jsonl",
+   "type": "قائمة",
+   "university": "KAU",
+   "question": "كيف يفاضلون بين المتقدمين للدكتوراه في جامعة الملك عبدالعزيز؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_ulya_qabul_sec_6f628e0a_p1"
+   ],
+   "ranked": [
+    "kau_ulya_qabul_sec_6f628e0a_p1",
+    "kau_dirasa_exec011_p1",
+    "kau_ulya_qabul_sec_6f628e0a_p3",
+    "kau_ulya_qabul_sec_6f628e0a_p2",
+    "kau_ulya_qabul_sec_9017034a",
+    "kau_tahwil_khariji_sec_ab748931",
+    "kau_ulya_qabul_sec_6f628e0a_p4",
+    "kau_ulya_qabul_sec_8b8bcc18",
+    "kau_qabul_sec_c249b220",
+    "kau_ulya_qabul_sec_f0b524d3",
+    "kau_ulya_qabul_sec_480dc936",
+    "kau_tahwil_dakhili_sec_e04a82ce",
+    "kau_ulya_qabul_sec_efe2cfc6",
+    "kau_ulya_qabul_sec_6f628e0a_p5",
+    "kau_dirasa_exec046"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g18",
+   "file": "grad_diploma27.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كم درجة الآيلتس المطلوبة لماجستير المحاسبة في جامعة الملك عبدالعزيز؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_ulya_qabul_sec_84822ad4_p1"
+   ],
+   "ranked": [
+    "kau_ulya_qabul_sec_6f628e0a_p2",
+    "kau_ulya_qabul_sec_84822ad4_p1",
+    "kau_ulya_qabul_sec_627db703",
+    "kau_ulya_qabul_sec_84822ad4_p19",
+    "kau_ulya_qabul_sec_84822ad4_p4",
+    "kau_ulya_qabul_sec_6f628e0a_p1",
+    "kau_ulya_qabul_sec_84822ad4_p13",
+    "kau_ulya_qabul_sec_84822ad4_p5",
+    "kau_ulya_qabul_sec_84822ad4_p6",
+    "kau_ulya_qabul_sec_84822ad4_p8",
+    "kau_ulya_qabul_sec_84822ad4_p17",
+    "kau_ulya_qabul_sec_84822ad4_p10",
+    "kau_ulya_qabul_sec_6f628e0a_p4",
+    "kau_ulya_qabul_sec_84822ad4_p9",
+    "kau_ulya_qabul_sec_84822ad4_p16"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "g19",
+   "file": "grad_diploma27.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "أنا قاضي وأبي أدرس دراسات عليا في جامعة الملك عبدالعزيز، وش الموافقة اللي أحتاجها؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_ulya_qabul_sec_daec9fb2"
+   ],
+   "ranked": [
+    "kau_ulya_qabul_sec_daec9fb2",
+    "kau_ulya_qabul_sec_06a442a3_p2",
+    "kau_ulya_qabul_sec_9017034a",
+    "kau_dirasa_exec028_p2",
+    "kau_ulya_qawaid_exec030",
+    "kau_ulya_qabul_sec_480dc936",
+    "kau_diploma_bued_sec_e67fd95f",
+    "kau_ulya_qawaid_art032",
+    "kau_dirasa_exec028_p1",
+    "kau_tahwil_ulya_sec_2856d46a",
+    "kau_dirasa_exec012",
+    "kau_ulya_qabul_sec_84822ad4_p5",
+    "kau_dirasa_exec016",
+    "kau_dirasa_exec018",
+    "kau_ulya_qawaid_art001_p1"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g20",
+   "file": "grad_diploma27.jsonl",
+   "type": "حكم",
+   "university": "KAU",
+   "question": "الاختبار الشامل في الدكتوراه بجامعة الملك عبدالعزيز إجباري؟ ومن كم جزء؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_ulya_qawaid_exec035_p1"
+   ],
+   "ranked": [
+    "kau_ulya_qawaid_exec035_p1",
+    "kau_ulya_qawaid_art035",
+    "kau_ulya_qabul_sec_6f628e0a_p1",
+    "kau_ulya_qawaid_art001_p2",
+    "kau_ulya_qawaid_exec035_p2",
+    "kau_ulya_qabul_sec_6f628e0a_p3",
+    "kau_ulya_qawaid_art001_p1",
+    "kau_ulya_qabul_sec_6f628e0a_p4",
+    "kau_ulya_qabul_sec_6f628e0a_p2",
+    "kau_ulya_qawaid_art017",
+    "kau_ulya_qawaid_art034",
+    "kau_ulya_qawaid_art012",
+    "kau_dirasa_art001_p3",
+    "kau_dirasa_exec029",
+    "kau_dirasa_exec030"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g21",
+   "file": "grad_diploma27.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كم رسوم دبلومات التعليم عن بعد في جامعة الملك عبدالعزيز؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_diploma_bued_sec_46d4dd52_p1"
+   ],
+   "ranked": [
+    "kau_diploma_bued_sec_46d4dd52_p1",
+    "kau_ulya_qawaid_art021",
+    "kau_diploma_bued_sec_c7ee8d9c",
+    "kau_diploma_bued_sec_46d4dd52_p2",
+    "kau_diploma_bued_sec_e26f8131",
+    "kau_diploma_bued_sec_03635cd4",
+    "kau_diploma_bued_sec_a02e0314",
+    "kau_diploma_bued_sec_e67fd95f",
+    "kau_diploma_bued_sec_3e4b8046_p2",
+    "kau_diploma_bued_sec_8df89280",
+    "kau_diploma_bued_sec_7b48053a",
+    "kau_diploma_bued_sec_038a71a1",
+    "kau_diploma_bued_sec_12e706ee",
+    "kau_diploma_bued_sec_3e4b8046_p1",
+    "kau_diploma_bued_sec_f21a45d4"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g22",
+   "file": "grad_diploma27.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "دبلوم المبيعات عن بعد في جامعة الملك عبدالعزيز كم مدته؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_diploma_bued_sec_4a28dea4"
+   ],
+   "ranked": [
+    "kau_diploma_bued_sec_4a28dea4",
+    "kau_diploma_bued_sec_15e2ee2a",
+    "kau_diploma_bued_sec_13b1d146",
+    "kau_diploma_bued_sec_46d4dd52_p1",
+    "kau_diploma_bued_sec_e67fd95f",
+    "kau_diploma_bued_sec_8df89280",
+    "kau_ulya_qawaid_art011",
+    "kau_diploma_bued_sec_e1f37039",
+    "kau_diploma_bued_sec_f81c1088",
+    "kau_diploma_bued_sec_f2882687",
+    "kau_diploma_bued_sec_3e4b8046_p1",
+    "kau_diploma_bued_sec_0884d8fe",
+    "kau_diploma_bued_sec_8e4b5b86",
+    "kau_diploma_bued_sec_9fa7216e",
+    "kau_diploma_bued_sec_a02e0314"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g23",
+   "file": "grad_diploma27.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "لو انسحبت من الدبلوم عن بعد في الأسبوع الخامس، كم يخصمون من الرسوم بجامعة الملك عبدالعزيز؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_diploma_bued_sec_c7ee8d9c"
+   ],
+   "ranked": [
+    "kau_diploma_bued_sec_c7ee8d9c",
+    "kau_ulya_qabul_sec_60d8c7f8",
+    "kau_diploma_bued_sec_46d4dd52_p1",
+    "kau_diploma_bued_sec_e26f8131",
+    "kau_dirasa_exec017",
+    "kau_diploma_bued_sec_8b431dcc",
+    "kau_ulya_qawaid_exec023_2",
+    "kau_diploma_bued_sec_3e4b8046_p2",
+    "kau_ulya_qawaid_exec024",
+    "kau_dirasa_exec014",
+    "kau_diploma_bued_sec_e67fd95f",
+    "kau_dirasa_exec019",
+    "kau_dirasa_exec021",
+    "kau_ulya_qawaid_art025",
+    "kau_diploma_bued_sec_46d4dd52_p2"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g24",
+   "file": "grad_diploma27.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "وش المؤهل المطلوب عشان أدخل دبلوم عن بعد في جامعة الملك عبدالعزيز؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_diploma_bued_sec_02f4877a"
+   ],
+   "ranked": [
+    "kau_diploma_bued_sec_02f4877a",
+    "kau_dirasa_exec012",
+    "kau_diploma_bued_sec_3e4b8046_p1",
+    "kau_diploma_bued_sec_e67fd95f",
+    "kau_diploma_bued_sec_f2882687",
+    "kau_diploma_bued_sec_0884d8fe",
+    "kau_diploma_bued_sec_a02e0314",
+    "kau_ulya_qabul_sec_6f628e0a_p4",
+    "kau_ulya_qabul_sec_84822ad4_p1",
+    "kau_diploma_bued_sec_7b48053a",
+    "kau_huquq_sec_02f4877a",
+    "kau_ulya_qabul_sec_84822ad4_p18",
+    "kau_ulya_qabul_sec_84822ad4_p5",
+    "kau_diploma_bued_sec_d0b9c0a6",
+    "kau_diploma_bued_sec_03635cd4"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "g25",
+   "file": "grad_diploma27.jsonl",
+   "type": "حكم",
+   "university": "KAU",
+   "question": "انطوى قيدي في الماجستير بجامعة الملك عبدالعزيز، أقدر أرجع؟",
+   "search_query": null,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_ulya_qawaid_art027",
+    "kau_ulya_qawaid_exec027"
+   ],
+   "ranked": [
+    "kau_dirasa_exec019",
+    "kau_ulya_qawaid_art027",
+    "kau_dirasa_art019",
+    "kau_dirasa_exec020",
+    "kau_ulya_qawaid_art001_p2",
+    "kau_ulya_qabul_sec_a4f79963",
+    "kau_dirasa_exec021",
+    "kau_ulya_qawaid_art024",
+    "kau_dirasa_art021",
+    "kau_ulya_qawaid_art012",
+    "kau_ulya_qawaid_art026",
+    "kau_ulya_qawaid_art057",
+    "kau_ulya_qawaid_exec035_p2",
+    "kau_ulya_qawaid_art017",
+    "kau_tahwil_ulya_sec_7775468c"
+   ],
+   "gold_rank": 2
+  }
+ ]
+}

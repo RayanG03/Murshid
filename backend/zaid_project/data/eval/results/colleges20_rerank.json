@@ -1,0 +1,744 @@
+{
+ "settings": {
+  "created": "2026-10-08T15:43:05",
+  "git_commit": "4c604f2",
+  "rerank": true,
+  "sets": [
+   "colleges"
+  ],
+  "rewrite_prompt": "prompts/rewrite.txt",
+  "new_rewrite_calls": 20,
+  "new_rerank_calls": 20,
+  "usage_cost": 0.029447,
+  "credit_before": 3.0612103479999995,
+  "credit_after": 3.038840508,
+  "seconds": 210
+ },
+ "metrics": {
+  "overall": {
+   "questions": 20,
+   "hit@1": 17,
+   "hit@4": 20,
+   "hit@15": 20,
+   "mrr@10": 0.908
+  },
+  "by_file": {
+   "colleges20.jsonl": {
+    "questions": 20,
+    "hit@1": 17,
+    "hit@4": 20,
+    "hit@15": 20,
+    "mrr@10": 0.908
+   }
+  },
+  "by_type": {
+   "شروط": {
+    "questions": 4,
+    "hit@1": 3,
+    "hit@4": 4,
+    "hit@15": 4,
+    "mrr@10": 0.833
+   },
+   "قائمة": {
+    "questions": 13,
+    "hit@1": 11,
+    "hit@4": 13,
+    "hit@15": 13,
+    "mrr@10": 0.91
+   },
+   "كلية": {
+    "questions": 3,
+    "hit@1": 3,
+    "hit@4": 3,
+    "hit@15": 3,
+    "mrr@10": 1.0
+   }
+  }
+ },
+ "questions": [
+  {
+   "id": "c01",
+   "file": "colleges20.jsonl",
+   "type": "قائمة",
+   "university": "KSU",
+   "question": "وش التخصصات اللي في كلية علوم الحاسب والمعلومات بجامعة الملك سعود؟",
+   "rewritten": "التخصصات الموجودة في كلية علوم الحاسب والمعلومات في جامعة الملك سعود",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_qabul_dalil_sec_9daa17a1",
+    "ksu_qabul_sec_b91faa0d_p2",
+    "ksu_tahwil_khariji_sec_9f3efc29_p2"
+   ],
+   "ranked": [
+    "ksu_qabul_dalil_sec_9daa17a1",
+    "ksu_tahwil_khariji_sec_9f3efc29_p2",
+    "ksu_qabul_dalil_sec_f12b08bc",
+    "ksu_qabul_dalil_sec_17462119",
+    "ksu_qabul_sec_b91faa0d_p3",
+    "ksu_qabul_dalil_sec_50348783",
+    "ksu_tahwil_dakhili_sec_6a585ce4",
+    "ksu_qabul_dalil_sec_8f0ca7aa_2",
+    "ksu_tahwil_dakhili_sec_06c371ba",
+    "ksu_tahwil_dakhili_sec_69d28b5a",
+    "ksu_qabul_dalil_sec_853bf491"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "c02",
+   "file": "colleges20.jsonl",
+   "type": "كلية",
+   "university": "KSU",
+   "question": "أبي أدرس القبالة في جامعة الملك سعود، تتبع أي كلية؟",
+   "rewritten": "الكلية التي تتبعها القبالة في جامعة الملك سعود",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_qabul_dalil_sec_196f2aa5",
+    "ksu_qabul_sec_b91faa0d_p1",
+    "ksu_tahwil_dakhili_sec_9d82c979",
+    "ksu_tahwil_khariji_sec_9f3efc29_p1"
+   ],
+   "ranked": [
+    "ksu_qabul_dalil_sec_196f2aa5",
+    "ksu_qabul_sec_b91faa0d_p1",
+    "ksu_tahwil_khariji_sec_9f3efc29_p1",
+    "ksu_tahwil_dakhili_sec_9d82c979",
+    "ksu_qabul_dalil_sec_fcf60c46",
+    "ksu_qabul_sec_b91faa0d_p2",
+    "ksu_qabul_dalil_sec_42802c6e",
+    "ksu_tahwil_khariji_sec_9f3efc29_p2",
+    "ksu_qabul_dalil_sec_c1aef7b9",
+    "ksu_qabul_sec_b91faa0d_p3",
+    "ksu_qabul_dalil_sec_17462119",
+    "ksu_qabul_dalil_sec_853bf491",
+    "ksu_shuun_art053_p1",
+    "ksu_shuun_exec053"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "c03",
+   "file": "colleges20.jsonl",
+   "type": "قائمة",
+   "university": "KSU",
+   "question": "وش هي الكليات الصحية في جامعة الملك سعود؟",
+   "rewritten": "الكليات الصحية في جامعة الملك سعود",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_qabul_dalil_sec_3427aee3"
+   ],
+   "ranked": [
+    "ksu_qabul_dalil_sec_3427aee3",
+    "ksu_qabul_dalil_sec_592915bc",
+    "ksu_qabul_dalil_sec_196f2aa5",
+    "ksu_qabul_dalil_sec_57732948",
+    "ksu_qabul_dalil_sec_49891c3c",
+    "ksu_qabul_dalil_sec_e47c0cb6",
+    "ksu_qabul_dalil_sec_fcf60c46",
+    "ksu_tahwil_dakhili_sec_8d2ede19",
+    "ksu_qabul_sec_b91faa0d_p2",
+    "ksu_qabul_dalil_sec_f12b08bc",
+    "ksu_qabul_dalil_sec_50348783",
+    "ksu_sihhiya_sec_87162f2b"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "c04",
+   "file": "colleges20.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "القبول في كلية الطب بجامعة الملك سعود فيه مقابلة شخصية؟",
+   "rewritten": "القبول في كلية الطب بجامعة الملك سعود وفيه مقابلة شخصية",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_qabul_dalil_sec_57732948"
+   ],
+   "ranked": [
+    "ksu_qabul_dalil_sec_49891c3c",
+    "ksu_qabul_sec_739e54f2",
+    "ksu_qabul_dalil_sec_57732948",
+    "ksu_qabul_dalil_sec_c143b58f",
+    "ksu_qabul_dalil_sec_3427aee3",
+    "ksu_qabul_dalil_sec_fbc9c0ef_p1",
+    "ksu_qabul_sec_8ad1bb6a",
+    "ksu_qabul_dalil_sec_f12b08bc",
+    "ksu_qabul_dalil_sec_50348783",
+    "ksu_qabul_sec_b91faa0d_p1",
+    "ksu_tahwil_dakhili_sec_90bd1b85"
+   ],
+   "gold_rank": 3
+  },
+  {
+   "id": "c05",
+   "file": "colleges20.jsonl",
+   "type": "قائمة",
+   "university": "KSU",
+   "question": "وش البرامج اللي تقدمها كلية الفنون في جامعة الملك سعود؟",
+   "rewritten": "البرامج الأكاديمية التي تقدمها كلية الفنون في جامعة الملك سعود",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_qabul_dalil_sec_f3a5b2a6",
+    "ksu_qabul_sec_b91faa0d_p1",
+    "ksu_tahwil_dakhili_sec_e50bba46"
+   ],
+   "ranked": [
+    "ksu_qabul_dalil_sec_f3a5b2a6",
+    "ksu_qabul_sec_b91faa0d_p1",
+    "ksu_qabul_sec_b91faa0d_p2",
+    "ksu_qabul_dalil_sec_50348783",
+    "ksu_tahwil_dakhili_sec_e50bba46",
+    "ksu_tahwil_khariji_sec_9f3efc29_p1",
+    "ksu_tahwil_khariji_sec_9f3efc29_p2",
+    "ksu_qabul_sec_b91faa0d_p3",
+    "ksu_qabul_sec_8ad1bb6a",
+    "ksu_qabul_dalil_sec_57ca6e75_p1",
+    "ksu_shuun_art014",
+    "ksu_shuun_exec017"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "c06",
+   "file": "colleges20.jsonl",
+   "type": "كلية",
+   "university": "KSU",
+   "question": "تخصص الآثار في جامعة الملك سعود تبع أي كلية؟",
+   "rewritten": "الكلية التي ينتمي إليها تخصص الآثار في جامعة الملك سعود",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_qabul_dalil_sec_4d147e89",
+    "ksu_qabul_sec_b91faa0d_p1",
+    "ksu_tahwil_dakhili_sec_3ff02652"
+   ],
+   "ranked": [
+    "ksu_qabul_dalil_sec_4d147e89",
+    "ksu_qabul_sec_b91faa0d_p1",
+    "ksu_tahwil_khariji_sec_9f3efc29_p1",
+    "ksu_qabul_dalil_sec_50348783",
+    "ksu_qabul_dalil_sec_ec2180f2",
+    "ksu_tahwil_dakhili_sec_3ff02652",
+    "ksu_qabul_dalil_sec_c1aef7b9",
+    "ksu_qabul_dalil_sec_40b142e0",
+    "ksu_qabul_sec_b91faa0d_p2",
+    "ksu_tahwil_khariji_sec_9f3efc29_p2",
+    "ksu_qabul_dalil_sec_592915bc",
+    "ksu_qabul_dalil_sec_853bf491",
+    "ksu_qabul_dalil_sec_17462119"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "c07",
+   "file": "colleges20.jsonl",
+   "type": "قائمة",
+   "university": "KSU",
+   "question": "وش الكليات الإنسانية في جامعة الملك سعود، وكيف يحسبون القبول فيها؟",
+   "rewritten": "الكليات الإنسانية في جامعة الملك سعود وشروط القبول فيها",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_qabul_dalil_sec_50348783"
+   ],
+   "ranked": [
+    "ksu_qabul_dalil_sec_50348783",
+    "ksu_qabul_dalil_sec_ec2180f2",
+    "ksu_qabul_dalil_sec_f12b08bc",
+    "ksu_qabul_sec_b91faa0d_p1",
+    "ksu_tahwil_dakhili_sec_e42076f7",
+    "ksu_qabul_dalil_sec_3427aee3",
+    "ksu_tahwil_dakhili_sec_da70ff3d",
+    "ksu_khadamat_sec_c213d1f9_p1",
+    "ksu_qabul_dalil_sec_eb0b2603",
+    "ksu_qabul_dalil_sec_b49837d1",
+    "ksu_qabul_dalil_sec_4d147e89"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "c08",
+   "file": "colleges20.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "كلية العمارة والتخطيط في جامعة الملك سعود وش تخصصاتها، وفيها اختبار قبول؟",
+   "rewritten": "تخصصات كلية العمارة والتخطيط في جامعة الملك سعود ووجود اختبار قبول للالتحاق بها",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_qabul_dalil_sec_82af0778"
+   ],
+   "ranked": [
+    "ksu_qabul_dalil_sec_82af0778",
+    "ksu_qabul_dalil_sec_f12b08bc",
+    "ksu_qabul_dalil_sec_49891c3c",
+    "ksu_qabul_sec_739e54f2",
+    "ksu_tahwil_dakhili_sec_352a7a1b",
+    "ksu_tahwil_khariji_sec_9f3efc29_p2",
+    "ksu_qabul_dalil_sec_fbc9c0ef_p1",
+    "ksu_tahwil_dakhili_sec_06c371ba",
+    "ksu_qabul_dalil_sec_40b142e0",
+    "ksu_qabul_dalil_sec_853bf491",
+    "ksu_tahwil_dakhili_sec_6a585ce4"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "c09",
+   "file": "colleges20.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "أبي أحول من جامعة ثانية لكلية الهندسة في جامعة الملك سعود، وش التخصصات المتاحة للتحويل؟ وهل هي للطالبات؟",
+   "rewritten": "شروط التحويل الخارجي إلى كلية الهندسة في جامعة الملك سعود والتخصصات المتاحة له والجنس المسموح به",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_tahwil_khariji_sec_9f3efc29_p1"
+   ],
+   "ranked": [
+    "ksu_tahwil_khariji_sec_9f3efc29_p1",
+    "ksu_tahwil_khariji_sec_9f3efc29_p2",
+    "ksu_tahwil_dakhili_sec_06c371ba",
+    "ksu_tahwil_dakhili_sec_aefe5990",
+    "ksu_tahwil_dakhili_sec_6a585ce4",
+    "ksu_tahwil_dakhili_sec_2a4caf34",
+    "ksu_tahwil_khariji_sec_91ce0db1",
+    "ksu_tahwil_dakhili_sec_66e7d85c",
+    "ksu_tahwil_khariji_sec_8827df99",
+    "ksu_tahwil_dakhili_sec_69d28b5a",
+    "ksu_tahwil_dakhili_sec_d82e20dc",
+    "ksu_tahwil_dakhili_sec_e50bba46",
+    "ksu_tahwil_khariji_sec_5c1e2e31"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "c10",
+   "file": "colleges20.jsonl",
+   "type": "قائمة",
+   "university": "KSU",
+   "question": "وش تخصصات كلية التربية في جامعة الملك سعود؟",
+   "rewritten": "التخصصات الدراسية في كلية التربية بجامعة الملك سعود",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_qabul_dalil_sec_eb0b2603",
+    "ksu_qabul_sec_b91faa0d_p1"
+   ],
+   "ranked": [
+    "ksu_qabul_dalil_sec_eb0b2603",
+    "ksu_qabul_sec_b91faa0d_p1",
+    "ksu_tahwil_dakhili_sec_3271df4c",
+    "ksu_qabul_dalil_sec_50348783",
+    "ksu_qabul_sec_b91faa0d_p2",
+    "ksu_tahwil_khariji_sec_9f3efc29_p1",
+    "ksu_qabul_dalil_sec_ec2180f2",
+    "ksu_qabul_dalil_sec_8f0ca7aa_2",
+    "ksu_qabul_dalil_sec_c1aef7b9",
+    "ksu_qabul_sec_b91faa0d_p3",
+    "ksu_qabul_dalil_sec_db11ad94",
+    "ksu_qabul_sec_565d240f",
+    "ksu_qabul_dalil_sec_42802c6e"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "c11",
+   "file": "colleges20.jsonl",
+   "type": "قائمة",
+   "university": "KAU",
+   "question": "وش تخصصات كلية الحاسبات وتقنية المعلومات في جامعة الملك عبدالعزيز؟",
+   "rewritten": "التخصصات المتوفرة في كلية الحاسبات وتقنية المعلومات في جامعة الملك عبدالعزيز",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_qabul_sec_5cf99cb5"
+   ],
+   "ranked": [
+    "kau_tahwil_khariji_sec_5cf99cb5",
+    "kau_qabul_sec_5cf99cb5",
+    "kau_tahwil_khariji_sec_f4174562",
+    "kau_qabul_sec_a6abefbc",
+    "kau_tahwil_dakhili_sec_f12b08bc",
+    "kau_tahwil_dakhili_sec_5cf99cb5",
+    "kau_qabul_sec_40b142e0",
+    "kau_qabul_sec_ba1f33b1",
+    "kau_qabul_sec_09c229e5",
+    "kau_tahwil_khariji_sec_ba1f33b1",
+    "kau_tahwil_dakhili_sec_c7df7ea9",
+    "kau_qabul_sec_7fb7716b"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "c12",
+   "file": "colleges20.jsonl",
+   "type": "كلية",
+   "university": "KAU",
+   "question": "أبي أدرس علم النفس الإكلينيكي في جامعة الملك عبدالعزيز، تبع أي كلية؟",
+   "rewritten": "الكلية التي يُدرّس فيها تخصص علم النفس الإكلينيكي في جامعة الملك عبدالعزيز",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_qabul_sec_592915bc",
+    "kau_tahwil_khariji_sec_592915bc"
+   ],
+   "ranked": [
+    "kau_qabul_sec_592915bc",
+    "kau_tahwil_khariji_sec_592915bc",
+    "kau_tahwil_khariji_sec_af051e21",
+    "kau_qabul_sec_af051e21",
+    "kau_qabul_sec_14631425",
+    "kau_tahwil_khariji_sec_14631425",
+    "kau_tahwil_khariji_sec_f4174562",
+    "kau_tahwil_dakhili_sec_3427aee3",
+    "kau_qabul_sec_c1aef7b9",
+    "kau_tahwil_khariji_sec_c1aef7b9",
+    "kau_tahwil_dakhili_sec_196f2aa5",
+    "kau_dirasa_exec023",
+    "kau_qabul_sec_7fb7716b"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "c13",
+   "file": "colleges20.jsonl",
+   "type": "قائمة",
+   "university": "KAU",
+   "question": "وش الكليات الصحية في جامعة الملك عبدالعزيز؟",
+   "rewritten": "الكليات الصحية في جامعة الملك عبدالعزيز",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_qabul_sec_5a1ddf5b",
+    "kau_tahwil_dakhili_sec_3427aee3"
+   ],
+   "ranked": [
+    "kau_qabul_sec_5a1ddf5b",
+    "kau_tahwil_dakhili_sec_3427aee3",
+    "kau_tahwil_khariji_sec_f4174562",
+    "kau_qabul_sec_3e72ab87",
+    "kau_qabul_sec_592915bc",
+    "kau_tahwil_khariji_sec_3e72ab87",
+    "kau_tahwil_dakhili_sec_592915bc",
+    "kau_qabul_sec_57732948",
+    "kau_qabul_sec_a6abefbc",
+    "kau_qabul_sec_fcf60c46",
+    "kau_qabul_sec_09c229e5",
+    "kau_tahwil_dakhili_sec_f12b08bc",
+    "kau_tahwil_dakhili_sec_e04a82ce"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "c14",
+   "file": "colleges20.jsonl",
+   "type": "قائمة",
+   "university": "KAU",
+   "question": "كلية السياحة في جامعة الملك عبدالعزيز وش تخصصاتها؟ وأي واحد منها مو متاح للطالبات؟",
+   "rewritten": "التخصصات في كلية السياحة بجامعة الملك عبدالعزيز والجنس المسموح به في كل تخصص",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_qabul_sec_8a2a6764",
+    "kau_tahwil_khariji_sec_8a2a6764"
+   ],
+   "ranked": [
+    "kau_tahwil_khariji_sec_8a2a6764",
+    "kau_qabul_sec_8a2a6764",
+    "kau_tahwil_khariji_sec_f4174562",
+    "kau_qabul_sec_f2a6b720",
+    "kau_tahwil_dakhili_sec_c7df7ea9",
+    "kau_tahwil_dakhili_sec_8a2a6764",
+    "kau_qabul_sec_09c229e5",
+    "kau_tahwil_dakhili_sec_f12b08bc",
+    "kau_qabul_sec_7fb7716b",
+    "kau_dirasa_exec023",
+    "kau_tahwil_ulya_sec_60cc0662",
+    "kau_dirasa_exec025"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "c15",
+   "file": "colleges20.jsonl",
+   "type": "قائمة",
+   "university": "KAU",
+   "question": "وش التخصصات اللي فيها قبول مباشر في البكالوريوس بجامعة الملك عبدالعزيز؟",
+   "rewritten": "التخصصات التي يُسمح بالقبول المباشر فيها للبكالوريوس في جامعة الملك عبدالعزيز",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_qabul_sec_b02d9ec5"
+   ],
+   "ranked": [
+    "kau_qabul_sec_b02d9ec5",
+    "kau_qabul_sec_7fb7716b",
+    "kau_tahwil_khariji_sec_f4174562",
+    "kau_qabul_sec_09c229e5",
+    "kau_qabul_sec_c1aef7b9",
+    "kau_qabul_sec_a6abefbc",
+    "kau_tahwil_khariji_sec_c1aef7b9",
+    "kau_qabul_sec_40b142e0",
+    "kau_dirasa_exec009",
+    "kau_qabul_sec_6aeb8099",
+    "kau_tahwil_khariji_sec_40b142e0",
+    "kau_dirasa_art012",
+    "kau_dirasa_exec023"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "c16",
+   "file": "colleges20.jsonl",
+   "type": "قائمة",
+   "university": "KAU",
+   "question": "وش الدبلومات اللي تقدمها الكلية التطبيقية في جامعة الملك عبدالعزيز؟",
+   "rewritten": "الدبلومات التي تقدمها كلية التقنية التطبيقية في جامعة الملك عبد العزيز",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_qabul_sec_6aeb8099"
+   ],
+   "ranked": [
+    "kau_qabul_sec_6aeb8099",
+    "kau_tahwil_khariji_sec_592915bc",
+    "kau_tahwil_khariji_sec_f4174562",
+    "kau_qabul_sec_592915bc",
+    "kau_qabul_sec_7fb7716b",
+    "kau_qabul_sec_5a1ddf5b",
+    "kau_qabul_sec_09c229e5",
+    "kau_tahwil_khariji_sec_40b142e0",
+    "kau_qabul_sec_40b142e0",
+    "kau_tahwil_dakhili_sec_592915bc",
+    "kau_qabul_sec_9f26bb71",
+    "kau_dirasa_exec023",
+    "kau_tahwil_dakhili_sec_a0fed265"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "c17",
+   "file": "colleges20.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "أنا طالبة وأبي أدرس هندسة نووية في جامعة الملك عبدالعزيز، متاحة لي؟",
+   "rewritten": "جواز دراسة تخصص هندسة نووية للطالبة في جامعة الملك عبدالعزيز وشروط القبول فيه",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_qabul_sec_40b142e0",
+    "kau_tahwil_khariji_sec_40b142e0"
+   ],
+   "ranked": [
+    "kau_tahwil_khariji_sec_40b142e0",
+    "kau_qabul_sec_40b142e0",
+    "kau_tahwil_khariji_sec_f4174562",
+    "kau_tahwil_ulya_sec_60cc0662",
+    "kau_dirasa_exec028_p2",
+    "kau_qabul_sec_7fb7716b",
+    "kau_qabul_sec_09c229e5",
+    "kau_qabul_sec_c249b220",
+    "kau_dirasa_exec028_p1",
+    "kau_dirasa_exec011_p1",
+    "kau_tahwil_ulya_sec_2856d46a",
+    "kau_dirasa_exec023",
+    "kau_qabul_sec_7fae9f02",
+    "kau_dirasa_exec009",
+    "kau_dirasa_art012"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "c18",
+   "file": "colleges20.jsonl",
+   "type": "قائمة",
+   "university": "KAU",
+   "question": "كلية التعدين في جامعة الملك عبدالعزيز وش فيها تخصصات؟",
+   "rewritten": "التخصصات الموجودة في كلية التعدين في جامعة الملك عبدالعزيز",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_qabul_sec_6f2471cf",
+    "kau_tahwil_khariji_sec_6f2471cf"
+   ],
+   "ranked": [
+    "kau_tahwil_khariji_sec_6f2471cf",
+    "kau_tahwil_khariji_sec_f4174562",
+    "kau_qabul_sec_6f2471cf",
+    "kau_qabul_sec_a6abefbc",
+    "kau_tahwil_dakhili_sec_f12b08bc",
+    "kau_tahwil_khariji_sec_40b142e0",
+    "kau_qabul_sec_40b142e0",
+    "kau_qabul_sec_c1aef7b9",
+    "kau_tahwil_dakhili_sec_c7df7ea9",
+    "kau_qabul_sec_7fb7716b",
+    "kau_tahwil_khariji_sec_c1aef7b9",
+    "kau_tahwil_dakhili_sec_3427aee3"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "c19",
+   "file": "colleges20.jsonl",
+   "type": "قائمة",
+   "university": "KAU",
+   "question": "أبي أحول من جامعة ثانية لكلية الآداب والعلوم الإنسانية في جامعة الملك عبدالعزيز، وش التخصصات المتاحة للتحويل؟",
+   "rewritten": "التحويل الخارجي إلى كلية الآداب والعلوم الإنسانية في جامعة الملك عبدالعزيز وشروطه والتخصصات المسموح التحويل إليها",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_tahwil_khariji_sec_af051e21"
+   ],
+   "ranked": [
+    "kau_tahwil_khariji_sec_f4174562",
+    "kau_tahwil_dakhili_sec_af051e21",
+    "kau_tahwil_khariji_sec_af051e21",
+    "kau_tahwil_dakhili_sec_c7df7ea9",
+    "kau_qabul_sec_af051e21",
+    "kau_tahwil_dakhili_sec_128a0cf9",
+    "kau_tahwil_ulya_sec_2856d46a",
+    "kau_dirasa_exec023",
+    "kau_tahwil_dakhili_sec_748474ac",
+    "kau_dirasa_exec025",
+    "kau_tahwil_khariji_sec_ab748931",
+    "kau_tahwil_dakhili_sec_a0fed265"
+   ],
+   "gold_rank": 3
+  },
+  {
+   "id": "c20",
+   "file": "colleges20.jsonl",
+   "type": "قائمة",
+   "university": "KAU",
+   "question": "وش الكليات العلمية في جامعة الملك عبدالعزيز؟",
+   "rewritten": "الكليات العلمية في جامعة الملك عبد العزيز",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_qabul_sec_a6abefbc"
+   ],
+   "ranked": [
+    "kau_qabul_sec_a6abefbc",
+    "kau_qabul_sec_c1aef7b9",
+    "kau_tahwil_dakhili_sec_f12b08bc",
+    "kau_tahwil_khariji_sec_f4174562",
+    "kau_qabul_sec_40b142e0",
+    "kau_qabul_sec_5a1ddf5b",
+    "kau_qabul_sec_f2a6b720",
+    "kau_tahwil_dakhili_sec_3427aee3",
+    "kau_tahwil_dakhili_sec_c7df7ea9",
+    "kau_qabul_sec_9f26bb71",
+    "kau_qabul_sec_7fb7716b",
+    "kau_qabul_sec_7fae9f02",
+    "kau_tahwil_dakhili_sec_a0fed265"
+   ],
+   "gold_rank": 1
+  }
+ ]
+}

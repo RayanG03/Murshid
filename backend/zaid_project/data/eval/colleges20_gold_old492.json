@@ -1,0 +1,77 @@
+{
+ "c01": [
+  "ksu_qabul_sec_b91faa0d_p2",
+  "ksu_qabul_dalil_sec_c19e0b0c",
+  "ksu_tahwil_khariji_sec_9f3efc29_p2"
+ ],
+ "c02": [
+  "ksu_qabul_sec_b91faa0d_p1",
+  "ksu_qabul_dalil_sec_3427aee3",
+  "ksu_tahwil_dakhili_sec_9d82c979",
+  "ksu_tahwil_khariji_sec_9f3efc29_p1"
+ ],
+ "c03": [
+  "none"
+ ],
+ "c04": [
+  "ksu_qabul_dalil_sec_3427aee3"
+ ],
+ "c05": [
+  "ksu_qabul_sec_b91faa0d_p1",
+  "ksu_qabul_dalil_sec_55c8a86c",
+  "ksu_tahwil_dakhili_sec_e50bba46"
+ ],
+ "c06": [
+  "ksu_qabul_sec_b91faa0d_p1",
+  "ksu_qabul_dalil_sec_55c8a86c",
+  "ksu_tahwil_dakhili_sec_3ff02652"
+ ],
+ "c07": [
+  "none"
+ ],
+ "c08": [
+  "ksu_qabul_dalil_sec_c19e0b0c"
+ ],
+ "c09": [
+  "ksu_tahwil_khariji_sec_9f3efc29_p1"
+ ],
+ "c10": [
+  "ksu_qabul_sec_b91faa0d_p1",
+  "ksu_qabul_dalil_sec_55c8a86c"
+ ],
+ "c11": [
+  "kau_qabul_sec_5a1ddf5b"
+ ],
+ "c12": [
+  "kau_qabul_sec_5a1ddf5b",
+  "kau_tahwil_khariji_sec_c0534744"
+ ],
+ "c13": [
+  "kau_qabul_sec_5a1ddf5b",
+  "kau_tahwil_dakhili_sec_3427aee3"
+ ],
+ "c14": [
+  "kau_qabul_sec_c0534744",
+  "kau_tahwil_khariji_sec_c228f97c"
+ ],
+ "c15": [
+  "kau_qabul_sec_a1c85537"
+ ],
+ "c16": [
+  "kau_qabul_sec_db0769c1"
+ ],
+ "c17": [
+  "kau_qabul_sec_82af0778",
+  "kau_tahwil_khariji_sec_57732948"
+ ],
+ "c18": [
+  "kau_qabul_sec_82af0778",
+  "kau_tahwil_khariji_sec_6f2471cf"
+ ],
+ "c19": [
+  "kau_tahwil_khariji_sec_af051e21"
+ ],
+ "c20": [
+  "none"
+ ]
+}

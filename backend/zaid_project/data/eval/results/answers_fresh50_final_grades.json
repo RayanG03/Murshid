@@ -1,0 +1,352 @@
+[
+ {
+  "id": "f01",
+  "type": "شروط",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f02",
+  "type": "شروط",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f03",
+  "type": "نعم/لا",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f04",
+  "type": "نعم/لا",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f05",
+  "type": "رقم",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f06",
+  "type": "شروط",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f07",
+  "type": "رقم",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f08",
+  "type": "رقم",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f09",
+  "type": "إجراء",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f10",
+  "type": "شروط",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f11",
+  "type": "نعم/لا",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f12",
+  "type": "حالة",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f13",
+  "type": "تاريخ",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f14",
+  "type": "حالة",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f15",
+  "type": "تاريخ",
+  "grade": "صحيح",
+  "note": "جواب إنجليزي صحيح، والتاريخ بأرقام عربية مشرقية كما قبل",
+  "gold_rank": 1
+ },
+ {
+  "id": "f16",
+  "type": "شروط",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f17",
+  "type": "شروط",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f18",
+  "type": "شروط",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f19",
+  "type": "شروط",
+  "grade": "صحيح مع ملاحظة",
+  "note": "كما قبل: بدأ بسقف المادة 25% ثم ذكر 15% من القاعدة التنفيذية دون أن يوضح أيهما يُطبَّق",
+  "gold_rank": 1
+ },
+ {
+  "id": "f20",
+  "type": "حالة",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f21",
+  "type": "رقم",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f22",
+  "type": "إجراء",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f23",
+  "type": "نعم/لا",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f24",
+  "type": "شروط",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f25",
+  "type": "شروط",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 2
+ },
+ {
+  "id": "f26",
+  "type": "شروط",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f27",
+  "type": "نعم/لا",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f28",
+  "type": "إجراء",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f29",
+  "type": "مستندات",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 2
+ },
+ {
+  "id": "f30",
+  "type": "نعم/لا",
+  "grade": "خطأ",
+  "note": "كما قبل: قائمة البرامج (إدارة السفر والسياحة للطلاب فقط) لم تُسترجع (المرتبة 10)، فذكر الشروط العامة كأن التخصص متاح",
+  "gold_rank": 10
+ },
+ {
+  "id": "f31",
+  "type": "شروط",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f32",
+  "type": "نعم/لا",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 4
+ },
+ {
+  "id": "f33",
+  "type": "حالة",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f34",
+  "type": "رقم",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f35",
+  "type": "نعم/لا",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f36",
+  "type": "مدة",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f37",
+  "type": "رقم",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 3
+ },
+ {
+  "id": "f38",
+  "type": "شروط",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f39",
+  "type": "تاريخ",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f40",
+  "type": "شروط",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 2
+ },
+ {
+  "id": "f41",
+  "type": "نعم/لا",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f42",
+  "type": "تعريف",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 2
+ },
+ {
+  "id": "f43",
+  "type": "حالة",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f44",
+  "type": "حالة",
+  "grade": "صحيح مع ملاحظة",
+  "note": "ناقص: ذكر جواز إعادة القيد لعذر مقبول (المادة 21) ولم يذكر أن المنسحب أكثر من فصل يُعامل معاملة المطوي قيده؛ مقطع تلك القاعدة لم يُسترجع",
+  "gold_rank": 5
+ },
+ {
+  "id": "f45",
+  "type": "رقم",
+  "grade": "صحيح",
+  "note": "",
+  "gold_rank": 1
+ },
+ {
+  "id": "f46",
+  "type": "رفض",
+  "grade": "رفض صحيح",
+  "note": "",
+  "gold_rank": null
+ },
+ {
+  "id": "f47",
+  "type": "رفض",
+  "grade": "رفض صحيح",
+  "note": "",
+  "gold_rank": null
+ },
+ {
+  "id": "f48",
+  "type": "رفض",
+  "grade": "رفض صحيح",
+  "note": "",
+  "gold_rank": null
+ },
+ {
+  "id": "f49",
+  "type": "رفض",
+  "grade": "رفض صحيح",
+  "note": "",
+  "gold_rank": null
+ },
+ {
+  "id": "f50",
+  "type": "رفض",
+  "grade": "رفض صحيح",
+  "note": "",
+  "gold_rank": null
+ }
+]

@@ -1,0 +1,14 @@
+{
+ "t01": {"ksu_taqwim_sec_33b75dbc_p1": ["ksu_taqwim_sec_03f386c9"]},
+ "t02": {"ksu_taqwim_sec_33b75dbc_p1": ["ksu_taqwim_sec_03f386c9"]},
+ "t03": {"ksu_taqwim_sec_33b75dbc_p1": ["ksu_taqwim_sec_210f2c7c"]},
+ "t06": {"ksu_taqwim_sec_33b75dbc_p1": ["ksu_taqwim_sec_9813db3d"]},
+ "n04": {"ksu_taqwim_sec_33b75dbc_p1": ["ksu_taqwim_sec_03f386c9"]},
+ "student_07": {"ksu_taqwim_sec_33b75dbc_p1": ["ksu_taqwim_sec_03f386c9"]},
+ "student_08": {"ksu_taqwim_sec_33b75dbc_p1": ["ksu_taqwim_sec_03f386c9"]},
+ "t41": {"kau_tahwil_dakhili_sec_128361d4_p1": ["kau_tahwil_dakhili_sec_57732948"]},
+ "m19": {"kau_tahwil_dakhili_sec_128361d4_p3": ["kau_tahwil_dakhili_sec_5cf99cb5"]},
+ "m21": {"kau_tahwil_ulya_sec_f21e3136": ["kau_tahwil_ulya_sec_2856d46a_p1"]},
+ "q22": {"kau_tahwil_ulya_sec_f21e3136": ["kau_tahwil_ulya_sec_2856d46a_p1"]},
+ "student_24": {"kau_tahwil_ulya_sec_f21e3136": ["kau_tahwil_ulya_sec_2856d46a_p1"]}
+}

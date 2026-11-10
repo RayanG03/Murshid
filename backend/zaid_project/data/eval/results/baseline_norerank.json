@@ -1,0 +1,2668 @@
+{
+ "settings": {
+  "created": "2026-09-28T20:17:29",
+  "git_commit": "1659f5f",
+  "rerank": false,
+  "sets": [
+   "main"
+  ],
+  "rewrite_prompt": "prompts/rewrite.txt",
+  "new_rewrite_calls": 93,
+  "new_rerank_calls": 0,
+  "credit_before": 3.0332917580000007,
+  "credit_after": 2.991219317999999,
+  "seconds": 528
+ },
+ "metrics": {
+  "overall": {
+   "questions": 93,
+   "hit@1": 65,
+   "hit@4": 90,
+   "hit@15": 92,
+   "mrr@10": 0.812
+  },
+  "by_file": {
+   "test_questions_50.jsonl": {
+    "questions": 47,
+    "hit@1": 35,
+    "hit@4": 46,
+    "hit@15": 46,
+    "mrr@10": 0.855
+   },
+   "test_questions_new50.jsonl": {
+    "questions": 46,
+    "hit@1": 30,
+    "hit@4": 44,
+    "hit@15": 46,
+    "mrr@10": 0.769
+   }
+  },
+  "by_type": {
+   "إجراء": {
+    "questions": 2,
+    "hit@1": 2,
+    "hit@4": 2,
+    "hit@15": 2,
+    "mrr@10": 1.0
+   },
+   "تاريخ": {
+    "questions": 20,
+    "hit@1": 10,
+    "hit@4": 20,
+    "hit@15": 20,
+    "mrr@10": 0.7
+   },
+   "جدول": {
+    "questions": 7,
+    "hit@1": 6,
+    "hit@4": 7,
+    "hit@15": 7,
+    "mrr@10": 0.893
+   },
+   "رقم": {
+    "questions": 29,
+    "hit@1": 23,
+    "hit@4": 28,
+    "hit@15": 29,
+    "mrr@10": 0.878
+   },
+   "شروط": {
+    "questions": 23,
+    "hit@1": 16,
+    "hit@4": 21,
+    "hit@15": 22,
+    "mrr@10": 0.782
+   },
+   "عامي": {
+    "questions": 3,
+    "hit@1": 2,
+    "hit@4": 3,
+    "hit@15": 3,
+    "mrr@10": 0.833
+   },
+   "فخ": {
+    "questions": 9,
+    "hit@1": 6,
+    "hit@4": 9,
+    "hit@15": 9,
+    "mrr@10": 0.815
+   }
+  }
+ },
+ "questions": [
+  {
+   "id": "t01",
+   "file": "test_questions_50.jsonl",
+   "type": "تاريخ",
+   "university": "KSU",
+   "question": "متى تبدأ الدراسة في الفصل الأول للعام 2026-2027؟",
+   "rewritten": "بداية الدراسة في الفصل الأول للعام الأكاديمي 2026-2027 في التقويم الأكاديمي",
+   "gold": [
+    "ksu_taqwim_0000",
+    "ksu_harakat_0000"
+   ],
+   "ranked": [
+    "ksu_taqwim_0000",
+    "ksu_harakat_0000",
+    "ksu_harakat_0001",
+    "ksu_taqwim_0001",
+    "ksu_harakat_0003",
+    "ksu_harakat_0004",
+    "ksu_harakat_0006",
+    "ksu_taqwim_0002",
+    "ksu_qabul_0000",
+    "ksu_qabul_dalil_0002"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t02",
+   "file": "test_questions_50.jsonl",
+   "type": "تاريخ",
+   "university": "KSU",
+   "question": "متى تبدأ اختبارات نهائي الترم الأول ومتى تخلص؟",
+   "rewritten": "مواعيد بداية وانتهاء الاختبارات النهائية للفصل الدراسي الأول في التقويم الأكاديمي",
+   "gold": [
+    "ksu_taqwim_0000",
+    "ksu_harakat_0000"
+   ],
+   "ranked": [
+    "ksu_harakat_0001",
+    "ksu_taqwim_0000",
+    "ksu_taqwim_0001",
+    "ksu_shuun_0054",
+    "ksu_harakat_0004",
+    "ksu_harakat_0000",
+    "ksu_harakat_0006",
+    "ksu_shuun_0002",
+    "ksu_harakat_0003",
+    "ksu_shuun_0063",
+    "ksu_khadamat_0015",
+    "ksu_shuun_0105",
+    "ksu_shuun_0074",
+    "ksu_taqwim_0002",
+    "ksu_shuun_0052"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "t03",
+   "file": "test_questions_50.jsonl",
+   "type": "تاريخ",
+   "university": "KSU",
+   "question": "كم مدة إجازة عيد الفطر؟ من متى لمتى؟",
+   "rewritten": "مدة إجازة عيد الفطر وفترة البدء والنهاية لها في التقويم الأكاديمي",
+   "gold": [
+    "ksu_harakat_0003",
+    "ksu_harakat_0004",
+    "ksu_taqwim_0000"
+   ],
+   "ranked": [
+    "ksu_taqwim_0000",
+    "ksu_taqwim_0001",
+    "ksu_harakat_0004",
+    "ksu_harakat_0003",
+    "ksu_harakat_0001",
+    "ksu_harakat_0000",
+    "ksu_shuun_0001",
+    "ksu_harakat_0006",
+    "ksu_shuun_0091",
+    "ksu_shuun_0090",
+    "ksu_taqwim_0002",
+    "ksu_khadamat_0003",
+    "ksu_khadamat_0017",
+    "ksu_shuun_0094"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t04",
+   "file": "test_questions_50.jsonl",
+   "type": "تاريخ",
+   "university": "KSU",
+   "question": "آخر يوم أقدر أعتذر فيه عن مقرر في الفصل الأول؟",
+   "rewritten": "آخر يوم لتقديم طلب الاعتذار عن مقرر في الفصل الدراسي الأول في التقويم الأكاديمي",
+   "gold": [
+    "ksu_harakat_0000",
+    "ksu_shuun_0092"
+   ],
+   "ranked": [
+    "ksu_taqwim_0000",
+    "ksu_harakat_0000",
+    "ksu_shuun_0092",
+    "ksu_shuun_0091",
+    "ksu_harakat_0001",
+    "ksu_taqwim_0001",
+    "ksu_shuun_0056",
+    "ksu_harakat_0006",
+    "ksu_khadamat_0015",
+    "ksu_shuun_0060",
+    "ksu_harakat_0003",
+    "ksu_harakat_0004",
+    "ksu_shuun_0106",
+    "ksu_taqwim_0002",
+    "ksu_shuun_0063"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "t05",
+   "file": "test_questions_50.jsonl",
+   "type": "تاريخ",
+   "university": "KSU",
+   "question": "متى فترة الحذف والإضافة للفصل الثاني؟",
+   "rewritten": "مواعيد الحذف والإضافة للمقررات في الفصل الدراسي الثاني والتقويم الأكاديمي",
+   "gold": [
+    "ksu_harakat_0003",
+    "ksu_harakat_0004"
+   ],
+   "ranked": [
+    "ksu_harakat_0003",
+    "ksu_taqwim_0001",
+    "ksu_harakat_0006",
+    "ksu_harakat_0000",
+    "ksu_shuun_0047",
+    "ksu_khadamat_0009",
+    "ksu_khadamat_0010",
+    "ksu_harakat_0004",
+    "ksu_taqwim_0002",
+    "ksu_shuun_0113",
+    "ksu_khadamat_0008",
+    "ksu_taqwim_0000",
+    "ksu_harakat_0001",
+    "ksu_shuun_0074",
+    "ksu_shuun_0057"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t06",
+   "file": "test_questions_50.jsonl",
+   "type": "تاريخ",
+   "university": "KSU",
+   "question": "متى يبدأ الصيفي ومتى اختباراته النهائية؟",
+   "rewritten": "مواعيد بداية الفصل الصيفي واختباراته النهائية في التقويم الأكاديمي",
+   "gold": [
+    "ksu_taqwim_0000",
+    "ksu_harakat_0006"
+   ],
+   "ranked": [
+    "ksu_taqwim_0001",
+    "ksu_harakat_0006",
+    "ksu_harakat_0001",
+    "ksu_harakat_0004",
+    "ksu_taqwim_0000",
+    "ksu_shuun_0092",
+    "ksu_harakat_0003",
+    "ksu_shuun_0001",
+    "ksu_harakat_0000",
+    "ksu_shuun_0091",
+    "ksu_shuun_0054",
+    "ksu_taqwim_0002",
+    "ksu_shuun_0052"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "t07",
+   "file": "test_questions_50.jsonl",
+   "type": "تاريخ",
+   "university": "KAU",
+   "question": "متى يبدا الترم الاول في جامعة المؤسس؟",
+   "rewritten": "موعد بداية الفصل الدراسي الأول في التقويم الأكاديمي لجامعة المؤسس",
+   "gold": [
+    "kau_taqwim_0000"
+   ],
+   "ranked": [
+    "kau_taqwim_sana_0001",
+    "kau_taqwim_0002",
+    "kau_taqwim_0000",
+    "kau_taqwim_sana_0002",
+    "kau_taqwim_0001",
+    "kau_dirasa_0065",
+    "kau_dirasa_0059",
+    "kau_dirasa_0037",
+    "kau_dirasa_0029",
+    "kau_dirasa_0005",
+    "kau_dirasa_0028",
+    "kau_dirasa_0010",
+    "kau_dirasa_0001",
+    "kau_suluk_0014",
+    "kau_dirasa_0002"
+   ],
+   "gold_rank": 3
+  },
+  {
+   "id": "t08",
+   "file": "test_questions_50.jsonl",
+   "type": "تاريخ",
+   "university": "KAU",
+   "question": "متى اختبارات الدوري الأول؟",
+   "rewritten": "مواعيد الاختبارات الفصلية الأولى في التقويم الأكاديمي",
+   "gold": [
+    "kau_taqwim_0000"
+   ],
+   "ranked": [
+    "kau_taqwim_0002",
+    "kau_taqwim_0001",
+    "kau_taqwim_0000",
+    "kau_taqwim_sana_0001",
+    "kau_dirasa_0001",
+    "kau_dirasa_0065",
+    "kau_dirasa_0002",
+    "kau_dirasa_0037",
+    "kau_taqwim_sana_0002",
+    "kau_tahwil_dakhili_0010",
+    "kau_dirasa_0063",
+    "kau_dirasa_0007",
+    "kau_huquq_0006",
+    "kau_dirasa_0005",
+    "kau_dirasa_0004"
+   ],
+   "gold_rank": 3
+  },
+  {
+   "id": "t09",
+   "file": "test_questions_50.jsonl",
+   "type": "تاريخ",
+   "university": "KAU",
+   "question": "إلى متى أقدر أسحب مقرر هالفصل؟",
+   "rewritten": "آخر موعد لسحب مقرر أو الاعتذار عنه في الفصل الدراسي الحالي في التقويم الأكاديمي",
+   "gold": [
+    "kau_taqwim_0000"
+   ],
+   "ranked": [
+    "kau_taqwim_0000",
+    "kau_taqwim_0001",
+    "kau_dirasa_0037",
+    "kau_taqwim_0002",
+    "kau_taqwim_sana_0001",
+    "kau_dirasa_0065",
+    "kau_dirasa_0035",
+    "kau_dirasa_0074",
+    "kau_dirasa_0034",
+    "kau_dirasa_0072",
+    "kau_taqwim_sana_0002",
+    "kau_tahwil_ulya_0006",
+    "kau_dirasa_0069",
+    "kau_dirasa_0004",
+    "kau_dirasa_0063"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t10",
+   "file": "test_questions_50.jsonl",
+   "type": "تاريخ",
+   "university": "KAU",
+   "question": "متى الاختبارات البديلة، ومتى يبدأ الفصل الثاني؟",
+   "rewritten": "مواعيد الاختبارات البديلة في التقويم الأكاديمي ومباشرة الفصل الدراسي الثاني في التقويم الأكاديمي",
+   "gold": [
+    "kau_taqwim_0001"
+   ],
+   "ranked": [
+    "kau_taqwim_0001",
+    "kau_taqwim_sana_0002",
+    "kau_taqwim_0002",
+    "kau_taqwim_sana_0001",
+    "kau_dirasa_0067",
+    "kau_taqwim_0000",
+    "kau_dirasa_0068",
+    "kau_dirasa_0008",
+    "kau_dirasa_0073",
+    "kau_dirasa_0065",
+    "kau_dirasa_0029",
+    "kau_suluk_0009"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t11",
+   "file": "test_questions_50.jsonl",
+   "type": "تاريخ",
+   "university": "KAU",
+   "question": "متى أقدم على التحويل الخارجي لجامعة الملك عبدالعزيز ومتى تطلع النتيجة؟",
+   "rewritten": "مواعيد تقديم طلب التحويل الخارجي إلى جامعة الملك عبدالعزيز وموعد الإعلان عن النتيجة في التقويم الأكاديمي",
+   "gold": [
+    "kau_tahwil_khariji_0008"
+   ],
+   "ranked": [
+    "kau_tahwil_khariji_0008",
+    "kau_tahwil_khariji_0000",
+    "kau_taqwim_0000",
+    "kau_taqwim_0001",
+    "kau_tahwil_khariji_0006",
+    "kau_dirasa_0049",
+    "kau_dirasa_0053",
+    "kau_tahwil_ulya_0005",
+    "kau_tahwil_ulya_0002",
+    "kau_tahwil_dakhili_0008",
+    "kau_taqwim_0002",
+    "kau_taqwim_sana_0002",
+    "kau_taqwim_sana_0001",
+    "kau_tahwil_khariji_0015",
+    "kau_tahwil_dakhili_0001"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t12",
+   "file": "test_questions_50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "كم الحد الأدنى والأعلى للساعات اللي أسجلها في الترم؟",
+   "rewritten": "الحد الأدنى والحد الأقصى لعدد الوحدات الدراسية المسموح بتسجيلها في الفصل الدراسي",
+   "gold": [
+    "ksu_shuun_0047"
+   ],
+   "ranked": [
+    "ksu_shuun_0047",
+    "ksu_khadamat_0009",
+    "ksu_tahwil_dakhili_0014",
+    "ksu_tahwil_dakhili_0013",
+    "ksu_shuun_0099",
+    "ksu_shuun_0004",
+    "ksu_shuun_0101",
+    "ksu_tahwil_dakhili_0020",
+    "ksu_shuun_0027",
+    "ksu_shuun_0049",
+    "ksu_shuun_0079",
+    "ksu_shuun_0052",
+    "ksu_shuun_0073",
+    "ksu_shuun_0062",
+    "ksu_shuun_0116"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t13",
+   "file": "test_questions_50.jsonl",
+   "type": "إجراء",
+   "university": "KSU",
+   "question": "غبت عن النهائي بعذر، كم عندي وقت أقدم على اختبار بديل؟",
+   "rewritten": "مواعيد تقديم طلب الاختبار البديل بعد الغياب عن الاختبار النهائي بعذر مقبول وعدد الأيام المسموح بها",
+   "gold": [
+    "ksu_shuun_0056",
+    "ksu_shuun_0057"
+   ],
+   "ranked": [
+    "ksu_shuun_0056",
+    "ksu_shuun_0057",
+    "ksu_shuun_0105",
+    "ksu_shuun_0091",
+    "ksu_shuun_0092",
+    "ksu_khadamat_0015",
+    "ksu_shuun_0106",
+    "ksu_shuun_0062",
+    "ksu_shuun_0049",
+    "ksu_shuun_0104",
+    "ksu_shuun_0055",
+    "ksu_tahwil_khariji_0003",
+    "ksu_shuun_0054",
+    "ksu_harakat_0004"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t14",
+   "file": "test_questions_50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "أبي أعيد مادة جبت فيها د عشان أرفع معدلي، يصير؟",
+   "rewritten": "جواز إعادة دراسة المقرر الذي حصل فيه الطالب على تقدير راسب (F) لرفع المعدل التراكمي وشروطه",
+   "gold": [
+    "ksu_shuun_0059",
+    "ksu_shuun_0060"
+   ],
+   "ranked": [
+    "ksu_shuun_0060",
+    "ksu_shuun_0059",
+    "ksu_shuun_0063",
+    "ksu_shuun_0064",
+    "ksu_shuun_0114",
+    "ksu_shuun_0099",
+    "ksu_suluk_0016",
+    "ksu_shuun_0058",
+    "ksu_shuun_0003",
+    "ksu_shuun_0105",
+    "ksu_shuun_0011",
+    "ksu_shuun_0078",
+    "ksu_shuun_0081",
+    "ksu_shuun_0075",
+    "ksu_shuun_0022"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t15",
+   "file": "test_questions_50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "كم مرة أقدر أأجل الدراسة؟",
+   "rewritten": "الحد الأقصى لعدد مرات تأجيل الدراسة أو تأجيل الفصل الدراسي",
+   "gold": [
+    "ksu_shuun_0090"
+   ],
+   "ranked": [
+    "ksu_shuun_0090",
+    "ksu_shuun_0061",
+    "ksu_shuun_0092",
+    "ksu_shuun_0091",
+    "ksu_shuun_0060",
+    "ksu_shuun_0062",
+    "ksu_shuun_0097",
+    "ksu_shuun_0004",
+    "ksu_shuun_0063",
+    "ksu_shuun_0047",
+    "ksu_tahwil_dakhili_0006",
+    "ksu_shuun_0059",
+    "ksu_suluk_0007",
+    "ksu_shuun_0052",
+    "ksu_suluk_0008"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t16",
+   "file": "test_questions_50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "كم مقرر أقدر أنسحب منه طول دراستي؟",
+   "rewritten": "الحد الأقصى لعدد مرات الاعتذار عن مقرر أو الانسحاب منه طوال مدة الدراسة",
+   "gold": [
+    "ksu_shuun_0092"
+   ],
+   "ranked": [
+    "ksu_shuun_0092",
+    "ksu_shuun_0061",
+    "ksu_shuun_0060",
+    "ksu_shuun_0091",
+    "ksu_shuun_0058",
+    "ksu_shuun_0062",
+    "ksu_shuun_0070",
+    "ksu_shuun_0004",
+    "ksu_shuun_0072",
+    "ksu_tahwil_dakhili_0019",
+    "ksu_khadamat_0017",
+    "ksu_tahwil_dakhili_0012",
+    "ksu_khadamat_0007",
+    "ksu_suluk_0007",
+    "ksu_khadamat_0016"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t17",
+   "file": "test_questions_50.jsonl",
+   "type": "عامي",
+   "university": "KSU",
+   "question": "انقطعت ترم كامل وما سجلت ولا اجلت وش يصير",
+   "rewritten": "ما يترتب على الانقطاع عن الدراسة لفصل دراسي كامل دون تأجيل أو تسجيل",
+   "gold": [
+    "ksu_shuun_0093",
+    "ksu_shuun_0097"
+   ],
+   "ranked": [
+    "ksu_shuun_0003",
+    "ksu_shuun_0093",
+    "ksu_shuun_0091",
+    "ksu_shuun_0090",
+    "ksu_shuun_0005",
+    "ksu_shuun_0058",
+    "ksu_shuun_0097",
+    "ksu_shuun_0001",
+    "ksu_shuun_0004",
+    "ksu_khadamat_0017",
+    "ksu_shuun_0046",
+    "ksu_shuun_0002",
+    "ksu_shuun_0077",
+    "ksu_suluk_0008",
+    "ksu_suluk_0010"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "t18",
+   "file": "test_questions_50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "كم المعدل اللي لازم أجيبه عشان أتخرج من كلية الهندسة؟",
+   "rewritten": "المعدل التراكمي المطلوب لخريجي كلية الهندسة وشروط التخرج",
+   "gold": [
+    "ksu_shuun_0101"
+   ],
+   "ranked": [
+    "ksu_tahwil_dakhili_0004",
+    "ksu_shuun_0101",
+    "ksu_tahwil_dakhili_0017",
+    "ksu_shuun_0099",
+    "ksu_tahwil_dakhili_0008",
+    "ksu_tahwil_dakhili_0020",
+    "ksu_tahwil_dakhili_0013",
+    "ksu_shuun_0094",
+    "ksu_tahwil_dakhili_0005",
+    "ksu_shuun_0078",
+    "ksu_tahwil_dakhili_0014",
+    "ksu_qabul_dalil_0012",
+    "ksu_tahwil_dakhili_0022"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "t19",
+   "file": "test_questions_50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "كم يوم عندي أعترض على درجة الاختبار الفصلي؟",
+   "rewritten": "عدد الأيام المسموح بها لتقديم التظلم من درجة الاختبار الفصلي",
+   "gold": [
+    "ksu_shuun_0104"
+   ],
+   "ranked": [
+    "ksu_shuun_0104",
+    "ksu_shuun_0105",
+    "ksu_shuun_0052",
+    "ksu_shuun_0091",
+    "ksu_shuun_0002",
+    "ksu_khadamat_0015",
+    "ksu_shuun_0106",
+    "ksu_suluk_0027",
+    "ksu_taqwim_0001",
+    "ksu_shuun_0107",
+    "ksu_shuun_0055",
+    "ksu_shuun_0092",
+    "ksu_suluk_0021",
+    "ksu_shuun_0056",
+    "ksu_shuun_0060"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t20",
+   "file": "test_questions_50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "أبي أدرس مواد زائر في جامعة برا المملكة، وش الشروط؟",
+   "rewritten": "شروط الدراسة كطالب زائر في جامعة خارج المملكة العربية السعودية",
+   "gold": [
+    "ksu_shuun_0089",
+    "ksu_shuun_0087"
+   ],
+   "ranked": [
+    "ksu_shuun_0089",
+    "ksu_zaer_0001",
+    "ksu_shuun_0040",
+    "ksu_shuun_0087",
+    "ksu_zaer_0000",
+    "ksu_shuun_0005",
+    "ksu_zaer_0003",
+    "ksu_shuun_0035",
+    "ksu_qabul_dalil_0014",
+    "ksu_shuun_0009",
+    "ksu_qabul_dalil_0003",
+    "ksu_zaer_0002"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t21",
+   "file": "test_questions_50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "لو تأخرت عن الاختبار النهائي كم دقيقة يسمحون لي أدخل؟",
+   "rewritten": "الحد الزمني المسموح به لدخول الاختبار النهائي في حال التأخير",
+   "gold": [
+    "ksu_shuun_0054"
+   ],
+   "ranked": [
+    "ksu_shuun_0054",
+    "ksu_shuun_0056",
+    "ksu_shuun_0063",
+    "ksu_shuun_0105",
+    "ksu_khadamat_0015",
+    "ksu_shuun_0049",
+    "ksu_shuun_0057",
+    "ksu_shuun_0091",
+    "ksu_shuun_0002",
+    "ksu_shuun_0106",
+    "ksu_khadamat_0009",
+    "ksu_shuun_0048"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t22",
+   "file": "test_questions_50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "رسبت في مادة إجبارية أربع مرات، هل فيه حل؟",
+   "rewritten": "الحد الأقصى لعدد مرات رسوب الطالب في مقرر إجباري وما يترتب على رسوبه فيه أربع مرات",
+   "gold": [
+    "ksu_shuun_0061",
+    "ksu_shuun_0062"
+   ],
+   "ranked": [
+    "ksu_shuun_0061",
+    "ksu_shuun_0062",
+    "ksu_shuun_0092",
+    "ksu_shuun_0063",
+    "ksu_shuun_0059",
+    "ksu_shuun_0106",
+    "ksu_suluk_0023",
+    "ksu_shuun_0091",
+    "ksu_suluk_0007",
+    "ksu_khadamat_0007",
+    "ksu_shuun_0047",
+    "ksu_shuun_0060",
+    "ksu_shuun_0075",
+    "ksu_shuun_0097",
+    "ksu_shuun_0004"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t23",
+   "file": "test_questions_50.jsonl",
+   "type": "فخ",
+   "university": "KSU",
+   "question": "خلصت ثانوي من ثلاث سنين، أقدر أقدم على طب؟",
+   "rewritten": "جواز تقديم الطالب الخريج من المرحلة الثانوية منذ ثلاث سنوات على قبول كلية الطب وشروطه",
+   "gold": [
+    "ksu_qabul_dalil_0003",
+    "ksu_qabul_0005"
+   ],
+   "ranked": [
+    "ksu_qabul_dalil_0003",
+    "ksu_qabul_0005",
+    "ksu_qabul_dalil_0006",
+    "ksu_qabul_dalil_0004",
+    "ksu_tahwil_dakhili_0000",
+    "ksu_khadamat_0013",
+    "ksu_qabul_dalil_0015",
+    "ksu_tahwil_dakhili_0023",
+    "ksu_tahwil_dakhili_0022",
+    "ksu_qabul_dalil_0007",
+    "ksu_qabul_dalil_0014",
+    "ksu_tahwil_dakhili_0020",
+    "ksu_sihhiya_0003"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t24",
+   "file": "test_questions_50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "أبي أحول لكلية علوم الحاسب من كلية العلوم، كم المعدل المطلوب؟",
+   "rewritten": "المعدل التراكمي المطلوب وشروط التحويل الداخلي من كلية العلوم إلى كلية علوم الحاسب",
+   "gold": [
+    "ksu_tahwil_dakhili_0005"
+   ],
+   "ranked": [
+    "ksu_tahwil_dakhili_0005",
+    "ksu_tahwil_dakhili_0020",
+    "ksu_tahwil_dakhili_0018",
+    "ksu_tahwil_dakhili_0008",
+    "ksu_tahwil_dakhili_0007",
+    "ksu_tahwil_dakhili_0012",
+    "ksu_tahwil_dakhili_0015",
+    "ksu_tahwil_dakhili_0010",
+    "ksu_shuun_0101",
+    "ksu_tahwil_dakhili_0023",
+    "ksu_tahwil_dakhili_0022",
+    "ksu_qabul_dalil_0012"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t25",
+   "file": "test_questions_50.jsonl",
+   "type": "فخ",
+   "university": "KSU",
+   "question": "أنا من مسار إدارة الأعمال في الثانوي، أقدر أدخل كلية علمية؟",
+   "rewritten": "جواز القبول في الكليات العلمية لطلاب مسار إدارة الأعمال في المرحلة الثانوية",
+   "gold": [
+    "ksu_qabul_dalil_0015"
+   ],
+   "ranked": [
+    "ksu_qabul_dalil_0015",
+    "ksu_qabul_dalil_0009",
+    "ksu_qabul_dalil_0010",
+    "ksu_qabul_dalil_0012",
+    "ksu_tahwil_dakhili_0009",
+    "ksu_tahwil_dakhili_0020",
+    "ksu_qabul_dalil_0007",
+    "ksu_qabul_dalil_0006",
+    "ksu_shuun_0037",
+    "ksu_tahwil_dakhili_0019",
+    "ksu_qabul_0003",
+    "ksu_shuun_0032"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t26",
+   "file": "test_questions_50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "كم مدة صلاحية التقرير الطبي اللي أثبت فيه الإعاقة؟",
+   "rewritten": "مدة صلاحية التقرير الطبي لإثبات الإعاقة",
+   "gold": [
+    "ksu_sihhiya_0003"
+   ],
+   "ranked": [
+    "ksu_sihhiya_0003",
+    "ksu_sihhiya_0001",
+    "ksu_sihhiya_0002",
+    "ksu_sihhiya_0005",
+    "ksu_sihhiya_0004",
+    "ksu_sihhiya_0006",
+    "ksu_khadamat_0005",
+    "ksu_shuun_0106",
+    "ksu_shuun_0050",
+    "ksu_qabul_dalil_0003"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t27",
+   "file": "test_questions_50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "طالب انسحب من الجامعة ويبي يرجع يقدم كمستجد، كم لازم ينتظر؟",
+   "rewritten": "الموعد المطلوب لانتظار الطالب الذي انسحب من الجامعة قبل أن يُقبل كطالب مستجد",
+   "gold": [
+    "ksu_qabul_dalil_0003",
+    "ksu_qabul_0005"
+   ],
+   "ranked": [
+    "ksu_shuun_0003",
+    "ksu_shuun_0097",
+    "ksu_shuun_0060",
+    "ksu_shuun_0092",
+    "ksu_shuun_0004",
+    "ksu_shuun_0057",
+    "ksu_shuun_0104",
+    "ksu_tahwil_khariji_0008",
+    "ksu_shuun_0049",
+    "ksu_shuun_0087",
+    "ksu_shuun_0091",
+    "ksu_shuun_0064",
+    "ksu_shuun_0099",
+    "ksu_zaer_0003",
+    "ksu_shuun_0062"
+   ],
+   "gold_rank": null
+  },
+  {
+   "id": "t28",
+   "file": "test_questions_50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كم الحد الأدنى والأعلى للعبء الدراسي؟",
+   "rewritten": "الحد الأدنى والحد الأقصى للعبء الدراسي في الفصل الدراسي وعدد الوحدات الدراسية المسموح بتسجيلها",
+   "gold": [
+    "kau_dirasa_0028"
+   ],
+   "ranked": [
+    "kau_dirasa_0005",
+    "kau_dirasa_0028",
+    "kau_dirasa_0027",
+    "kau_dirasa_0004",
+    "kau_dirasa_0084",
+    "kau_dirasa_0059",
+    "kau_dirasa_0032",
+    "kau_dirasa_0029",
+    "kau_dirasa_0037",
+    "kau_dirasa_0082",
+    "kau_dirasa_0061",
+    "kau_dirasa_0047",
+    "kau_dirasa_0003"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "t29",
+   "file": "test_questions_50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كم نسبة الغياب اللي تحرمني من النهائي؟",
+   "rewritten": "الحد الأقصى لنسبة الغياب التي تؤدي إلى الحرمان من دخول الاختبار النهائي",
+   "gold": [
+    "kau_dirasa_0031",
+    "kau_dirasa_0033"
+   ],
+   "ranked": [
+    "kau_dirasa_0030",
+    "kau_dirasa_0031",
+    "kau_dirasa_0032",
+    "kau_dirasa_0066",
+    "kau_dirasa_0033",
+    "kau_dirasa_0004",
+    "kau_qabul_0008",
+    "kau_dirasa_0074",
+    "kau_dirasa_0002",
+    "kau_dirasa_0072",
+    "kau_dirasa_0067",
+    "kau_suluk_0009",
+    "kau_suluk_0007",
+    "kau_dirasa_0084"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "t30",
+   "file": "test_questions_50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كم مقرر أقدر أنسحب منه طول فترة دراستي؟",
+   "rewritten": "الحد الأقصى لعدد المقررات التي يجوز للطالب الانسحاب منها طوال فترة دراسته",
+   "gold": [
+    "kau_dirasa_0037"
+   ],
+   "ranked": [
+    "kau_dirasa_0037",
+    "kau_dirasa_0036",
+    "kau_dirasa_0058",
+    "kau_dirasa_0004",
+    "kau_dirasa_0006",
+    "kau_dirasa_0056",
+    "kau_dirasa_0059",
+    "kau_dirasa_0061",
+    "kau_dirasa_0029",
+    "kau_dirasa_0005",
+    "kau_suluk_0007",
+    "kau_tahwil_ulya_0004",
+    "kau_dirasa_0039",
+    "kau_dirasa_0073",
+    "kau_dirasa_0084"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t31",
+   "file": "test_questions_50.jsonl",
+   "type": "فخ",
+   "university": "KAU",
+   "question": "أنا طالب سنة أولى، أقدر أنسحب من مادة؟",
+   "rewritten": "جواز الانسحاب من مقرر للطالب في السنة الأولى وشروطه",
+   "gold": [
+    "kau_dirasa_0037"
+   ],
+   "ranked": [
+    "kau_dirasa_0037",
+    "kau_dirasa_0057",
+    "kau_dirasa_0036",
+    "kau_maliya_0000",
+    "kau_dirasa_0005",
+    "kau_dirasa_0088",
+    "kau_dirasa_0004",
+    "kau_dirasa_0045",
+    "kau_dirasa_0067",
+    "kau_dirasa_0044",
+    "kau_suluk_0007",
+    "kau_dirasa_0069",
+    "kau_dirasa_0056"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t32",
+   "file": "test_questions_50.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "زوجي مبتعث برا، أقدر أأجل دراستي؟",
+   "rewritten": "تأجيل الدراسة للزوجة متزوجة من مبتعث وشروطه",
+   "gold": [
+    "kau_dirasa_0039"
+   ],
+   "ranked": [
+    "kau_dirasa_0039",
+    "kau_dirasa_0038",
+    "kau_dirasa_0058",
+    "kau_sakan_0001",
+    "kau_dirasa_0034",
+    "kau_dirasa_0004",
+    "kau_dirasa_0069",
+    "kau_dirasa_0040",
+    "kau_dirasa_0067",
+    "kau_dirasa_0041",
+    "kau_dirasa_0018",
+    "kau_dirasa_0046",
+    "kau_tahwil_ulya_0006",
+    "kau_sakan_0005",
+    "kau_dirasa_0020"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t33",
+   "file": "test_questions_50.jsonl",
+   "type": "إجراء",
+   "university": "KAU",
+   "question": "غبت عن الاختبار النهائي وأنا مريض، كم عندي وقت أقدم التقرير الطبي؟",
+   "rewritten": "آخر موعد لتقديم التقرير الطبي بعد الغياب عن الاختبار النهائي وشروط قبوله",
+   "gold": [
+    "kau_dirasa_0068"
+   ],
+   "ranked": [
+    "kau_dirasa_0068",
+    "kau_dirasa_0066",
+    "kau_dirasa_0067",
+    "kau_dirasa_0074",
+    "kau_dirasa_0030",
+    "kau_dirasa_0031",
+    "kau_dirasa_0065",
+    "kau_dirasa_0033",
+    "kau_tahwil_khariji_0008",
+    "kau_dirasa_0063",
+    "kau_suluk_0010",
+    "kau_dirasa_0071",
+    "kau_dirasa_0070"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t34",
+   "file": "test_questions_50.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "خلصت كل المواد بس معدلي أقل من المطلوب بـ0.2، وش الحل؟",
+   "rewritten": "الحل عند انخفاض المعدل التراكمي بـ0.2 عن المطلوب ومتطلبات تحسين المعدل التراكمي",
+   "gold": [
+    "kau_dirasa_0084"
+   ],
+   "ranked": [
+    "kau_dirasa_0084",
+    "kau_dirasa_0076",
+    "kau_tahwil_dakhili_0006",
+    "kau_tahwil_dakhili_0003",
+    "kau_tahwil_dakhili_0007",
+    "kau_tahwil_dakhili_0005",
+    "kau_dirasa_0101",
+    "kau_dirasa_0083",
+    "kau_dirasa_0102",
+    "kau_dirasa_0047",
+    "kau_tahwil_dakhili_0004",
+    "kau_dirasa_0046",
+    "kau_dirasa_0021",
+    "kau_dirasa_0081"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t35",
+   "file": "test_questions_50.jsonl",
+   "type": "عامي",
+   "university": "KAU",
+   "question": "ضبطوني اغش بالنهائي اول مره وش العقوبه",
+   "rewritten": "العقوبة التأديبية للغش في الاختبار النهائي للمرة الأولى",
+   "gold": [
+    "kau_suluk_0007"
+   ],
+   "ranked": [
+    "kau_suluk_0007",
+    "kau_suluk_0009",
+    "kau_suluk_0011",
+    "kau_suluk_0019",
+    "kau_suluk_0012",
+    "kau_suluk_0018",
+    "kau_suluk_0013",
+    "kau_suluk_0010",
+    "kau_dirasa_0074",
+    "kau_dirasa_0004",
+    "kau_suluk_0008",
+    "kau_dirasa_0067",
+    "kau_dirasa_0002",
+    "kau_dirasa_0062"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t36",
+   "file": "test_questions_50.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "صورت المحاضرة بجوالي بدون ما أستأذن، هذي مخالفة؟",
+   "rewritten": "المخالفة التأديبية لتصوير المحاضرة بجهاز شخصي بدون إذن",
+   "gold": [
+    "kau_suluk_0005"
+   ],
+   "ranked": [
+    "kau_suluk_0005",
+    "kau_suluk_0004",
+    "kau_suluk_0010",
+    "kau_suluk_0011",
+    "kau_suluk_0006",
+    "kau_dirasa_0031",
+    "kau_huquq_0002",
+    "kau_dirasa_0004",
+    "kau_suluk_0003",
+    "kau_suluk_0018",
+    "kau_suluk_0008",
+    "kau_suluk_0017",
+    "kau_suluk_0009",
+    "kau_sakan_0009"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t37",
+   "file": "test_questions_50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كم يوم عندي أتظلم على الدرجة النهائية للمادة؟",
+   "rewritten": "عدد الأيام المسموح بها لتقديم التظلم على الدرجة النهائية للمقرر",
+   "gold": [
+    "kau_dirasa_0074"
+   ],
+   "ranked": [
+    "kau_dirasa_0074",
+    "kau_dirasa_0063",
+    "kau_dirasa_0062",
+    "kau_dirasa_0064",
+    "kau_taqwim_0001",
+    "kau_dirasa_0073",
+    "kau_dirasa_0002",
+    "kau_suluk_0019",
+    "kau_dirasa_0068",
+    "kau_taqwim_sana_0001",
+    "kau_dirasa_0006",
+    "kau_suluk_0007",
+    "kau_dirasa_0103",
+    "kau_taqwim_sana_0002",
+    "kau_huquq_0002"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t38",
+   "file": "test_questions_50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "مكافأة التفوق كم وشروطها؟",
+   "rewritten": "مقدار مكافأة التفوق وشروط استحقاقها",
+   "gold": [
+    "kau_maliya_0002"
+   ],
+   "ranked": [
+    "kau_maliya_0002",
+    "kau_maliya_0001",
+    "kau_maliya_0006",
+    "kau_maliya_0007",
+    "kau_maliya_0000",
+    "kau_maliya_0003",
+    "kau_dirasa_0089",
+    "kau_maliya_0004",
+    "kau_maliya_0005",
+    "kau_maliya_0008",
+    "kau_dirasa_0006"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t39",
+   "file": "test_questions_50.jsonl",
+   "type": "عامي",
+   "university": "KAU",
+   "question": "انا موظف اقدر اخذ المكافئه الشهريه؟",
+   "rewritten": "جواز استحقاق الموظف للمكافأة الشهرية وشروطها",
+   "gold": [
+    "kau_maliya_0001"
+   ],
+   "ranked": [
+    "kau_maliya_0001",
+    "kau_maliya_0006",
+    "kau_maliya_0007",
+    "kau_maliya_0008",
+    "kau_maliya_0000",
+    "kau_maliya_0002",
+    "kau_maliya_0003",
+    "kau_huquq_0007",
+    "kau_maliya_0004",
+    "kau_dirasa_0061",
+    "kau_dirasa_0089",
+    "kau_maliya_0005"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t40",
+   "file": "test_questions_50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كيف تنحسب النسبة الموزونة للقبول؟ وكم وزن اختبار STEP؟",
+   "rewritten": "كيف تُحسب النسبة الموزونة لقبول الطلاب ووزن اختبار STEP فيها",
+   "gold": [
+    "kau_qabul_0008",
+    "kau_qabul_0009"
+   ],
+   "ranked": [
+    "kau_qabul_0008",
+    "kau_qabul_0009",
+    "kau_dirasa_0030",
+    "kau_dirasa_0003",
+    "kau_dirasa_0103",
+    "kau_tahwil_dakhili_0005",
+    "kau_tahwil_dakhili_0003",
+    "kau_dirasa_0002",
+    "kau_dirasa_0101",
+    "kau_dirasa_0102",
+    "kau_dirasa_0004",
+    "kau_dirasa_0031"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t41",
+   "file": "test_questions_50.jsonl",
+   "type": "جدول",
+   "university": "KAU",
+   "question": "أبي أحول لكلية الطب من كلية صحية ثانية، كم المعدل المطلوب؟",
+   "rewritten": "المعدل التراكمي المطلوب وشروط التحويل الداخلي من كلية صحية إلى كلية الطب",
+   "gold": [
+    "kau_tahwil_dakhili_0003",
+    "kau_tahwil_dakhili_0009"
+   ],
+   "ranked": [
+    "kau_tahwil_dakhili_0003",
+    "kau_tahwil_dakhili_0004",
+    "kau_tahwil_dakhili_0005",
+    "kau_tahwil_dakhili_0007",
+    "kau_tahwil_dakhili_0006",
+    "kau_tahwil_dakhili_0001",
+    "kau_tahwil_dakhili_0009",
+    "kau_dirasa_0084",
+    "kau_tahwil_dakhili_0000",
+    "kau_qabul_0001",
+    "kau_dirasa_0079",
+    "kau_dirasa_0055"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t42",
+   "file": "test_questions_50.jsonl",
+   "type": "فخ",
+   "university": "KAU",
+   "question": "كم مرة يحق لي أحول بين الكليات؟",
+   "rewritten": "الحد الأقصى لعدد مرات التحويل الداخلي بين الكليات وشروطه",
+   "gold": [
+    "kau_tahwil_dakhili_0001"
+   ],
+   "ranked": [
+    "kau_tahwil_dakhili_0000",
+    "kau_tahwil_dakhili_0001",
+    "kau_tahwil_dakhili_0009",
+    "kau_dirasa_0053",
+    "kau_tahwil_dakhili_0008",
+    "kau_tahwil_dakhili_0006",
+    "kau_tahwil_dakhili_0007",
+    "kau_suluk_0009",
+    "kau_tahwil_khariji_0006",
+    "kau_tahwil_dakhili_0003",
+    "kau_tahwil_dakhili_0004",
+    "kau_sakan_0003",
+    "kau_tahwil_dakhili_0005"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "t43",
+   "file": "test_questions_50.jsonl",
+   "type": "جدول",
+   "university": "KAU",
+   "question": "كم درجة IELTS تعفيني من الإنجليزي في الكليات العلمية؟",
+   "rewritten": "مقدار درجة IELTS المطلوبة لاستثناء الطالب من مقررات اللغة الإنجليزية في الكليات العلمية",
+   "gold": [
+    "kau_tahwil_dakhili_0010",
+    "kau_tahwil_dakhili_0011"
+   ],
+   "ranked": [
+    "kau_tahwil_dakhili_0010",
+    "kau_tahwil_dakhili_0011",
+    "kau_tahwil_dakhili_0007",
+    "kau_tahwil_dakhili_0006",
+    "kau_tahwil_dakhili_0005",
+    "kau_tahwil_dakhili_0004",
+    "kau_tahwil_dakhili_0003",
+    "kau_tahwil_dakhili_0009",
+    "kau_dirasa_0101",
+    "kau_dirasa_0102",
+    "kau_dirasa_0084",
+    "kau_tahwil_dakhili_0001"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "t44",
+   "file": "test_questions_50.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "أنا ماجستير بالرسالة، أقدر أتحول للمسار بالمشروع البحثي؟",
+   "rewritten": "جواز التحويل من مسار الرسالة إلى مسار المشروع البحثي في الدراسات العليا وشروطه",
+   "gold": [
+    "kau_tahwil_ulya_0006"
+   ],
+   "ranked": [
+    "kau_tahwil_ulya_0006",
+    "kau_tahwil_ulya_0004",
+    "kau_tahwil_dakhili_0007",
+    "kau_tahwil_dakhili_0006",
+    "kau_tahwil_dakhili_0005",
+    "kau_tahwil_dakhili_0004",
+    "kau_maliya_0007",
+    "kau_qabul_0007",
+    "kau_tahwil_ulya_0005",
+    "kau_tahwil_ulya_0003",
+    "kau_qabul_0008",
+    "kau_dirasa_0071",
+    "kau_tahwil_ulya_0002",
+    "kau_dirasa_0052"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "r01",
+   "file": "test_questions_50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "كم المكافأة الشهرية في جامعة الملك سعود؟",
+   "rewritten": "مقدار المكافأة الشهرية في جامعة الملك سعود",
+   "gold": [
+    "ksu_khadamat_0003"
+   ],
+   "ranked": [
+    "ksu_khadamat_0003",
+    "ksu_khadamat_0004",
+    "ksu_khadamat_0006",
+    "ksu_khadamat_0005",
+    "ksu_khadamat_0007",
+    "ksu_zaer_0000",
+    "ksu_shuun_0087",
+    "ksu_shuun_0114",
+    "ksu_shuun_0079",
+    "ksu_shuun_0065"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "r02",
+   "file": "test_questions_50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "وش عقوبة الغش في الاختبار عندكم؟",
+   "rewritten": "العقوبة التأديبية للغش في الاختبار",
+   "gold": [
+    "ksu_suluk_0018",
+    "ksu_suluk_0007",
+    "ksu_suluk_0005"
+   ],
+   "ranked": [
+    "ksu_suluk_0018",
+    "ksu_suluk_0030",
+    "ksu_suluk_0007",
+    "ksu_suluk_0014",
+    "ksu_suluk_0008",
+    "ksu_suluk_0005",
+    "ksu_suluk_0010",
+    "ksu_shuun_0056",
+    "ksu_suluk_0016",
+    "ksu_suluk_0015",
+    "ksu_suluk_0019",
+    "ksu_suluk_0001"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "r04",
+   "file": "test_questions_50.jsonl",
+   "type": "تاريخ",
+   "university": "KAU",
+   "question": "متى تبدأ اختبارات نهائي الفصل الثاني 2027؟",
+   "rewritten": "مواعيد بداية الاختبارات النهائية للفصل الدراسي الثاني لعام 2027 في التقويم الأكاديمي",
+   "gold": [
+    "kau_taqwim_sana_0002"
+   ],
+   "ranked": [
+    "kau_taqwim_0002",
+    "kau_taqwim_sana_0002",
+    "kau_taqwim_0001",
+    "kau_taqwim_0000",
+    "kau_taqwim_sana_0001",
+    "kau_dirasa_0067",
+    "kau_dirasa_0073",
+    "kau_dirasa_0063",
+    "kau_dirasa_0065",
+    "kau_dirasa_0008",
+    "kau_dirasa_0064",
+    "kau_dirasa_0002"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "n01",
+   "file": "test_questions_new50.jsonl",
+   "type": "تاريخ",
+   "university": "KSU",
+   "question": "متى أقدر أقدم على التحويل الداخلي بين الكليات في الترم الأول؟",
+   "rewritten": "مواعيد تقديم طلب التحويل الداخلي بين الكليات في الفصل الدراسي الأول في التقويم الأكاديمي",
+   "gold": [
+    "ksu_harakat_0000"
+   ],
+   "ranked": [
+    "ksu_tahwil_dakhili_0021",
+    "ksu_khadamat_0013",
+    "ksu_harakat_0001",
+    "ksu_harakat_0000",
+    "ksu_tahwil_dakhili_0006",
+    "ksu_tahwil_dakhili_0022",
+    "ksu_khadamat_0011",
+    "ksu_shuun_0066",
+    "ksu_harakat_0003",
+    "ksu_tahwil_dakhili_0004",
+    "ksu_harakat_0004",
+    "ksu_taqwim_0000",
+    "ksu_tahwil_dakhili_0000",
+    "ksu_harakat_0006",
+    "ksu_tahwil_dakhili_0023"
+   ],
+   "gold_rank": 4
+  },
+  {
+   "id": "n02",
+   "file": "test_questions_new50.jsonl",
+   "type": "تاريخ",
+   "university": "KSU",
+   "question": "آخر موعد للانسحاب من الجامعة في الفصل الأول؟",
+   "rewritten": "آخر موعد للانسحاب من الجامعة في الفصل الدراسي الأول في التقويم الأكاديمي",
+   "gold": [
+    "ksu_harakat_0000"
+   ],
+   "ranked": [
+    "ksu_harakat_0000",
+    "ksu_taqwim_0000",
+    "ksu_harakat_0001",
+    "ksu_harakat_0003",
+    "ksu_shuun_0098",
+    "ksu_khadamat_0019",
+    "ksu_shuun_0092",
+    "ksu_shuun_0094",
+    "ksu_taqwim_0001",
+    "ksu_harakat_0006",
+    "ksu_shuun_0056",
+    "ksu_harakat_0004",
+    "ksu_taqwim_0002",
+    "ksu_khadamat_0018",
+    "ksu_shuun_0100"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n03",
+   "file": "test_questions_new50.jsonl",
+   "type": "تاريخ",
+   "university": "KSU",
+   "question": "متى يفتح التحويل الخارجي إلى جامعة الملك سعود؟",
+   "rewritten": "موعد فتح باب التحويل الخارجي إلى جامعة الملك سعود في التقويم الأكاديمي",
+   "gold": [
+    "ksu_harakat_0003"
+   ],
+   "ranked": [
+    "ksu_harakat_0003",
+    "ksu_tahwil_khariji_0000",
+    "ksu_tahwil_khariji_0003",
+    "ksu_harakat_0000",
+    "ksu_tahwil_khariji_0001",
+    "ksu_shuun_0038",
+    "ksu_khadamat_0014",
+    "ksu_tahwil_khariji_0008",
+    "ksu_tahwil_dakhili_0021",
+    "ksu_taqwim_0001",
+    "ksu_tahwil_khariji_0004",
+    "ksu_harakat_0004",
+    "ksu_harakat_0001",
+    "ksu_harakat_0006",
+    "ksu_tahwil_khariji_0002"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n04",
+   "file": "test_questions_new50.jsonl",
+   "type": "تاريخ",
+   "university": "KSU",
+   "question": "متى إجازة الخريف ومتى نرجع؟",
+   "rewritten": "مواعيد إجازة الخريف وموعد العودة إلى الدراسة في التقويم الأكاديمي",
+   "gold": [
+    "ksu_taqwim_0000"
+   ],
+   "ranked": [
+    "ksu_taqwim_0000",
+    "ksu_harakat_0001",
+    "ksu_taqwim_0001",
+    "ksu_harakat_0004",
+    "ksu_harakat_0000",
+    "ksu_harakat_0003",
+    "ksu_harakat_0006",
+    "ksu_taqwim_0002",
+    "ksu_shuun_0098",
+    "ksu_shuun_0091",
+    "ksu_shuun_0014"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n05",
+   "file": "test_questions_new50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "غبت بعذر، كم أقل نسبة حضور يقدرون يرفعون عني الحرمان فيها؟",
+   "rewritten": "الحد الأدنى لنسبة الحضور المطلوبة لرفع الحرمان من دخول الاختبار النهائي مع العذر المقبول",
+   "gold": [
+    "ksu_shuun_0049"
+   ],
+   "ranked": [
+    "ksu_khadamat_0016",
+    "ksu_shuun_0049",
+    "ksu_khadamat_0015",
+    "ksu_shuun_0048",
+    "ksu_khadamat_0017",
+    "ksu_shuun_0101",
+    "ksu_suluk_0007",
+    "ksu_shuun_0062",
+    "ksu_shuun_0114",
+    "ksu_shuun_0099",
+    "ksu_shuun_0076",
+    "ksu_tahwil_dakhili_0014",
+    "ksu_shuun_0115",
+    "ksu_tahwil_dakhili_0013",
+    "ksu_suluk_0012"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "n06",
+   "file": "test_questions_new50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "وش شروط قائمة العميد؟",
+   "rewritten": "شروط قائمة العميد أو لائحة العميد",
+   "gold": [
+    "ksu_shuun_0080",
+    "ksu_shuun_0081"
+   ],
+   "ranked": [
+    "ksu_shuun_0081",
+    "ksu_shuun_0080",
+    "ksu_shuun_0082",
+    "ksu_shuun_0004",
+    "ksu_suluk_0011",
+    "ksu_shuun_0089",
+    "ksu_suluk_0020",
+    "ksu_suluk_0019",
+    "ksu_shuun_0097",
+    "ksu_shuun_0066",
+    "ksu_qabul_dalil_0002"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n07",
+   "file": "test_questions_new50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "كم مرة أقدر أطلب إعادة تصحيح الاختبار النهائي؟",
+   "rewritten": "الحد الأقصى لعدد مرات طلب إعادة تصحيح الاختبار النهائي",
+   "gold": [
+    "ksu_shuun_0105"
+   ],
+   "ranked": [
+    "ksu_shuun_0105",
+    "ksu_shuun_0106",
+    "ksu_shuun_0054",
+    "ksu_shuun_0059",
+    "ksu_shuun_0063",
+    "ksu_shuun_0057",
+    "ksu_shuun_0062",
+    "ksu_shuun_0092",
+    "ksu_shuun_0091",
+    "ksu_shuun_0056",
+    "ksu_suluk_0034",
+    "ksu_shuun_0052",
+    "ksu_shuun_0060",
+    "ksu_shuun_0104"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n08",
+   "file": "test_questions_new50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "أبي آخذ تخصص فرعي، إلى متى أقدر ألتحق فيه؟",
+   "rewritten": "موعد التسجيل في التخصص الفرعي وشروط الالتحاق به",
+   "gold": [
+    "ksu_shuun_0026"
+   ],
+   "ranked": [
+    "ksu_shuun_0026",
+    "ksu_shuun_0006",
+    "ksu_harakat_0003",
+    "ksu_harakat_0004",
+    "ksu_shuun_0025",
+    "ksu_shuun_0027",
+    "ksu_shuun_0070",
+    "ksu_shuun_0024",
+    "ksu_shuun_0023",
+    "ksu_harakat_0000",
+    "ksu_harakat_0001",
+    "ksu_harakat_0006",
+    "ksu_shuun_0005",
+    "ksu_taqwim_0001",
+    "ksu_taqwim_0002"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n09",
+   "file": "test_questions_new50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "متى آخر وقت ألتحق فيه بتخصص رئيس ثاني (دبل ميجر)؟",
+   "rewritten": "آخر موعد للتسجيل في تخصص رئيس ثاني (دبل ميجر) في التقويم الأكاديمي",
+   "gold": [
+    "ksu_shuun_0024",
+    "ksu_shuun_0025"
+   ],
+   "ranked": [
+    "ksu_shuun_0024",
+    "ksu_shuun_0025",
+    "ksu_harakat_0003",
+    "ksu_harakat_0004",
+    "ksu_shuun_0063",
+    "ksu_shuun_0026",
+    "ksu_taqwim_0001",
+    "ksu_shuun_0005",
+    "ksu_harakat_0000",
+    "ksu_shuun_0054",
+    "ksu_harakat_0001",
+    "ksu_shuun_0056",
+    "ksu_shuun_0081",
+    "ksu_taqwim_0002",
+    "ksu_shuun_0027"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n10",
+   "file": "test_questions_new50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "كم نسبة درجة الأعمال الفصلية من الدرجة النهائية؟",
+   "rewritten": "نسبة درجة الأعمال الفصلية من الدرجة النهائية للمقرر",
+   "gold": [
+    "ksu_shuun_0052"
+   ],
+   "ranked": [
+    "ksu_shuun_0052",
+    "ksu_shuun_0002",
+    "ksu_khadamat_0015",
+    "ksu_shuun_0058",
+    "ksu_shuun_0104",
+    "ksu_shuun_0115",
+    "ksu_shuun_0055",
+    "ksu_shuun_0071",
+    "ksu_shuun_0114",
+    "ksu_shuun_0053",
+    "ksu_tahwil_dakhili_0020",
+    "ksu_shuun_0116"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n11",
+   "file": "test_questions_new50.jsonl",
+   "type": "جدول",
+   "university": "KSU",
+   "question": "كم وزن تقدير ج+ وكم درجته؟",
+   "rewritten": "وزن تقدير ج+ ودرجته المئوية",
+   "gold": [
+    "ksu_shuun_0114"
+   ],
+   "ranked": [
+    "ksu_shuun_0114",
+    "ksu_shuun_0116",
+    "ksu_shuun_0117",
+    "ksu_shuun_0115",
+    "ksu_shuun_0003",
+    "ksu_shuun_0059",
+    "ksu_shuun_0078",
+    "ksu_tahwil_dakhili_0018",
+    "ksu_shuun_0055",
+    "ksu_tahwil_dakhili_0007",
+    "ksu_shuun_0076",
+    "ksu_shuun_0060"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n12",
+   "file": "test_questions_new50.jsonl",
+   "type": "فخ",
+   "university": "KSU",
+   "question": "معدلي 4.6 عند التخرج، وش تقديري العام وهل آخذ مرتبة شرف؟",
+   "rewritten": "تقدير الطالب عند التخرج ومدى استحقاقه لمرتبة الشرف بناءً على المعدل التراكمي 4.6",
+   "gold": [
+    "ksu_shuun_0078",
+    "ksu_shuun_0079"
+   ],
+   "ranked": [
+    "ksu_shuun_0079",
+    "ksu_shuun_0078",
+    "ksu_shuun_0070",
+    "ksu_shuun_0101",
+    "ksu_khadamat_0006",
+    "ksu_shuun_0100",
+    "ksu_shuun_0003",
+    "ksu_khadamat_0020",
+    "ksu_shuun_0099",
+    "ksu_khadamat_0021",
+    "ksu_shuun_0114",
+    "ksu_shuun_0065",
+    "ksu_shuun_0060"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n13",
+   "file": "test_questions_new50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "كم أقصى مدة يوقفوني فيها عن الدراسة كعقوبة؟",
+   "rewritten": "الحد الأقصى لفترة وقف الدراسة كعقوبة تأديبية",
+   "gold": [
+    "ksu_suluk_0007"
+   ],
+   "ranked": [
+    "ksu_suluk_0007",
+    "ksu_shuun_0092",
+    "ksu_shuun_0090",
+    "ksu_shuun_0004",
+    "ksu_khadamat_0007",
+    "ksu_shuun_0062",
+    "ksu_suluk_0033",
+    "ksu_shuun_0094",
+    "ksu_shuun_0095",
+    "ksu_shuun_0091",
+    "ksu_shuun_0047",
+    "ksu_tahwil_dakhili_0014",
+    "ksu_shuun_0060",
+    "ksu_khadamat_0017",
+    "ksu_tahwil_dakhili_0013"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n14",
+   "file": "test_questions_new50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "مخالفتي صار لها ثلاث سنين وما حققوا معي، يقدرون يعاقبوني الحين؟",
+   "rewritten": "العقوبة التأديبية على المخالفة بعد مرور ثلاث سنوات",
+   "gold": [
+    "ksu_suluk_0008"
+   ],
+   "ranked": [
+    "ksu_suluk_0034",
+    "ksu_suluk_0018",
+    "ksu_suluk_0010",
+    "ksu_suluk_0021",
+    "ksu_shuun_0095",
+    "ksu_suluk_0006",
+    "ksu_suluk_0008",
+    "ksu_suluk_0003",
+    "ksu_suluk_0032",
+    "ksu_shuun_0091",
+    "ksu_suluk_0007",
+    "ksu_suluk_0016",
+    "ksu_suluk_0019",
+    "ksu_suluk_0023",
+    "ksu_suluk_0004"
+   ],
+   "gold_rank": 7
+  },
+  {
+   "id": "n15",
+   "file": "test_questions_new50.jsonl",
+   "type": "فخ",
+   "university": "KSU",
+   "question": "انفصلت فصل نهائي تأديبي، متى أقدر أطلب إعادة النظر أو أرجع؟",
+   "rewritten": "مواعيد طلب إعادة النظر في القرار التأديبي أو إعادة القيد بعد الفصل النهائي التأديبي",
+   "gold": [
+    "ksu_suluk_0034",
+    "ksu_shuun_0095"
+   ],
+   "ranked": [
+    "ksu_suluk_0034",
+    "ksu_shuun_0095",
+    "ksu_harakat_0006",
+    "ksu_harakat_0003",
+    "ksu_shuun_0105",
+    "ksu_shuun_0097",
+    "ksu_shuun_0106",
+    "ksu_shuun_0059",
+    "ksu_shuun_0098",
+    "ksu_shuun_0104",
+    "ksu_shuun_0060",
+    "ksu_harakat_0000",
+    "ksu_harakat_0004",
+    "ksu_harakat_0001",
+    "ksu_taqwim_0001"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n16",
+   "file": "test_questions_new50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "كسرت جهاز في المعمل بالغلط، وش يلزمني؟",
+   "rewritten": "العقوبات التأديبية لإتلاف ممتلكات الجامعة عن طريق الخطأ وإجراءات التعويض",
+   "gold": [
+    "ksu_suluk_0010"
+   ],
+   "ranked": [
+    "ksu_suluk_0005",
+    "ksu_suluk_0006",
+    "ksu_suluk_0018",
+    "ksu_suluk_0010",
+    "ksu_suluk_0015",
+    "ksu_suluk_0007",
+    "ksu_shuun_0091",
+    "ksu_suluk_0033",
+    "ksu_shuun_0056",
+    "ksu_suluk_0019",
+    "ksu_shuun_0095",
+    "ksu_suluk_0016",
+    "ksu_suluk_0008",
+    "ksu_shuun_0105",
+    "ksu_suluk_0009"
+   ],
+   "gold_rank": 4
+  },
+  {
+   "id": "n17",
+   "file": "test_questions_new50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "كم مكافأة التفوق في جامعة الملك سعود ولمين؟",
+   "rewritten": "مقدار مكافأة التفوق في جامعة الملك سعود وشروط استحقاقها",
+   "gold": [
+    "ksu_khadamat_0006"
+   ],
+   "ranked": [
+    "ksu_khadamat_0006",
+    "ksu_khadamat_0003",
+    "ksu_khadamat_0005",
+    "ksu_khadamat_0004",
+    "ksu_khadamat_0007",
+    "ksu_shuun_0079",
+    "ksu_shuun_0044",
+    "ksu_shuun_0114",
+    "ksu_shuun_0065",
+    "ksu_shuun_0081",
+    "ksu_shuun_0045",
+    "ksu_shuun_0116",
+    "ksu_qabul_dalil_0004",
+    "ksu_shuun_0087",
+    "ksu_shuun_0073"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n18",
+   "file": "test_questions_new50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "ضاعت بطاقتي الجامعية، كم رسوم البدل؟",
+   "rewritten": "رسوم بدل البطاقة الجامعية المفقودة",
+   "gold": [
+    "ksu_khadamat_0001"
+   ],
+   "ranked": [
+    "ksu_khadamat_0001",
+    "ksu_khadamat_0007",
+    "ksu_khadamat_0003",
+    "ksu_khadamat_0000",
+    "ksu_khadamat_0005",
+    "ksu_shuun_0074",
+    "ksu_khadamat_0002",
+    "ksu_khadamat_0004",
+    "ksu_khadamat_0008",
+    "ksu_khadamat_0017",
+    "ksu_khadamat_0020"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n19",
+   "file": "test_questions_new50.jsonl",
+   "type": "جدول",
+   "university": "KSU",
+   "question": "طالب عنده ضعف سمع وما يحتاج لغة إشارة، وش تصنيفه؟",
+   "rewritten": "تصنيف الطالب الذي يعاني من ضعف السمع ولا يحتاج إلى لغة الإشارة في النظام الأكاديمي",
+   "gold": [
+    "ksu_sihhiya_0004"
+   ],
+   "ranked": [
+    "ksu_sihhiya_0004",
+    "ksu_sihhiya_0006",
+    "ksu_sihhiya_0005",
+    "ksu_sihhiya_0001",
+    "ksu_sihhiya_0003",
+    "ksu_shuun_0076",
+    "ksu_shuun_0003",
+    "ksu_sihhiya_0002",
+    "ksu_shuun_0077",
+    "ksu_tahwil_dakhili_0013",
+    "ksu_shuun_0094",
+    "ksu_shuun_0004"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n20",
+   "file": "test_questions_new50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "هل لازم أفصح عن إعاقتي وقت القبول؟",
+   "rewritten": "جواز إفصاح الطالب عن إعاقته أثناء قبوله في الجامعة وشروطه",
+   "gold": [
+    "ksu_sihhiya_0002"
+   ],
+   "ranked": [
+    "ksu_sihhiya_0002",
+    "ksu_sihhiya_0003",
+    "ksu_shuun_0045",
+    "ksu_qabul_dalil_0015",
+    "ksu_shuun_0044",
+    "ksu_qabul_dalil_0014",
+    "ksu_shuun_0091",
+    "ksu_khadamat_0005",
+    "ksu_tahwil_khariji_0008",
+    "ksu_sihhiya_0001",
+    "ksu_tahwil_khariji_0002",
+    "ksu_shuun_0087",
+    "ksu_shuun_0057",
+    "ksu_shuun_0032",
+    "ksu_shuun_0003"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n21",
+   "file": "test_questions_new50.jsonl",
+   "type": "جدول",
+   "university": "KSU",
+   "question": "كم المعدل المطلوب للتحويل لبرنامج اللغة الصينية من خارج كلية اللغات؟",
+   "rewritten": "المعدل التراكمي المطلوب وشروط التحويل الداخلي إلى برنامج اللغة الصينية من خارج كلية اللغات",
+   "gold": [
+    "ksu_tahwil_dakhili_0013"
+   ],
+   "ranked": [
+    "ksu_tahwil_dakhili_0013",
+    "ksu_tahwil_dakhili_0017",
+    "ksu_tahwil_dakhili_0014",
+    "ksu_tahwil_dakhili_0008",
+    "ksu_tahwil_dakhili_0011",
+    "ksu_tahwil_dakhili_0020",
+    "ksu_tahwil_dakhili_0015",
+    "ksu_tahwil_dakhili_0016",
+    "ksu_tahwil_dakhili_0023",
+    "ksu_tahwil_dakhili_0022",
+    "ksu_qabul_dalil_0010",
+    "ksu_tahwil_dakhili_0010",
+    "ksu_tahwil_dakhili_0004"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "n22",
+   "file": "test_questions_new50.jsonl",
+   "type": "فخ",
+   "university": "KSU",
+   "question": "هل برنامج اللغة الإسبانية متاح للبنات؟",
+   "rewritten": "توفر برنامج اللغة الإسبانية للطالبات في الجامعة",
+   "gold": [
+    "ksu_qabul_0001"
+   ],
+   "ranked": [
+    "ksu_tahwil_dakhili_0013",
+    "ksu_qabul_0001",
+    "ksu_qabul_dalil_0010",
+    "ksu_qabul_0002",
+    "ksu_qabul_0003",
+    "ksu_tahwil_dakhili_0020",
+    "ksu_tahwil_khariji_0006",
+    "ksu_tahwil_khariji_0007",
+    "ksu_qabul_dalil_0015",
+    "ksu_qabul_dalil_0014",
+    "ksu_khadamat_0020",
+    "ksu_shuun_0020"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "n23",
+   "file": "test_questions_new50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "أبي أحول لكلية إدارة الأعمال من كلية إنسانية، كم المعدل؟",
+   "rewritten": "المعدل التراكمي المطلوب وشروط التحويل الداخلي من كلية إنسانية إلى كلية إدارة الأعمال",
+   "gold": [
+    "ksu_tahwil_dakhili_0009"
+   ],
+   "ranked": [
+    "ksu_tahwil_dakhili_0009",
+    "ksu_tahwil_dakhili_0014",
+    "ksu_tahwil_dakhili_0019",
+    "ksu_tahwil_dakhili_0010",
+    "ksu_tahwil_dakhili_0017",
+    "ksu_tahwil_dakhili_0011",
+    "ksu_tahwil_dakhili_0016",
+    "ksu_qabul_dalil_0009",
+    "ksu_qabul_dalil_0010",
+    "ksu_tahwil_dakhili_0022",
+    "ksu_tahwil_dakhili_0015",
+    "ksu_qabul_dalil_0015",
+    "ksu_tahwil_dakhili_0023"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "m01",
+   "file": "test_questions_new50.jsonl",
+   "type": "تاريخ",
+   "university": "KAU",
+   "question": "متى إجازة اليوم الوطني؟",
+   "rewritten": "موعد إجازة اليوم الوطني في التقويم الأكاديمي",
+   "gold": [
+    "kau_taqwim_0001"
+   ],
+   "ranked": [
+    "kau_taqwim_0001",
+    "kau_taqwim_sana_0001",
+    "kau_taqwim_0002",
+    "kau_taqwim_sana_0002",
+    "kau_taqwim_0000",
+    "kau_sakan_0006",
+    "kau_tahwil_khariji_0008",
+    "kau_huquq_0001",
+    "kau_tahwil_khariji_0007",
+    "kau_dirasa_0037",
+    "kau_dirasa_0065",
+    "kau_dirasa_0020"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "m02",
+   "file": "test_questions_new50.jsonl",
+   "type": "تاريخ",
+   "university": "KAU",
+   "question": "متى الاختبارات النهائية للترم الأول؟",
+   "rewritten": "مواعيد الاختبارات النهائية للفصل الدراسي الأول في التقويم الأكاديمي",
+   "gold": [
+    "kau_taqwim_0001"
+   ],
+   "ranked": [
+    "kau_taqwim_sana_0001",
+    "kau_taqwim_0002",
+    "kau_taqwim_0001",
+    "kau_taqwim_0000",
+    "kau_dirasa_0002",
+    "kau_taqwim_sana_0002",
+    "kau_dirasa_0063",
+    "kau_dirasa_0001",
+    "kau_dirasa_0062",
+    "kau_dirasa_0065",
+    "kau_dirasa_0064",
+    "kau_dirasa_0004"
+   ],
+   "gold_rank": 3
+  },
+  {
+   "id": "m03",
+   "file": "test_questions_new50.jsonl",
+   "type": "تاريخ",
+   "university": "KAU",
+   "question": "إلى متى أقدر أعتذر عن الفصل كامل؟",
+   "rewritten": "آخر موعد لتقديم طلب الاعتذار عن الاستمرار في الدراسة أو تأجيل الفصل الدراسي في التقويم الأكاديمي",
+   "gold": [
+    "kau_taqwim_0000"
+   ],
+   "ranked": [
+    "kau_dirasa_0034",
+    "kau_taqwim_0000",
+    "kau_dirasa_0035",
+    "kau_taqwim_0002",
+    "kau_dirasa_0038",
+    "kau_dirasa_0067",
+    "kau_taqwim_0001",
+    "kau_dirasa_0014",
+    "kau_dirasa_0039",
+    "kau_dirasa_0004",
+    "kau_taqwim_sana_0001",
+    "kau_taqwim_sana_0002",
+    "kau_dirasa_0001",
+    "kau_dirasa_0069",
+    "kau_dirasa_0088"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "m04",
+   "file": "test_questions_new50.jsonl",
+   "type": "تاريخ",
+   "university": "KAU",
+   "question": "متى أسجل مواد الترم الثاني؟",
+   "rewritten": "مواعيد تسجيل المقررات للفصل الدراسي الثاني في التقويم الأكاديمي",
+   "gold": [
+    "kau_taqwim_0001"
+   ],
+   "ranked": [
+    "kau_taqwim_sana_0002",
+    "kau_taqwim_0000",
+    "kau_taqwim_0002",
+    "kau_taqwim_0001",
+    "kau_tahwil_dakhili_0009",
+    "kau_dirasa_0073",
+    "kau_dirasa_0103",
+    "kau_suluk_0020",
+    "kau_dirasa_0029",
+    "kau_taqwim_sana_0001",
+    "kau_dirasa_0065",
+    "kau_dirasa_0027",
+    "kau_dirasa_0008",
+    "kau_dirasa_0083",
+    "kau_dirasa_0028"
+   ],
+   "gold_rank": 4
+  },
+  {
+   "id": "m05",
+   "file": "test_questions_new50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كم مدة الاختبار النهائي؟",
+   "rewritten": "مدة الاختبار النهائي للمقررات الأكاديمية",
+   "gold": [
+    "kau_dirasa_0063"
+   ],
+   "ranked": [
+    "kau_dirasa_0063",
+    "kau_dirasa_0064",
+    "kau_dirasa_0074",
+    "kau_dirasa_0004",
+    "kau_dirasa_0062",
+    "kau_dirasa_0002",
+    "kau_dirasa_0033",
+    "kau_dirasa_0065",
+    "kau_dirasa_0006",
+    "kau_dirasa_0067",
+    "kau_dirasa_0037",
+    "kau_dirasa_0001"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "m06",
+   "file": "test_questions_new50.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "جاني تقدير غير مكتمل IC، كم وقت عندي أكمل المادة؟",
+   "rewritten": "الحد الأقصى للمدة المسموح بها لاستكمال المقرر عند حصول الطالب على تقدير غير مكتمل (IC)",
+   "gold": [
+    "kau_dirasa_0069",
+    "kau_dirasa_0070"
+   ],
+   "ranked": [
+    "kau_dirasa_0071",
+    "kau_dirasa_0069",
+    "kau_dirasa_0070",
+    "kau_dirasa_0102",
+    "kau_dirasa_0072",
+    "kau_dirasa_0002",
+    "kau_dirasa_0006",
+    "kau_dirasa_0101",
+    "kau_dirasa_0035",
+    "kau_dirasa_0074",
+    "kau_dirasa_0067",
+    "kau_dirasa_0084",
+    "kau_dirasa_0079",
+    "kau_dirasa_0059"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "m07",
+   "file": "test_questions_new50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كم أقدر أدرس كطالب زائر في جامعة ثانية؟",
+   "rewritten": "عدد الوحدات الدراسية التي يجوز للطالب الزائر دراستها في جامعة أخرى وشروط التسجيل كطالب زائر",
+   "gold": [
+    "kau_dirasa_0059"
+   ],
+   "ranked": [
+    "kau_tahwil_ulya_0000",
+    "kau_dirasa_0058",
+    "kau_dirasa_0059",
+    "kau_tahwil_ulya_0001",
+    "kau_dirasa_0060",
+    "kau_dirasa_0061",
+    "kau_tahwil_ulya_0004",
+    "kau_dirasa_0079",
+    "kau_tahwil_ulya_0006",
+    "kau_tahwil_ulya_0002",
+    "kau_tahwil_ulya_0003",
+    "kau_dirasa_0073",
+    "kau_dirasa_0028"
+   ],
+   "gold_rank": 3
+  },
+  {
+   "id": "m08",
+   "file": "test_questions_new50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كم تحتفظ الجامعة بأوراق الاختبارات، ومتى لازم تنرصد الدرجات؟",
+   "rewritten": "مدة احتفاظ الجامعة بأوراق الاختبارات وموعد نشر الدرجات في التقويم الأكاديمي",
+   "gold": [
+    "kau_dirasa_0065"
+   ],
+   "ranked": [
+    "kau_dirasa_0065",
+    "kau_dirasa_0075",
+    "kau_taqwim_0002",
+    "kau_taqwim_0001",
+    "kau_dirasa_0063",
+    "kau_dirasa_0006",
+    "kau_taqwim_0000",
+    "kau_dirasa_0068",
+    "kau_taqwim_sana_0001",
+    "kau_dirasa_0072",
+    "kau_taqwim_sana_0002",
+    "kau_dirasa_0084",
+    "kau_dirasa_0003",
+    "kau_dirasa_0032",
+    "kau_dirasa_0029"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "m09",
+   "file": "test_questions_new50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كم فصل مسموح أعتذر عن الدراسة طول البكالوريوس؟",
+   "rewritten": "الحد الأقصى لعدد الفصول الدراسية المسموح بتأجيل الدراسة فيها أو الاعتذار عن الاستمرار فيها خلال المرحلة الجامعية",
+   "gold": [
+    "kau_dirasa_0035"
+   ],
+   "ranked": [
+    "kau_dirasa_0035",
+    "kau_dirasa_0034",
+    "kau_dirasa_0039",
+    "kau_dirasa_0004",
+    "kau_dirasa_0040",
+    "kau_dirasa_0025",
+    "kau_dirasa_0038",
+    "kau_dirasa_0026",
+    "kau_dirasa_0084",
+    "kau_dirasa_0018",
+    "kau_dirasa_0059",
+    "kau_dirasa_0021",
+    "kau_suluk_0009",
+    "kau_tahwil_dakhili_0001",
+    "kau_dirasa_0029"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "m10",
+   "file": "test_questions_new50.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "وش شروط المعدل والساعات للتحويل من جامعة ثانية لجامعة الملك عبدالعزيز؟",
+   "rewritten": "شروط المعدل التراكمي وعدد الوحدات الدراسية المطلوبة للتحويل الخارجي إلى جامعة الملك عبدالعزيز",
+   "gold": [
+    "kau_tahwil_khariji_0006"
+   ],
+   "ranked": [
+    "kau_tahwil_dakhili_0003",
+    "kau_tahwil_ulya_0002",
+    "kau_tahwil_dakhili_0006",
+    "kau_tahwil_khariji_0006",
+    "kau_dirasa_0049",
+    "kau_tahwil_dakhili_0004",
+    "kau_tahwil_dakhili_0001",
+    "kau_dirasa_0051",
+    "kau_dirasa_0053",
+    "kau_dirasa_0084",
+    "kau_tahwil_dakhili_0007",
+    "kau_tahwil_dakhili_0005",
+    "kau_tahwil_ulya_0004"
+   ],
+   "gold_rank": 4
+  },
+  {
+   "id": "m11",
+   "file": "test_questions_new50.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "وش عقوبة التدخين داخل الجامعة؟",
+   "rewritten": "العقوبة التأديبية لتدخين السجائر أو الشيشة داخل الحرم الجامعي أو في الأماكن المغلقة أو المخصصة للطلاب",
+   "gold": [
+    "kau_suluk_0005"
+   ],
+   "ranked": [
+    "kau_suluk_0011",
+    "kau_suluk_0009",
+    "kau_suluk_0005",
+    "kau_suluk_0004",
+    "kau_suluk_0007",
+    "kau_suluk_0002",
+    "kau_suluk_0003",
+    "kau_huquq_0009",
+    "kau_suluk_0012",
+    "kau_suluk_0013",
+    "kau_suluk_0010",
+    "kau_suluk_0018",
+    "kau_sakan_0008"
+   ],
+   "gold_rank": 3
+  },
+  {
+   "id": "m12",
+   "file": "test_questions_new50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كم أقصى مدة للفصل المؤقت من الجامعة كعقوبة تأديبية؟",
+   "rewritten": "أقصى مدة للفصل المؤقت من الجامعة كعقوبة تأديبية",
+   "gold": [
+    "kau_suluk_0009"
+   ],
+   "ranked": [
+    "kau_suluk_0009",
+    "kau_dirasa_0042",
+    "kau_dirasa_0047",
+    "kau_dirasa_0004",
+    "kau_suluk_0018",
+    "kau_sakan_0005",
+    "kau_suluk_0013",
+    "kau_suluk_0011",
+    "kau_suluk_0012",
+    "kau_suluk_0019",
+    "kau_dirasa_0046"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "m13",
+   "file": "test_questions_new50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كم مدة التظلم من قرار تأديبي؟",
+   "rewritten": "مدة التظلم من القرار التأديبي",
+   "gold": [
+    "kau_suluk_0019"
+   ],
+   "ranked": [
+    "kau_suluk_0019",
+    "kau_suluk_0018",
+    "kau_dirasa_0074",
+    "kau_suluk_0012",
+    "kau_dirasa_0042",
+    "kau_suluk_0013",
+    "kau_huquq_0002",
+    "kau_suluk_0011",
+    "kau_suluk_0009",
+    "kau_dirasa_0004",
+    "kau_dirasa_0043"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "m14",
+   "file": "test_questions_new50.jsonl",
+   "type": "فخ",
+   "university": "KAU",
+   "question": "غشيت في اختبار الدوري أول مرة، وش يصير؟",
+   "rewritten": "العقوبة التأديبية للغش في الاختبار للمرة الأولى",
+   "gold": [
+    "kau_suluk_0007"
+   ],
+   "ranked": [
+    "kau_suluk_0007",
+    "kau_suluk_0009",
+    "kau_suluk_0008",
+    "kau_suluk_0019",
+    "kau_huquq_0006",
+    "kau_suluk_0013",
+    "kau_tahwil_dakhili_0010",
+    "kau_dirasa_0067",
+    "kau_suluk_0012",
+    "kau_taqwim_0001",
+    "kau_suluk_0011",
+    "kau_taqwim_sana_0001",
+    "kau_suluk_0018",
+    "kau_suluk_0003",
+    "kau_dirasa_0004"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "m15",
+   "file": "test_questions_new50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كم بدل الإعاقة الشهري؟",
+   "rewritten": "مقدار بدل الإعاقة الشهري وشروط استحقاقه",
+   "gold": [
+    "kau_maliya_0003"
+   ],
+   "ranked": [
+    "kau_maliya_0003",
+    "kau_maliya_0006",
+    "kau_maliya_0007",
+    "kau_maliya_0001",
+    "kau_maliya_0004",
+    "kau_maliya_0005",
+    "kau_maliya_0008",
+    "kau_maliya_0000",
+    "kau_qabul_0008",
+    "kau_sakan_0003",
+    "kau_huquq_0005"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "m16",
+   "file": "test_questions_new50.jsonl",
+   "type": "فخ",
+   "university": "KAU",
+   "question": "ما قدمت على المكافأة إلا بعد سنتين، يصرفونها لي؟",
+   "rewritten": "جواز صرف المكافأة الشهرية بعد مرور سنتين على الدراسة وشروط استحقاقها",
+   "gold": [
+    "kau_maliya_0000"
+   ],
+   "ranked": [
+    "kau_maliya_0006",
+    "kau_maliya_0001",
+    "kau_maliya_0000",
+    "kau_maliya_0007",
+    "kau_maliya_0002",
+    "kau_maliya_0008",
+    "kau_maliya_0005",
+    "kau_maliya_0004",
+    "kau_dirasa_0079",
+    "kau_dirasa_0026",
+    "kau_maliya_0003",
+    "kau_sakan_0001"
+   ],
+   "gold_rank": 3
+  },
+  {
+   "id": "m17",
+   "file": "test_questions_new50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كم بدل الكتب لطالب الماجستير وكم مرة ينصرف؟",
+   "rewritten": "مقدار بدل الكتب للطالب في الدراسات العليا وعدد مرات صرفه",
+   "gold": [
+    "kau_maliya_0006"
+   ],
+   "ranked": [
+    "kau_maliya_0006",
+    "kau_maliya_0005",
+    "kau_maliya_0004",
+    "kau_maliya_0007",
+    "kau_maliya_0001",
+    "kau_maliya_0003",
+    "kau_tahwil_ulya_0006",
+    "kau_maliya_0000",
+    "kau_sakan_0003",
+    "kau_maliya_0002",
+    "kau_suluk_0007",
+    "kau_tahwil_ulya_0004"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "m18",
+   "file": "test_questions_new50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كم مرة تقبلني الجامعة؟",
+   "rewritten": "عدد مرات قبول الطالب في الجامعة وفق شروط القبول",
+   "gold": [
+    "kau_qabul_0009"
+   ],
+   "ranked": [
+    "kau_dirasa_0048",
+    "kau_suluk_0007",
+    "kau_dirasa_0024",
+    "kau_suluk_0009",
+    "kau_dirasa_0022",
+    "kau_dirasa_0062",
+    "kau_qabul_0009",
+    "kau_tahwil_khariji_0008",
+    "kau_dirasa_0025",
+    "kau_sakan_0003",
+    "kau_dirasa_0023",
+    "kau_maliya_0005",
+    "kau_suluk_0019",
+    "kau_sakan_0002",
+    "kau_dirasa_0060"
+   ],
+   "gold_rank": 7
+  },
+  {
+   "id": "m19",
+   "file": "test_questions_new50.jsonl",
+   "type": "جدول",
+   "university": "KAU",
+   "question": "كم المعدل المطلوب للتحويل لكلية الحاسبات وتقنية المعلومات؟",
+   "rewritten": "المعدل التراكمي المطلوب وشروط التحويل الداخلي إلى كلية الحاسبات وتقنية المعلومات",
+   "gold": [
+    "kau_tahwil_dakhili_0005"
+   ],
+   "ranked": [
+    "kau_tahwil_dakhili_0005",
+    "kau_tahwil_dakhili_0004",
+    "kau_tahwil_dakhili_0006",
+    "kau_tahwil_dakhili_0007",
+    "kau_tahwil_dakhili_0003",
+    "kau_tahwil_dakhili_0001",
+    "kau_dirasa_0084",
+    "kau_tahwil_dakhili_0009",
+    "kau_tahwil_khariji_0002",
+    "kau_qabul_0001",
+    "kau_tahwil_dakhili_0000",
+    "kau_dirasa_0055"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "m20",
+   "file": "test_questions_new50.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "كم فصل مسموح أكون درسته عشان أقدر أحول داخلياً بين الكليات؟",
+   "rewritten": "الحد الأقصى لعدد الفصول الدراسية المكتملة المطلوب لتحويل الطالب الداخلي بين الكليات",
+   "gold": [
+    "kau_tahwil_dakhili_0001"
+   ],
+   "ranked": [
+    "kau_tahwil_dakhili_0000",
+    "kau_tahwil_dakhili_0001",
+    "kau_tahwil_dakhili_0006",
+    "kau_tahwil_dakhili_0003",
+    "kau_tahwil_dakhili_0009",
+    "kau_tahwil_dakhili_0004",
+    "kau_tahwil_dakhili_0007",
+    "kau_tahwil_dakhili_0008",
+    "kau_dirasa_0053",
+    "kau_tahwil_dakhili_0005",
+    "kau_dirasa_0035",
+    "kau_dirasa_0084"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "m21",
+   "file": "test_questions_new50.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "طالب دراسات عليا من جامعة ثانية يبي يحول، كم ساعة يعادلون له؟",
+   "rewritten": "عدد الوحدات الدراسية التي يمكن معادلتها للطالب الزائر من جامعة أخرى",
+   "gold": [
+    "kau_tahwil_ulya_0002"
+   ],
+   "ranked": [
+    "kau_tahwil_ulya_0002",
+    "kau_tahwil_dakhili_0009",
+    "kau_tahwil_ulya_0006",
+    "kau_dirasa_0059",
+    "kau_dirasa_0049",
+    "kau_dirasa_0058",
+    "kau_tahwil_ulya_0004",
+    "kau_dirasa_0061",
+    "kau_tahwil_khariji_0006",
+    "kau_tahwil_ulya_0005",
+    "kau_dirasa_0073",
+    "kau_tahwil_ulya_0000",
+    "kau_maliya_0006",
+    "kau_dirasa_0060",
+    "kau_dirasa_0050"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "m22",
+   "file": "test_questions_new50.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "يحق لي أشوف ورقة إجابتي في الاختبار النهائي؟",
+   "rewritten": "جواز الاطلاع على ورقة الإجابة في الاختبار النهائي وشروطه",
+   "gold": [
+    "kau_huquq_0006"
+   ],
+   "ranked": [
+    "kau_huquq_0006",
+    "kau_dirasa_0032",
+    "kau_dirasa_0074",
+    "kau_dirasa_0063",
+    "kau_dirasa_0033",
+    "kau_dirasa_0067",
+    "kau_dirasa_0073",
+    "kau_dirasa_0030",
+    "kau_dirasa_0065",
+    "kau_dirasa_0064",
+    "kau_dirasa_0062",
+    "kau_dirasa_0089"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "m23",
+   "file": "test_questions_new50.jsonl",
+   "type": "جدول",
+   "university": "KAU",
+   "question": "كم أقل درجة للنجاح وكم وزنها؟",
+   "rewritten": "الحد الأدنى للدرجة المئوية للنجاح في المقرر ووزنها في حساب المعدل التراكمي",
+   "gold": [
+    "kau_dirasa_0101"
+   ],
+   "ranked": [
+    "kau_dirasa_0084",
+    "kau_dirasa_0103",
+    "kau_dirasa_0003",
+    "kau_dirasa_0101",
+    "kau_dirasa_0076",
+    "kau_tahwil_dakhili_0006",
+    "kau_dirasa_0102",
+    "kau_dirasa_0079",
+    "kau_tahwil_dakhili_0007",
+    "kau_dirasa_0082",
+    "kau_dirasa_0002",
+    "kau_dirasa_0083",
+    "kau_tahwil_dakhili_0005",
+    "kau_qabul_0008"
+   ],
+   "gold_rank": 4
+  }
+ ]
+}

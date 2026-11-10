@@ -1,0 +1,1684 @@
+{
+ "settings": {
+  "created": "2026-09-30T23:22:43",
+  "git_commit": "aee8064",
+  "rerank": true,
+  "sets": [
+   "fresh"
+  ],
+  "rewrite_prompt": "prompts/rewrite.txt",
+  "new_rewrite_calls": 45,
+  "new_rerank_calls": 45,
+  "usage_cost": 0.088175,
+  "credit_before": 1.8446896479999992,
+  "credit_after": 1.766377047999999,
+  "seconds": 316
+ },
+ "metrics": {
+  "overall": {
+   "questions": 45,
+   "hit@1": 37,
+   "hit@4": 43,
+   "hit@15": 45,
+   "mrr@10": 0.886
+  },
+  "by_file": {
+   "fresh50.jsonl": {
+    "questions": 45,
+    "hit@1": 37,
+    "hit@4": 43,
+    "hit@15": 45,
+    "mrr@10": 0.886
+   }
+  },
+  "by_type": {
+   "إجراء": {
+    "questions": 3,
+    "hit@1": 3,
+    "hit@4": 3,
+    "hit@15": 3,
+    "mrr@10": 1.0
+   },
+   "تاريخ": {
+    "questions": 3,
+    "hit@1": 3,
+    "hit@4": 3,
+    "hit@15": 3,
+    "mrr@10": 1.0
+   },
+   "تعريف": {
+    "questions": 1,
+    "hit@1": 0,
+    "hit@4": 1,
+    "hit@15": 1,
+    "mrr@10": 0.5
+   },
+   "حالة": {
+    "questions": 6,
+    "hit@1": 5,
+    "hit@4": 5,
+    "hit@15": 6,
+    "mrr@10": 0.867
+   },
+   "رقم": {
+    "questions": 7,
+    "hit@1": 6,
+    "hit@4": 7,
+    "hit@15": 7,
+    "mrr@10": 0.905
+   },
+   "شروط": {
+    "questions": 14,
+    "hit@1": 12,
+    "hit@4": 14,
+    "hit@15": 14,
+    "mrr@10": 0.929
+   },
+   "مدة": {
+    "questions": 1,
+    "hit@1": 1,
+    "hit@4": 1,
+    "hit@15": 1,
+    "mrr@10": 1.0
+   },
+   "مستندات": {
+    "questions": 1,
+    "hit@1": 0,
+    "hit@4": 1,
+    "hit@15": 1,
+    "mrr@10": 0.5
+   },
+   "نعم/لا": {
+    "questions": 9,
+    "hit@1": 7,
+    "hit@4": 8,
+    "hit@15": 9,
+    "mrr@10": 0.817
+   }
+  }
+ },
+ "questions": [
+  {
+   "id": "f01",
+   "file": "fresh50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "أنا طالبة وأبي أحول لتخصص الرياضيات الاكتوارية والمالية في جامعة الملك سعود، كم المعدل المطلوب ووش الشروط الثانية؟",
+   "rewritten": "المعدل التراكمي المطلوب وشروط التحويل الداخلي إلى تخصص الرياضيات الاكتوارية والمالية في جامعة الملك سعود",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_tahwil_dakhili_sec_f042fdf0"
+   ],
+   "ranked": [
+    "ksu_tahwil_dakhili_sec_f042fdf0",
+    "ksu_tahwil_khariji_sec_91ce0db1",
+    "ksu_tahwil_dakhili_sec_66e7d85c",
+    "ksu_shuun_exec062",
+    "ksu_tahwil_dakhili_sec_06c371ba",
+    "ksu_tahwil_dakhili_sec_abd7062a",
+    "ksu_tahwil_dakhili_sec_69d28b5a",
+    "ksu_tahwil_dakhili_sec_910385f1",
+    "ksu_tahwil_dakhili_sec_e50bba46",
+    "ksu_tahwil_dakhili_sec_2a4caf34",
+    "ksu_tahwil_dakhili_sec_6a585ce4",
+    "ksu_tahwil_dakhili_sec_d82e20dc",
+    "ksu_tahwil_dakhili_sec_e69f5bea",
+    "ksu_tahwil_dakhili_sec_3ff02652",
+    "ksu_tahwil_dakhili_sec_3271df4c"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f02",
+   "file": "fresh50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "أنا طالبة وأبي أحول لكلية العمارة والتخطيط، متى أقدر أقدم وكم المعدل؟ وكيف يفاضلون بين المتقدمين؟",
+   "rewritten": "شروط التحويل الداخلي إلى كلية العمارة والتخطيط والمعدل التراكمي المطلوب وآلية الفرز بين المتقدمين",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_tahwil_dakhili_sec_352a7a1b"
+   ],
+   "ranked": [
+    "ksu_tahwil_dakhili_sec_352a7a1b",
+    "ksu_tahwil_dakhili_sec_06c371ba",
+    "ksu_tahwil_dakhili_sec_2a4caf34",
+    "ksu_tahwil_dakhili_sec_69d28b5a",
+    "ksu_tahwil_dakhili_sec_e97f0f7e",
+    "ksu_tahwil_dakhili_sec_e50bba46",
+    "ksu_tahwil_dakhili_sec_66e7d85c",
+    "ksu_tahwil_dakhili_sec_910385f1",
+    "ksu_tahwil_dakhili_sec_e42076f7",
+    "ksu_tahwil_dakhili_sec_f042fdf0",
+    "ksu_tahwil_dakhili_sec_d82e20dc",
+    "ksu_tahwil_dakhili_sec_3ff02652",
+    "ksu_shuun_exec048_p1",
+    "ksu_shuun_art039"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f03",
+   "file": "fresh50.jsonl",
+   "type": "نعم/لا",
+   "university": "KSU",
+   "question": "أنا في كلية العلوم بجامعة الملك سعود ومعدلي 4.8، أقدر أحول لكلية الصيدلة؟",
+   "rewritten": null,
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_tahwil_dakhili_sec_8d2ede19"
+   ],
+   "ranked": [
+    "ksu_tahwil_dakhili_sec_8d2ede19",
+    "ksu_tahwil_dakhili_sec_6a585ce4",
+    "ksu_tahwil_dakhili_sec_910385f1",
+    "ksu_tahwil_dakhili_sec_2a4caf34",
+    "ksu_tahwil_khariji_sec_91ce0db1",
+    "ksu_tahwil_dakhili_sec_66e7d85c",
+    "ksu_tahwil_dakhili_sec_6ad9c371",
+    "ksu_qabul_dalil_sec_3427aee3",
+    "ksu_tahwil_khariji_sec_9f3efc29_p1",
+    "ksu_tahwil_dakhili_sec_69d28b5a",
+    "ksu_tahwil_dakhili_sec_06c371ba",
+    "ksu_tahwil_khariji_sec_8827df99",
+    "ksu_tahwil_dakhili_sec_f042fdf0",
+    "ksu_qabul_dalil_sec_2a19ff6a",
+    "ksu_tahwil_dakhili_sec_d82e20dc"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f04",
+   "file": "fresh50.jsonl",
+   "type": "نعم/لا",
+   "university": "KSU",
+   "question": "معدلي 4.9 في كلية العلوم الطبية التطبيقية، أقدر أحول لكلية الطب في جامعة الملك سعود؟ كم المعدل المطلوب؟",
+   "rewritten": null,
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_tahwil_dakhili_sec_90bd1b85"
+   ],
+   "ranked": [
+    "ksu_tahwil_dakhili_sec_90bd1b85",
+    "ksu_tahwil_dakhili_sec_6ad9c371",
+    "ksu_tahwil_dakhili_sec_d9b9025c",
+    "ksu_tahwil_dakhili_sec_2a4caf34",
+    "ksu_tahwil_dakhili_sec_910385f1",
+    "ksu_tahwil_dakhili_sec_66e7d85c",
+    "ksu_shuun_exec062",
+    "ksu_tahwil_dakhili_sec_6a585ce4",
+    "ksu_tahwil_dakhili_sec_69d28b5a",
+    "ksu_tahwil_dakhili_sec_f042fdf0",
+    "ksu_tahwil_dakhili_sec_abd7062a",
+    "ksu_tahwil_dakhili_sec_3ff02652",
+    "ksu_tahwil_dakhili_sec_e42076f7",
+    "ksu_qabul_dalil_sec_f472140f",
+    "ksu_tahwil_dakhili_sec_d82e20dc"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f05",
+   "file": "fresh50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "أنا طالب في كلية الهندسة وأبي أحول لتخصص الهندسة الزراعية في كلية علوم الأغذية والزراعة، كم المعدل اللي يطلبونه مني؟",
+   "rewritten": "الحد الأدنى للمعدل التراكمي المطلوب وشروط التحويل الداخلي من كلية الهندسة إلى تخصص الهندسة الزراعية في كلية علوم الأغذية والزراعة",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_tahwil_dakhili_sec_d82e20dc"
+   ],
+   "ranked": [
+    "ksu_tahwil_dakhili_sec_d82e20dc",
+    "ksu_tahwil_dakhili_sec_2a4caf34",
+    "ksu_tahwil_dakhili_sec_06c371ba",
+    "ksu_tahwil_dakhili_sec_66e7d85c",
+    "ksu_tahwil_dakhili_sec_910385f1",
+    "ksu_tahwil_dakhili_sec_352a7a1b",
+    "ksu_tahwil_dakhili_sec_f042fdf0",
+    "ksu_tahwil_dakhili_sec_69d28b5a",
+    "ksu_tahwil_dakhili_sec_6a585ce4",
+    "ksu_tahwil_dakhili_sec_e69f5bea",
+    "ksu_tahwil_dakhili_sec_3ff02652",
+    "ksu_tahwil_dakhili_sec_90bd1b85",
+    "ksu_tahwil_dakhili_sec_b53df25e"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f06",
+   "file": "fresh50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "وش شروط التحويل لبرنامج الدراسات القرآنية في كلية التربية بجامعة الملك سعود من خارج الكلية؟",
+   "rewritten": "شروط التحويل الخارجي إلى برنامج الدراسات القرآنية في كلية التربية بجامعة الملك سعود",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_tahwil_dakhili_sec_3271df4c"
+   ],
+   "ranked": [
+    "ksu_tahwil_dakhili_sec_3271df4c",
+    "ksu_tahwil_khariji_sec_91ce0db1",
+    "ksu_tahwil_khariji_sec_8827df99",
+    "ksu_tahwil_dakhili_sec_abd7062a",
+    "ksu_tahwil_dakhili_sec_9d82c979",
+    "ksu_tahwil_dakhili_sec_e50bba46",
+    "ksu_tahwil_dakhili_sec_6ad9c371",
+    "ksu_tahwil_dakhili_sec_69d28b5a",
+    "ksu_tahwil_dakhili_sec_da70ff3d",
+    "ksu_tahwil_dakhili_sec_6a585ce4",
+    "ksu_tahwil_dakhili_sec_d82e20dc",
+    "ksu_tahwil_dakhili_sec_f042fdf0"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f07",
+   "file": "fresh50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "أنا طالب دكتوراه في جامعة الملك سعود، كم بدل الكتب وكم مرة ينصرف؟ وكم بدل طباعة الرسالة ومتى يبدأ صرفه؟",
+   "rewritten": "البدل المخصص للكتب وعدد مرات صرفه للطالب في الدراسات العليا والبدل المخصص لطباعة رسالة الدكتوراه وموعد بداية صرفه",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_khadamat_sec_02b408ce"
+   ],
+   "ranked": [
+    "ksu_khadamat_sec_02b408ce",
+    "ksu_khadamat_sec_3f0fcfd3",
+    "ksu_khadamat_sec_cdae5a61",
+    "ksu_shuun_exec035",
+    "ksu_khadamat_sec_25164532",
+    "ksu_khadamat_sec_9ffd49e6",
+    "ksu_qabul_dalil_sec_57ca6e75_p1",
+    "ksu_shuun_art035",
+    "ksu_zaer_sec_26bb66e3",
+    "ksu_khadamat_sec_76f52d80",
+    "ksu_shuun_art024",
+    "ksu_shuun_art037_p1",
+    "ksu_khadamat_sec_8ead3ece",
+    "ksu_shuun_art047",
+    "ksu_tahwil_khariji_sec_dabc1587"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f08",
+   "file": "fresh50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "عندي إعاقة وأدرس في جامعة الملك سعود، كم بدل الإعاقة وكيف أقدم عليه؟",
+   "rewritten": "مقدار بدل الإعاقة للطلاب في جامعة الملك سعود وإجراءات التقديم عليه",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_khadamat_sec_76f52d80"
+   ],
+   "ranked": [
+    "ksu_khadamat_sec_76f52d80",
+    "ksu_sihhiya_sec_efe4884b",
+    "ksu_sihhiya_sec_6e1b686d",
+    "ksu_qabul_dalil_sec_f472140f",
+    "ksu_sihhiya_sec_4fcd25b7",
+    "ksu_shuun_exec043_p1",
+    "ksu_sihhiya_sec_79a9e76e_p2",
+    "ksu_khadamat_sec_25164532",
+    "ksu_sihhiya_sec_79a9e76e_p3",
+    "ksu_khadamat_sec_02b408ce",
+    "ksu_qabul_dalil_sec_57ca6e75_p1",
+    "ksu_qabul_sec_8ad1bb6a"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f09",
+   "file": "fresh50.jsonl",
+   "type": "إجراء",
+   "university": "KSU",
+   "question": "انقبلت في جامعة الملك سعود بس غيرت رأيي قبل ما أبدأ، كيف أنسحب من القبول؟ ووش يصير لبياناتي؟",
+   "rewritten": "السحب من القبول في جامعة الملك سعود قبل البدء وتأثيره على البيانات الشخصية",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_khadamat_sec_6733417c"
+   ],
+   "ranked": [
+    "ksu_khadamat_sec_6733417c",
+    "ksu_shuun_exec060",
+    "ksu_qabul_dalil_sec_f472140f",
+    "ksu_shuun_art001_p4",
+    "ksu_qabul_dalil_sec_57ca6e75_p1",
+    "ksu_suluk_art028",
+    "ksu_shuun_exec017",
+    "ksu_tahwil_khariji_sec_8827df99",
+    "ksu_tahwil_khariji_sec_aec6275d",
+    "ksu_tahwil_khariji_sec_91ce0db1",
+    "ksu_khadamat_sec_95441d59",
+    "ksu_qabul_sec_565d240f",
+    "ksu_tahwil_khariji_sec_dabc1587"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f10",
+   "file": "fresh50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "وش التخصصات في الكليات الصحية بجامعة الملك سعود اللي تحتاج مقابلة شخصية؟ وكم وزن التحصيلي في القبول؟",
+   "rewritten": "التخصصات في الكليات الصحية بجامعة الملك سعود التي تتطلب مقابلة شخصية ووزن التحصيل الأكاديمي في قبول الطلاب",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_qabul_dalil_sec_3427aee3"
+   ],
+   "ranked": [
+    "ksu_qabul_dalil_sec_3427aee3",
+    "ksu_qabul_dalil_sec_1988bed2",
+    "ksu_qabul_dalil_sec_6565297d",
+    "ksu_qabul_dalil_sec_2a19ff6a",
+    "ksu_qabul_dalil_sec_f472140f",
+    "ksu_qabul_dalil_sec_47cb696a",
+    "ksu_qabul_sec_739e54f2",
+    "ksu_qabul_sec_8ad1bb6a",
+    "ksu_qabul_sec_b91faa0d_p1",
+    "ksu_qabul_sec_b91faa0d_p2",
+    "ksu_qabul_sec_565d240f",
+    "ksu_tahwil_dakhili_sec_aefe5990",
+    "ksu_sihhiya_sec_87162f2b",
+    "ksu_khadamat_sec_c213d1f9_p1",
+    "ksu_sihhiya_sec_6e1b686d"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f11",
+   "file": "fresh50.jsonl",
+   "type": "نعم/لا",
+   "university": "KSU",
+   "question": "أنا بنت وأبي أدخل هندسة الحاسب في جامعة الملك سعود، متاح لي؟",
+   "rewritten": "جواز قبول الطالبة في تخصص هندسة الحاسب في جامعة الملك سعود وشروط القبول فيه",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_qabul_sec_b91faa0d_p2",
+    "ksu_tahwil_khariji_sec_9f3efc29_p2"
+   ],
+   "ranked": [
+    "ksu_qabul_sec_b91faa0d_p2",
+    "ksu_qabul_dalil_sec_fbc9c0ef_p2",
+    "ksu_qabul_dalil_sec_6565297d",
+    "ksu_qabul_sec_8ad1bb6a",
+    "ksu_qabul_dalil_sec_853bf491",
+    "ksu_qabul_dalil_sec_c19e0b0c",
+    "ksu_tahwil_dakhili_sec_06c371ba",
+    "ksu_tahwil_khariji_sec_9f3efc29_p2",
+    "ksu_qabul_sec_b91faa0d_p3",
+    "ksu_qabul_dalil_sec_f472140f",
+    "ksu_tahwil_dakhili_sec_6a585ce4",
+    "ksu_tahwil_dakhili_sec_69d28b5a"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f12",
+   "file": "fresh50.jsonl",
+   "type": "حالة",
+   "university": "KSU",
+   "question": "أدرس في جامعة ثانية وخلصت 40 ساعة، أقدر أحول لجامعة الملك سعود؟",
+   "rewritten": "جواز التحويل الخارجي من جامعة أخرى إلى جامعة الملك سعود وشروطه بعد إكمال 40 وحدة دراسية",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_tahwil_khariji_sec_91ce0db1",
+    "ksu_tahwil_khariji_sec_9f3efc29_p2"
+   ],
+   "ranked": [
+    "ksu_tahwil_khariji_sec_91ce0db1",
+    "ksu_tahwil_khariji_sec_8827df99",
+    "ksu_tahwil_khariji_sec_5c1e2e31",
+    "ksu_shuun_exec053",
+    "ksu_shuun_art019",
+    "ksu_tahwil_khariji_sec_dabc1587",
+    "ksu_shuun_art053_p1",
+    "ksu_khadamat_sec_0cd413b2",
+    "ksu_tahwil_khariji_sec_aec6275d",
+    "ksu_tahwil_khariji_sec_9f3efc29_p2",
+    "ksu_tahwil_dakhili_sec_2a4caf34",
+    "ksu_tahwil_khariji_sec_dc308de9",
+    "ksu_tahwil_dakhili_sec_aefe5990"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f13",
+   "file": "fresh50.jsonl",
+   "type": "تاريخ",
+   "university": "KSU",
+   "question": "أنا في السنة الأولى المشتركة، متى أقدر أدخل رغباتي للتخصص في الترم الأول؟",
+   "rewritten": "الموعد المحدد لتقديم رغبات التخصص للطلاب في السنة الأولى المشتركة في الفصل الدراسي الأول في التقويم الأكاديمي",
+   "intent": {
+    "type": "date",
+    "event": "تقديم رغبات التخصص",
+    "semester": "الأول"
+   },
+   "calendar_rows": [
+    "ksu_harakat_sec_f44bd9d7_p2",
+    "ksu_harakat_sec_2d63285d_p2"
+   ],
+   "calendar_mode": true,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_harakat_sec_f44bd9d7_p2"
+   ],
+   "ranked": [
+    "ksu_harakat_sec_f44bd9d7_p2",
+    "ksu_harakat_sec_2d63285d_p2",
+    "ksu_harakat_sec_f44bd9d7_p1",
+    "ksu_shuun_exec014_p1",
+    "ksu_khadamat_sec_0cd413b2",
+    "ksu_shuun_exec014_p3",
+    "ksu_khadamat_sec_99d73107",
+    "ksu_shuun_exec014_p2",
+    "ksu_shuun_exec014_p7",
+    "ksu_shuun_art014",
+    "ksu_shuun_art001_p1",
+    "ksu_taqwim_sec_03f386c9",
+    "ksu_shuun_exec014_p4",
+    "ksu_tahwil_dakhili_sec_aefe5990"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f14",
+   "file": "fresh50.jsonl",
+   "type": "حالة",
+   "university": "KSU",
+   "question": "عندي سكري، هل ينحسب ضمن الحالات الصحية في تصنيف جامعة الملك سعود لذوي الإعاقة؟",
+   "rewritten": "النية: {\"type\": \"other\"}",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_sihhiya_sec_79a9e76e_p2"
+   ],
+   "ranked": [
+    "ksu_sihhiya_sec_79a9e76e_p2",
+    "ksu_sihhiya_sec_efe4884b",
+    "ksu_qabul_sec_739e54f2",
+    "ksu_shuun_art027",
+    "ksu_sihhiya_sec_6e1b686d",
+    "ksu_sihhiya_sec_79a9e76e_p1",
+    "ksu_sihhiya_sec_4fcd25b7",
+    "ksu_sihhiya_sec_79a9e76e_p3",
+    "ksu_sihhiya_sec_87162f2b",
+    "ksu_shuun_art001_p5",
+    "ksu_suluk_art002",
+    "ksu_tahwil_dakhili_sec_69d28b5a",
+    "ksu_shuun_art011",
+    "ksu_qabul_dalil_sec_57ca6e75_p2",
+    "ksu_shuun_art051"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f15",
+   "file": "fresh50.jsonl",
+   "type": "تاريخ",
+   "university": "KSU",
+   "question": "When does the 2027/2028 academic year start at King Saud University?",
+   "rewritten": "بداية الفصل الدراسي الأول في التقويم الأكاديمي لجامعة الملك سعود للعام الدراسي 2027/2028",
+   "intent": {
+    "type": "date",
+    "event": "بداية الفصل الدراسي الأول",
+    "semester": "الأول"
+   },
+   "calendar_rows": [
+    "ksu_taqwim_sec_03f386c9",
+    "ksu_taqwim_sec_cc8ca341",
+    "ksu_taqwim_sec_210f2c7c",
+    "ksu_taqwim_sec_9813db3d"
+   ],
+   "calendar_mode": true,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_taqwim_sec_cc8ca341"
+   ],
+   "ranked": [
+    "ksu_taqwim_sec_cc8ca341",
+    "ksu_taqwim_sec_210f2c7c",
+    "ksu_taqwim_sec_9813db3d",
+    "ksu_harakat_sec_fb4e991e",
+    "ksu_harakat_sec_2d63285d_p2",
+    "ksu_taqwim_sec_03f386c9",
+    "ksu_harakat_sec_2d63285d_p1",
+    "ksu_harakat_sec_f44bd9d7_p2",
+    "ksu_harakat_sec_f44bd9d7_p1",
+    "ksu_qabul_sec_b91faa0d_p1",
+    "ksu_qabul_sec_b91faa0d_p2",
+    "ksu_qabul_sec_b91faa0d_p3",
+    "ksu_taqwim_sec_a2862d99"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f16",
+   "file": "fresh50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "أنا طالب في جامعة ثانية وأبي أدرس مواد في جامعة الملك سعود كطالب زائر، وش الشروط؟",
+   "rewritten": "شروط دراسة الطالب الزائر لمقررات جامعة الملك سعود والتسجيل فيها",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_zaer_sec_7d430991"
+   ],
+   "ranked": [
+    "ksu_zaer_sec_7d430991",
+    "ksu_shuun_art053_p1",
+    "ksu_zaer_sec_3f0c520e",
+    "ksu_shuun_exec053",
+    "ksu_zaer_sec_67fe6098",
+    "ksu_shuun_art037_p1",
+    "ksu_shuun_art020",
+    "ksu_zaer_sec_26bb66e3",
+    "ksu_suluk_art002",
+    "ksu_shuun_exec014_p8",
+    "ksu_shuun_art053_p2",
+    "ksu_shuun_exec045",
+    "ksu_qabul_dalil_sec_f472140f",
+    "ksu_shuun_exec043_p1"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f17",
+   "file": "fresh50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "أبي أسجل مادة كمستمع في جامعة الملك سعود، وش الشروط؟ وهل تنحسب من ساعاتي؟",
+   "rewritten": "شروط تسجيل مقرر كمستمع في جامعة الملك سعود وجواز احتسابه ضمن العبء الدراسي",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_shuun_exec045",
+    "ksu_shuun_art045"
+   ],
+   "ranked": [
+    "ksu_shuun_exec045",
+    "ksu_shuun_art045",
+    "ksu_shuun_art001_p3",
+    "ksu_shuun_exec053",
+    "ksu_shuun_art037_p1",
+    "ksu_zaer_sec_7d430991",
+    "ksu_shuun_exec043_p1",
+    "ksu_shuun_exec014_p8",
+    "ksu_khadamat_sec_908f3f65",
+    "ksu_shuun_art001_p2",
+    "ksu_shuun_art023",
+    "ksu_shuun_art024",
+    "ksu_shuun_exec012_p2",
+    "ksu_shuun_exec034"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f18",
+   "file": "fresh50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "أبي أعتذر عن الترم كامل في جامعة الملك سعود، متى آخر وقت أقدم؟ وكم مرة يحق لي؟ ولو العميد ما رد علي؟",
+   "rewritten": "آخر موعد لتقديم طلب الاعتذار عن الاستمرار في الدراسة في الفصل الدراسي وعدد المرات المسموح بها لتقديم الاعتذار وما يترتب على عدم رد العميد على الطلب",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_shuun_art055"
+   ],
+   "ranked": [
+    "ksu_shuun_art055",
+    "ksu_shuun_art056",
+    "ksu_shuun_art054",
+    "ksu_shuun_art065",
+    "ksu_shuun_art032",
+    "ksu_suluk_art026",
+    "ksu_shuun_art058",
+    "ksu_shuun_art066_p1",
+    "ksu_shuun_exec032",
+    "ksu_shuun_exec048_p2",
+    "ksu_khadamat_sec_edc6d745",
+    "ksu_suluk_art017",
+    "ksu_shuun_art001_p3",
+    "ksu_shuun_art001_p4",
+    "ksu_shuun_exec048_p1"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f19",
+   "file": "fresh50.jsonl",
+   "type": "شروط",
+   "university": "KSU",
+   "question": "عندي شهادة احترافية، أقدر أنعفى من مقررات في جامعة الملك سعود؟ وكم أقصى نسبة ممكن أنعفى منها؟",
+   "rewritten": "جواز الإعفاء من المقررات الدراسية لطالب جامعة الملك سعود بحوزته شهادة احترافية ونسبة الإعفاء القصوى المسموحة",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_shuun_exec043_p1",
+    "ksu_shuun_art043"
+   ],
+   "ranked": [
+    "ksu_shuun_exec043_p1",
+    "ksu_shuun_art043",
+    "ksu_shuun_art037_p1",
+    "ksu_shuun_art040",
+    "ksu_shuun_exec014_p1",
+    "ksu_shuun_art061",
+    "ksu_shuun_exec043_p2",
+    "ksu_shuun_art056",
+    "ksu_shuun_art035",
+    "ksu_shuun_art058",
+    "ksu_tahwil_dakhili_sec_e50bba46",
+    "ksu_shuun_art024",
+    "ksu_qabul_dalil_sec_6565297d",
+    "ksu_shuun_exec014_p3",
+    "ksu_qabul_sec_8ad1bb6a"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f20",
+   "file": "fresh50.jsonl",
+   "type": "حالة",
+   "university": "KSU",
+   "question": "What happens to my grade if I miss the final exam without an excuse at King Saud University?",
+   "rewritten": "الحذف والإضافة، الحرمان من دخول الاختبار النهائي، العذر المقبول، ما يترتب على الغياب عن الاختبار النهائي دون عذر مقبول على المعدل التراكمي",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_shuun_art031"
+   ],
+   "ranked": [
+    "ksu_shuun_art031",
+    "ksu_khadamat_sec_38849c46",
+    "ksu_shuun_art025",
+    "ksu_shuun_art032",
+    "ksu_shuun_art026",
+    "ksu_shuun_art001_p3",
+    "ksu_khadamat_sec_edc6d745",
+    "ksu_shuun_exec032",
+    "ksu_khadamat_sec_5bc3b158",
+    "ksu_shuun_appx01_p2",
+    "ksu_suluk_art005_p1",
+    "ksu_shuun_art046",
+    "ksu_shuun_exec048_p1",
+    "ksu_khadamat_sec_908f3f65"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f21",
+   "file": "fresh50.jsonl",
+   "type": "رقم",
+   "university": "KSU",
+   "question": "كم أقصى نسبة من خطتي الدراسية ممكن تكون مو حضورية (عن بعد) في جامعة الملك سعود؟",
+   "rewritten": "الحد الأقصى لنسبة المقررات الدراسية التي يجوز أن تكون عن بعد في جامعة الملك سعود",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_shuun_exec012_p2"
+   ],
+   "ranked": [
+    "ksu_shuun_exec012_p2",
+    "ksu_shuun_exec043_p1",
+    "ksu_shuun_art025",
+    "ksu_shuun_art043",
+    "ksu_shuun_exec053",
+    "ksu_shuun_art037_p1",
+    "ksu_shuun_art053_p1",
+    "ksu_shuun_art001_p2",
+    "ksu_shuun_exec012_p3",
+    "ksu_zaer_sec_3f0c520e",
+    "ksu_shuun_art001_p1",
+    "ksu_shuun_art040",
+    "ksu_qabul_sec_b91faa0d_p2",
+    "ksu_shuun_exec062"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f22",
+   "file": "fresh50.jsonl",
+   "type": "إجراء",
+   "university": "KSU",
+   "question": "صدر علي قرار عقوبة من عميد الكلية في جامعة الملك سعود، لمين أتظلم وكم عندي وقت؟",
+   "rewritten": "الجهة المختصة بتلقي التظلم من قرار العقوبة التأديبية في جامعة الملك سعود ومدة التظلم",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_suluk_art026"
+   ],
+   "ranked": [
+    "ksu_suluk_art026",
+    "ksu_suluk_art033",
+    "ksu_shuun_art065",
+    "ksu_shuun_exec048_p2",
+    "ksu_shuun_art066_p1",
+    "ksu_suluk_art006",
+    "ksu_shuun_art059",
+    "ksu_suluk_art018",
+    "ksu_suluk_art031",
+    "ksu_shuun_art067",
+    "ksu_shuun_art066_p2"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f23",
+   "file": "fresh50.jsonl",
+   "type": "نعم/لا",
+   "university": "KSU",
+   "question": "أنا محال للتحقيق في مخالفة، أقدر أنسحب من جامعة الملك سعود أو أخلي طرفي قبل ما يخلص التحقيق؟",
+   "rewritten": "جواز الانسحاب من الجامعة أو طي القيد أثناء التحقيق في مخالفة تأديبية",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "ksu_suluk_art028"
+   ],
+   "ranked": [
+    "ksu_suluk_art028",
+    "ksu_shuun_art001_p4",
+    "ksu_khadamat_sec_6733417c",
+    "ksu_shuun_exec060",
+    "ksu_shuun_art059",
+    "ksu_khadamat_sec_edc6d745",
+    "ksu_shuun_art056",
+    "ksu_shuun_art058",
+    "ksu_suluk_art005_p2",
+    "ksu_suluk_art005_p1",
+    "ksu_shuun_exec043_p1",
+    "ksu_shuun_art057"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f24",
+   "file": "fresh50.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "What are the requirements to transfer into the Faculty of Dentistry at King Abdulaziz University?",
+   "rewritten": "شروط التحويل الداخلي إلى كلية طب الأسنان في جامعة الملك عبدالعزيز",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_tahwil_dakhili_sec_c143b58f"
+   ],
+   "ranked": [
+    "kau_tahwil_dakhili_sec_c143b58f",
+    "kau_tahwil_dakhili_sec_748474ac",
+    "kau_tahwil_dakhili_sec_e04a82ce",
+    "kau_tahwil_khariji_sec_ab748931",
+    "kau_tahwil_dakhili_sec_57732948",
+    "kau_tahwil_dakhili_sec_4d036e1a",
+    "kau_tahwil_dakhili_sec_592915bc",
+    "kau_tahwil_dakhili_sec_fcf60c46",
+    "kau_tahwil_dakhili_sec_14631425",
+    "kau_tahwil_dakhili_sec_196f2aa5",
+    "kau_dirasa_appx01_p2"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f25",
+   "file": "fresh50.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "أنا في كلية الهندسة بجامعة الملك عبدالعزيز وأبي أحول تمريض، كم المعدل ووش المطلوب؟",
+   "rewritten": "المعدل التراكمي المطلوب وشروط التحويل الداخلي إلى كلية التمريض في جامعة الملك عبدالعزيز",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_tahwil_dakhili_sec_196f2aa5"
+   ],
+   "ranked": [
+    "kau_tahwil_dakhili_sec_40b142e0",
+    "kau_tahwil_dakhili_sec_196f2aa5",
+    "kau_dirasa_exec023",
+    "kau_tahwil_dakhili_sec_14631425",
+    "kau_tahwil_dakhili_sec_e04a82ce",
+    "kau_tahwil_dakhili_sec_57732948",
+    "kau_tahwil_dakhili_sec_fcf60c46",
+    "kau_tahwil_dakhili_sec_f0680bb7",
+    "kau_tahwil_dakhili_sec_8eec24eb",
+    "kau_tahwil_dakhili_sec_82af0778",
+    "kau_tahwil_dakhili_sec_c228f97c",
+    "kau_tahwil_dakhili_sec_c143b58f",
+    "kau_tahwil_dakhili_sec_ba1f33b1",
+    "kau_tahwil_dakhili_sec_a684b61f",
+    "kau_tahwil_dakhili_sec_5cf99cb5"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "f26",
+   "file": "fresh50.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "أبي أحول لكلية الدراسات البحرية في جامعة المؤسس، كم المعدل وهل فيه شرط صحي؟",
+   "rewritten": "المعدل التراكمي المطلوب وشروط التحويل الداخلي إلى كلية الدراسات البحرية ومتطلبات الشروط الصحية",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_tahwil_dakhili_sec_8eec24eb"
+   ],
+   "ranked": [
+    "kau_tahwil_dakhili_sec_8eec24eb",
+    "kau_tahwil_dakhili_sec_a684b61f",
+    "kau_tahwil_dakhili_sec_748474ac",
+    "kau_tahwil_dakhili_sec_196f2aa5",
+    "kau_tahwil_dakhili_sec_592915bc",
+    "kau_tahwil_dakhili_sec_57732948",
+    "kau_tahwil_dakhili_sec_14631425",
+    "kau_tahwil_dakhili_sec_fcf60c46",
+    "kau_tahwil_dakhili_sec_c143b58f",
+    "kau_tahwil_dakhili_sec_e04a82ce",
+    "kau_dirasa_exec023",
+    "kau_tahwil_dakhili_sec_8a2a6764",
+    "kau_tahwil_khariji_sec_ab748931"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f27",
+   "file": "fresh50.jsonl",
+   "type": "نعم/لا",
+   "university": "KAU",
+   "question": "أنا في كلية إنسانية بجامعة الملك عبدالعزيز، أقدر أحول لكلية علوم الإنسان والتصاميم؟",
+   "rewritten": "جواز التحويل الداخلي من كلية العلوم الإنسانية إلى كلية علوم الإنسان والتصاميم في جامعة الملك عبدالعزيز وشروطه",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_tahwil_dakhili_sec_128a0cf9"
+   ],
+   "ranked": [
+    "kau_tahwil_dakhili_sec_128a0cf9",
+    "kau_tahwil_dakhili_sec_748474ac",
+    "kau_tahwil_khariji_sec_6f2471cf",
+    "kau_tahwil_dakhili_sec_af051e21",
+    "kau_dirasa_exec025",
+    "kau_qabul_sec_c0534744",
+    "kau_tahwil_dakhili_sec_e04a82ce",
+    "kau_tahwil_dakhili_sec_3427aee3",
+    "kau_tahwil_dakhili_sec_4d036e1a",
+    "kau_tahwil_dakhili_sec_c1aef7b9",
+    "kau_tahwil_khariji_sec_c0534744",
+    "kau_tahwil_dakhili_sec_a684b61f",
+    "kau_tahwil_dakhili_sec_14631425",
+    "kau_tahwil_dakhili_sec_592915bc"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f28",
+   "file": "fresh50.jsonl",
+   "type": "إجراء",
+   "university": "KAU",
+   "question": "كيف أقدم على التحويل الداخلي بين الكليات في جامعة الملك عبدالعزيز؟ وأقدر أغير ترتيب رغباتي بعد ما أقدم؟",
+   "rewritten": "التحويل الداخلي بين الكليات في جامعة الملك عبدالعزيز وآليته وتعديل رغبات الطالب بعد التقديم",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_tahwil_dakhili_sec_3ce4390b"
+   ],
+   "ranked": [
+    "kau_tahwil_dakhili_sec_3ce4390b",
+    "kau_tahwil_dakhili_sec_e04a82ce",
+    "kau_dirasa_exec025",
+    "kau_tahwil_ulya_sec_53d633d5",
+    "kau_tahwil_dakhili_sec_4d036e1a",
+    "kau_tahwil_ulya_sec_8674a18b",
+    "kau_tahwil_khariji_sec_ab748931",
+    "kau_tahwil_dakhili_sec_748474ac",
+    "kau_tahwil_ulya_sec_2856d46a_p1",
+    "kau_tahwil_ulya_sec_2856d46a_p2",
+    "kau_tahwil_dakhili_sec_57732948"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f29",
+   "file": "fresh50.jsonl",
+   "type": "مستندات",
+   "university": "KAU",
+   "question": "وش الأوراق المطلوبة للتحويل الخارجي لجامعة الملك عبدالعزيز؟ وأنا مو سعودي بس أمي سعودية، وش أزيد؟",
+   "rewritten": "الوثائق المطلوبة للتحويل الخارجي إلى جامعة الملك عبدالعزيز للطالب غير السعودي الذي أمه سعودية",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_tahwil_khariji_sec_d7d5a807"
+   ],
+   "ranked": [
+    "kau_tahwil_khariji_sec_ab748931",
+    "kau_tahwil_khariji_sec_d7d5a807",
+    "kau_tahwil_ulya_sec_2856d46a_p1",
+    "kau_dirasa_exec023",
+    "kau_dirasa_exec025",
+    "kau_tahwil_ulya_sec_2856d46a_p2",
+    "kau_tahwil_dakhili_sec_e04a82ce",
+    "kau_tahwil_khariji_sec_6898074d",
+    "kau_tahwil_ulya_sec_858c9a80",
+    "kau_tahwil_khariji_sec_daaa20e8",
+    "kau_tahwil_khariji_sec_c173f7f7"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "f30",
+   "file": "fresh50.jsonl",
+   "type": "نعم/لا",
+   "university": "KAU",
+   "question": "أنا طالبة في جامعة ثانية وأبي أحول لجامعة الملك عبدالعزيز في تخصص إدارة السفر والسياحة، متاح لي؟",
+   "rewritten": "شروط التحويل الخارجي إلى جامعة الملك عبدالعزيز وتخصص إدارة السفر والسياحة",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_tahwil_khariji_sec_c228f97c",
+    "kau_qabul_sec_c0534744"
+   ],
+   "ranked": [
+    "kau_tahwil_ulya_sec_2856d46a_p1",
+    "kau_dirasa_exec023",
+    "kau_tahwil_khariji_sec_ab748931",
+    "kau_dirasa_exec025",
+    "kau_tahwil_ulya_sec_858c9a80",
+    "kau_tahwil_ulya_sec_53d633d5",
+    "kau_tahwil_ulya_sec_2856d46a_p2",
+    "kau_tahwil_ulya_sec_8674a18b",
+    "kau_tahwil_khariji_sec_c173f7f7",
+    "kau_tahwil_khariji_sec_c228f97c",
+    "kau_tahwil_khariji_sec_6898074d",
+    "kau_tahwil_khariji_sec_daaa20e8",
+    "kau_dirasa_exec026",
+    "kau_dirasa_exec024"
+   ],
+   "gold_rank": 10
+  },
+  {
+   "id": "f31",
+   "file": "fresh50.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "وش برامج الدبلوم اللي تقبل مباشرة في جامعة الملك عبدالعزيز؟ ووش منها للطلاب بس؟",
+   "rewritten": "البرامج الأكاديمية في جامعة الملك عبدالعزيز التي تقبل الطلاب مباشرةً والبرامج المخصصة للطلاب فقط",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_qabul_sec_db0769c1"
+   ],
+   "ranked": [
+    "kau_qabul_sec_db0769c1",
+    "kau_qabul_sec_591e6f48",
+    "kau_dirasa_exec009",
+    "kau_qabul_sec_a1c85537",
+    "kau_dirasa_exec010",
+    "kau_qabul_sec_c0534744",
+    "kau_dirasa_exec012",
+    "kau_dirasa_exec027",
+    "kau_dirasa_exec046",
+    "kau_tahwil_khariji_sec_c173f7f7",
+    "kau_qabul_sec_5a1ddf5b",
+    "kau_dirasa_exec028_p2",
+    "kau_dirasa_exec013_p2",
+    "kau_qabul_sec_9f26bb71"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f32",
+   "file": "fresh50.jsonl",
+   "type": "نعم/لا",
+   "university": "KAU",
+   "question": "أنا متخرج من المسار الشرعي، أقدر أدخل كلية الاقتصاد والإدارة في جامعة الملك عبدالعزيز؟",
+   "rewritten": "جواز التحويل الخارجي من المسار الشرعي إلى كلية الاقتصاد والإدارة في جامعة الملك عبدالعزيز وشروطه",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_qabul_sec_db0769c1"
+   ],
+   "ranked": [
+    "kau_tahwil_dakhili_sec_ba1f33b1",
+    "kau_tahwil_khariji_sec_af051e21",
+    "kau_dirasa_exec025",
+    "kau_qabul_sec_db0769c1",
+    "kau_qabul_sec_a1c85537",
+    "kau_tahwil_ulya_sec_2856d46a_p1",
+    "kau_tahwil_dakhili_sec_3427aee3",
+    "kau_dirasa_exec023",
+    "kau_qabul_sec_591e6f48",
+    "kau_tahwil_khariji_sec_ab748931",
+    "kau_tahwil_khariji_sec_c173f7f7",
+    "kau_dirasa_art023",
+    "kau_qabul_sec_c0534744",
+    "kau_tahwil_khariji_sec_6898074d",
+    "kau_tahwil_khariji_sec_c228f97c"
+   ],
+   "gold_rank": 4
+  },
+  {
+   "id": "f33",
+   "file": "fresh50.jsonl",
+   "type": "حالة",
+   "university": "KAU",
+   "question": "الدكتور عندنا يلغي المحاضرات ويدمج شعبتين مع بعض، هذا من حقه في جامعة الملك عبدالعزيز؟",
+   "rewritten": "الحق في إلغاء المحاضرات أو دمج شعبتين في جامعة الملك عبدالعزيز",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_huquq_sec_0ae3aaec"
+   ],
+   "ranked": [
+    "kau_huquq_sec_0ae3aaec",
+    "kau_dirasa_exec013_p1",
+    "kau_dirasa_art001_p6",
+    "kau_dirasa_exec014",
+    "kau_suluk_art003_p3",
+    "kau_dirasa_exec026",
+    "kau_dirasa_exec023",
+    "kau_dirasa_exec024",
+    "kau_huquq_sec_885cf63f",
+    "kau_dirasa_art015",
+    "kau_tahwil_khariji_sec_9f26bb71",
+    "kau_qabul_sec_591e6f48",
+    "kau_dirasa_exec028_p1",
+    "kau_tahwil_ulya_sec_2856d46a_p1"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f34",
+   "file": "fresh50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "كيف تنحسب نقاط المفاضلة للسكن الطلابي في جامعة الملك عبدالعزيز؟",
+   "rewritten": "كيف تُحسب نقاط المفاضلة للسكن الطلابي في جامعة الملك عبدالعزيز",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_sakan_sec_dee3d4ad"
+   ],
+   "ranked": [
+    "kau_sakan_sec_dee3d4ad",
+    "kau_sakan_sec_eca6df25_p1",
+    "kau_dirasa_exec011_p1",
+    "kau_sakan_sec_c9fe852b",
+    "kau_sakan_sec_77ae3ce9",
+    "kau_sakan_sec_eca6df25_p2",
+    "kau_dirasa_exec022",
+    "kau_qabul_sec_c7aa7d7e",
+    "kau_dirasa_exec028_p2",
+    "kau_sakan_sec_1baddb78",
+    "kau_sakan_sec_a98f6094"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f35",
+   "file": "fresh50.jsonl",
+   "type": "نعم/لا",
+   "university": "KAU",
+   "question": "أنا طالبة بكالوريوس متزوجة وأهلي برا جدة، يحق لي أسكن في السكن الجامعي بجامعة الملك عبدالعزيز؟",
+   "rewritten": "شروط إقامة الطالبة المتزوجة في السكن الجامعي بجامعة الملك عبدالعزيز",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_sakan_sec_eca6df25_p1"
+   ],
+   "ranked": [
+    "kau_sakan_sec_eca6df25_p1",
+    "kau_sakan_sec_dee3d4ad",
+    "kau_sakan_sec_eca6df25_p2",
+    "kau_dirasa_exec028_p2",
+    "kau_qabul_sec_c7aa7d7e",
+    "kau_sakan_sec_77ae3ce9",
+    "kau_sakan_sec_1baddb78",
+    "kau_sakan_sec_78c3fa00_p1",
+    "kau_sakan_sec_a98f6094",
+    "kau_huquq_sec_ac282cf2_3",
+    "kau_sakan_sec_78c3fa00_p2",
+    "kau_dirasa_exec023",
+    "kau_dirasa_exec028_p1"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f36",
+   "file": "fresh50.jsonl",
+   "type": "مدة",
+   "university": "KAU",
+   "question": "متى لازم أطلع من السكن الجامعي في جامعة الملك عبدالعزيز بعد آخر اختبار في الترم؟ وبعد ما أتخرج؟ وكم أقصى مدة أقدر أسكن؟",
+   "rewritten": "مواعيد إخلاء السكن الجامعي بعد الاختبارات النهائية في الفصل الدراسي وبعد التخرج في جامعة الملك عبدالعزيز والحد الأقصى لفترة الإقامة في السكن الجامعي",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_sakan_sec_1baddb78"
+   ],
+   "ranked": [
+    "kau_sakan_sec_1baddb78",
+    "kau_dirasa_exec022",
+    "kau_dirasa_art005",
+    "kau_sakan_sec_77ae3ce9",
+    "kau_sakan_sec_eca6df25_p2",
+    "kau_dirasa_art022",
+    "kau_sakan_sec_eca6df25_p1",
+    "kau_sakan_sec_a98f6094",
+    "kau_dirasa_exec042",
+    "kau_dirasa_exec019",
+    "kau_dirasa_exec013_p1",
+    "kau_dirasa_exec029",
+    "kau_dirasa_art001_p6",
+    "kau_dirasa_exec028_p1",
+    "kau_dirasa_exec028_p3"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f37",
+   "file": "fresh50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "أنا طالب منحة خارجية في جامعة الملك عبدالعزيز، وش البدلات اللي لي لما أوصل ولما أتخرج؟ وكم كل واحد؟",
+   "rewritten": "بدلات الطالب المنقول من المنحة الخارجية في جامعة الملك عبدالعزيز عند الوصول وعند التخرج ومقدار كل بدل",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_maliya_sec_9902f8a6",
+    "kau_maliya_sec_3d478334"
+   ],
+   "ranked": [
+    "kau_maliya_sec_c7c0c9a9",
+    "kau_maliya_sec_806fa6ea",
+    "kau_maliya_sec_3d478334",
+    "kau_maliya_sec_9902f8a6",
+    "kau_dirasa_exec028_p1",
+    "kau_dirasa_exec028_p3",
+    "kau_tahwil_khariji_sec_c173f7f7",
+    "kau_dirasa_art041",
+    "kau_tahwil_khariji_sec_ab748931",
+    "kau_maliya_sec_86c1e6a5",
+    "kau_dirasa_art001_p6",
+    "kau_dirasa_exec023",
+    "kau_tahwil_khariji_sec_6898074d",
+    "kau_dirasa_exec019",
+    "kau_dirasa_art023"
+   ],
+   "gold_rank": 3
+  },
+  {
+   "id": "f38",
+   "file": "fresh50.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "أنا طالب ماجستير في جامعة الملك عبدالعزيز وأبي أحول لتخصص ثاني داخل الجامعة، يصير؟ وكم مرة؟",
+   "rewritten": "جواز التحويل الداخلي لطلاب الماجستير إلى تخصص آخر داخل الجامعة وعدد المرات المسموح بها",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_tahwil_ulya_sec_8674a18b"
+   ],
+   "ranked": [
+    "kau_tahwil_ulya_sec_8674a18b",
+    "kau_tahwil_dakhili_sec_e04a82ce",
+    "kau_dirasa_exec025",
+    "kau_tahwil_ulya_sec_53d633d5",
+    "kau_tahwil_dakhili_sec_748474ac",
+    "kau_dirasa_exec023",
+    "kau_dirasa_art025",
+    "kau_dirasa_exec026",
+    "kau_tahwil_dakhili_sec_4d036e1a",
+    "kau_dirasa_art026",
+    "kau_tahwil_ulya_sec_2856d46a_p1",
+    "kau_tahwil_ulya_sec_2856d46a_p2",
+    "kau_tahwil_khariji_sec_c173f7f7",
+    "kau_tahwil_ulya_sec_858c9a80",
+    "kau_dirasa_art023"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f39",
+   "file": "fresh50.jsonl",
+   "type": "تاريخ",
+   "university": "KAU",
+   "question": "متى نرجع للدراسة بعد إجازة الخريف في جامعة الملك عبدالعزيز؟",
+   "rewritten": "موعد العودة للدراسة بعد إجازة الخريف في التقويم الأكاديمي",
+   "intent": {
+    "type": "date",
+    "event": "بداية الدراسة",
+    "semester": "الأول"
+   },
+   "calendar_rows": [
+    "kau_taqwim_sana_sec_20922d1f",
+    "kau_taqwim_sana_sec_ba7d35eb"
+   ],
+   "calendar_mode": true,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_taqwim_sana_sec_20922d1f",
+    "kau_taqwim_sec_13052e22_p2"
+   ],
+   "ranked": [
+    "kau_taqwim_sana_sec_20922d1f",
+    "kau_taqwim_sec_13052e22_p3",
+    "kau_taqwim_sana_sec_ba7d35eb",
+    "kau_taqwim_sec_13052e22_p2",
+    "kau_dirasa_exec019",
+    "kau_taqwim_sec_13052e22_p1",
+    "kau_dirasa_exec018",
+    "kau_sakan_sec_a98f6094",
+    "kau_dirasa_art001_p1",
+    "kau_dirasa_exec006",
+    "kau_dirasa_exec028_p1",
+    "kau_dirasa_exec020",
+    "kau_dirasa_exec028_p2",
+    "kau_dirasa_exec046"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f40",
+   "file": "fresh50.jsonl",
+   "type": "شروط",
+   "university": "KAU",
+   "question": "ما قدرت أكمل البكالوريوس في جامعة الملك عبدالعزيز، أقدر آخذ دبلوم بدالها؟ وش الشروط؟",
+   "rewritten": "جواز حصول الطالب على دبلوم بدل الدرجة الجامعية في البكالوريوس وشروطه",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_dirasa_exec010"
+   ],
+   "ranked": [
+    "kau_dirasa_art012",
+    "kau_dirasa_exec010",
+    "kau_dirasa_art010",
+    "kau_dirasa_exec012",
+    "kau_dirasa_exec009",
+    "kau_qabul_sec_591e6f48",
+    "kau_tahwil_khariji_sec_ab748931",
+    "kau_dirasa_exec011_p1",
+    "kau_qabul_sec_db0769c1",
+    "kau_maliya_sec_3d478334",
+    "kau_maliya_sec_9902f8a6",
+    "kau_tahwil_khariji_sec_c173f7f7",
+    "kau_maliya_sec_806fa6ea",
+    "kau_maliya_sec_c7c0c9a9",
+    "kau_maliya_sec_86c1e6a5"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "f41",
+   "file": "fresh50.jsonl",
+   "type": "نعم/لا",
+   "university": "KAU",
+   "question": "أنا من جامعة ثانية وبدرس زائر في جامعة الملك عبدالعزيز، أقدر أطلب سكن؟ وتنصرف لي مكافأة؟",
+   "rewritten": "جواز طلب السكن وصرف المكافأة الشهرية للطالب الزائر في جامعة الملك عبدالعزيز",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_dirasa_exec028_p2"
+   ],
+   "ranked": [
+    "kau_dirasa_exec028_p2",
+    "kau_maliya_sec_b81146ba",
+    "kau_sakan_sec_eca6df25_p1",
+    "kau_dirasa_exec028_p1",
+    "kau_maliya_sec_ada20449",
+    "kau_dirasa_exec028_p3",
+    "kau_sakan_sec_eca6df25_p2",
+    "kau_maliya_sec_806fa6ea",
+    "kau_sakan_sec_77ae3ce9",
+    "kau_maliya_sec_4509be15",
+    "kau_tahwil_ulya_sec_858c9a80",
+    "kau_sakan_sec_1baddb78",
+    "kau_tahwil_ulya_sec_b199b96f",
+    "kau_sakan_sec_a98f6094"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f42",
+   "file": "fresh50.jsonl",
+   "type": "تعريف",
+   "university": "KAU",
+   "question": "جاني تقدير IP في مادة بحثية بجامعة الملك عبدالعزيز، وش معناه؟ وإذا ما انعدل وش يصير؟",
+   "rewritten": "معنى تقدير مستمر (IP) في مقرر بحثي وما يترتب على عدم تعديله",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_dirasa_exec034"
+   ],
+   "ranked": [
+    "kau_dirasa_art034",
+    "kau_dirasa_exec034",
+    "kau_dirasa_appx01_p2",
+    "kau_dirasa_art001_p2",
+    "kau_dirasa_exec032",
+    "kau_dirasa_exec042",
+    "kau_dirasa_art001_p3",
+    "kau_dirasa_appx01_p1",
+    "kau_dirasa_exec041",
+    "kau_dirasa_art033",
+    "kau_dirasa_art027",
+    "kau_dirasa_art001_p6",
+    "kau_dirasa_art024"
+   ],
+   "gold_rank": 2
+  },
+  {
+   "id": "f43",
+   "file": "fresh50.jsonl",
+   "type": "حالة",
+   "university": "KAU",
+   "question": "معدلي 3.80 من 5 في جامعة الملك عبدالعزيز، وش بيكون تقديري العام إذا تخرجت؟",
+   "rewritten": "التقدير العام المكافئ للمعدل التراكمي 3.80 من 5 في جامعة الملك عبدالعزيز عند التخرج",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_dirasa_art037"
+   ],
+   "ranked": [
+    "kau_dirasa_art037",
+    "kau_dirasa_art039",
+    "kau_dirasa_exec041",
+    "kau_dirasa_appx02",
+    "kau_dirasa_art001_p3",
+    "kau_dirasa_exec042",
+    "kau_dirasa_art041",
+    "kau_dirasa_exec012",
+    "kau_dirasa_exec010",
+    "kau_dirasa_exec022",
+    "kau_dirasa_exec028_p3"
+   ],
+   "gold_rank": 1
+  },
+  {
+   "id": "f44",
+   "file": "fresh50.jsonl",
+   "type": "حالة",
+   "university": "KAU",
+   "question": "انسحبت من جامعة الملك عبدالعزيز من ترمين، أقدر أرجع بنفس رقمي الجامعي؟",
+   "rewritten": "جواز إعادة القيد للطالب المنسحب من جامعة الملك عبدالعزيز بعد انقطاعه عن الدراسة لفترة ترمين باستخدام الرقم الجامعي نفسه",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_dirasa_exec021"
+   ],
+   "ranked": [
+    "kau_dirasa_exec019",
+    "kau_dirasa_exec020",
+    "kau_dirasa_art021",
+    "kau_dirasa_art019",
+    "kau_dirasa_exec021",
+    "kau_dirasa_exec024",
+    "kau_dirasa_exec023",
+    "kau_tahwil_ulya_sec_2856d46a_p1",
+    "kau_tahwil_ulya_sec_858c9a80",
+    "kau_dirasa_art001_p4",
+    "kau_tahwil_ulya_sec_2856d46a_p2",
+    "kau_dirasa_exec022",
+    "kau_tahwil_khariji_sec_daaa20e8",
+    "kau_dirasa_exec042",
+    "kau_tahwil_khariji_sec_c173f7f7"
+   ],
+   "gold_rank": 5
+  },
+  {
+   "id": "f45",
+   "file": "fresh50.jsonl",
+   "type": "رقم",
+   "university": "KAU",
+   "question": "أقدر أسجل مواد من مستويات متقدمة في خطتي بجامعة الملك عبدالعزيز؟ كم مستوى قدام أقدر أسجل منه؟",
+   "rewritten": "جواز تسجيل مقررات من المستويات المتقدمة في الخطة الدراسية لجامعة الملك عبدالعزيز وعدد المستويات المسموح بتسجيلها من المستويات الأقدم",
+   "intent": {
+    "type": "other"
+   },
+   "calendar_rows": [],
+   "calendar_mode": false,
+   "reranked": true,
+   "rerank_failed": false,
+   "gold": [
+    "kau_dirasa_exec013_p2"
+   ],
+   "ranked": [
+    "kau_dirasa_exec013_p2",
+    "kau_dirasa_exec013_p1",
+    "kau_dirasa_art005",
+    "kau_dirasa_exec012",
+    "kau_tahwil_ulya_sec_858c9a80",
+    "kau_dirasa_art001_p6",
+    "kau_dirasa_exec026",
+    "kau_qabul_sec_591e6f48",
+    "kau_tahwil_ulya_sec_b199b96f",
+    "kau_dirasa_art001_p2",
+    "kau_tahwil_khariji_sec_d7d5a807",
+    "kau_dirasa_exec017",
+    "kau_qabul_sec_c249b220",
+    "kau_dirasa_exec046",
+    "kau_dirasa_exec018"
+   ],
+   "gold_rank": 1
+  }
+ ]
+}

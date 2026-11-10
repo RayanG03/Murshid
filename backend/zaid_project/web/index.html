@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <title>مُرشِد · مساعد اللوائح الجامعية</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/static/app.css" />
+</head>
+<body>
+<div class="shell" id="shell" data-theme="ksu">
+
+  <!-- الشريط الجانبي -->
+  <aside class="sidebar">
+
+    <div class="side-head">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" />
+          <path d="M15.6 8.4 13 13l-4.6 2.6L11 11l4.6-2.6Z" fill="currentColor" />
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-name">مُرشِد</span>
+        <span class="logo-tag">مساعد اللوائح الجامعية</span>
+      </div>
+    </div>
+
+    <div class="side-section">
+      <span class="side-label" id="lbl-uni">اختر الجامعة</span>
+      <div class="uni-list" id="uniList" role="group" aria-labelledby="lbl-uni"></div>
+    </div>
+
+    <div class="side-section side-history">
+      <span class="side-label">
+        محادثاتك
+        <em class="count" id="histCount">0/3</em>
+      </span>
+      <div id="histBox"></div>
+      <span class="hist-note">يُحفظ آخر 3 محادثات · تنتهي بعد 3 أيام</span>
+    </div>
+
+    <div class="side-section side-topics">
+      <span class="side-label">مواضيع سريعة</span>
+      <div class="topic-list" id="topics"></div>
+    </div>
+
+    <div class="side-foot">
+      <span class="foot-badge">مشروع تخرّج · نظام إجابة عربي</span>
+    </div>
+  </aside>
+
+  <!-- المنطقة الرئيسية -->
+  <main class="main">
+
+    <header class="topbar">
+      <div class="context">
+        <span class="ctx-mark" aria-hidden="true"><img id="ctxLogo" alt="" /></span>
+        <span class="ctx-meta">
+          <span class="ctx-name" id="ctxName"></span>
+          <span class="ctx-status" id="ctxStatus"><span class="live" aria-hidden="true"></span> <span id="statText">جارِ الاتصال…</span></span>
+        </span>
+      </div>
+
+      <div class="tools">
+        <button class="tool fs-sm" id="fsSmall" aria-label="تصغير الخط">أ</button>
+        <button class="tool fs-lg" id="fsBig" aria-label="تكبير الخط">أ</button>
+
+        <button class="tool" id="autoRead" aria-pressed="false" aria-label="قراءة الردود تلقائياً">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true">
+            <path d="M4 13v-1a8 8 0 0 1 16 0v1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            <rect x="3" y="13" width="4.2" height="6.5" rx="1.6" stroke="currentColor" stroke-width="1.6" />
+            <rect x="16.8" y="13" width="4.2" height="6.5" rx="1.6" stroke="currentColor" stroke-width="1.6" />
+          </svg>
+        </button>
+
+        <button class="tool" id="darkBtn" aria-pressed="false" aria-label="الوضع الليلي"></button>
+
+        <button class="ghost-btn" id="newChat" disabled>
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7" />
+            <path d="M12 8.5v7M8.5 12h7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+          </svg>
+          <span class="btn-label">محادثة جديدة</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="thread" id="thread" role="log" aria-live="polite" aria-relevant="additions"
+      aria-label="سجل المحادثة"></div>
+
+    <footer class="composer">
+      <div class="field">
+        <button class="mic" id="mic" aria-pressed="false" aria-label="سؤال بالصوت" title="سؤال بالصوت">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden="true">
+            <rect x="9" y="3" width="6" height="11" rx="3" stroke="currentColor" stroke-width="1.6" />
+            <path d="M5 11a7 7 0 0 0 14 0M12 18v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </button>
+
+        <input class="input" id="q" type="text" aria-label="اكتب سؤالك" autocomplete="off"
+          placeholder="اكتب سؤالك هنا… مثلاً: كم مرة أقدر أحول بين الكليات؟" />
+
+        <button class="send" id="send" disabled aria-label="إرسال السؤال">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden="true">
+            <path d="M4 12l16-8-5 16-3.6-6.4L4 12z" stroke="currentColor"
+              stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <span class="hint-line" id="hint"></span>
+    </footer>
+
+  </main>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
